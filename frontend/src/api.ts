@@ -1,0 +1,4 @@
+import type {AnalyzeRequest,DemoPatient,Status,TriageResult} from './types';
+const base='';
+async function fetchJson<T>(path:string,init?:RequestInit):Promise<T>{const response=await fetch(base+path,init);const body=await response.json();if(!response.ok)throw new Error(body.detail||'Something went wrong. Please try again.');return body as T;}
+export const api={status:()=>fetchJson<Status>('/api/status'),demos:()=>fetchJson<DemoPatient[]>('/api/demo-patients'),analyze:(request:AnalyzeRequest)=>fetchJson<TriageResult>('/api/analyze',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(request)}),escalate:(request:AnalyzeRequest,local_result:TriageResult)=>fetchJson<TriageResult>('/api/escalate',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({request,local_result})})};
