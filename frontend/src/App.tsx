@@ -5,6 +5,7 @@ import { Header, type Screen } from './components/Header';
 import { Footer } from './components/Footer';
 import { RulesBanner } from './components/RulesBanner';
 import { HomeScreen } from './screens/HomeScreen';
+import { IntakeScreen } from './screens/IntakeScreen';
 
 const emptyVitals: Vitals = {
   temp_c: null,
@@ -156,152 +157,30 @@ function App() {
             />
           )}
 
-          {currentScreen !== 'home' && (
+          {currentScreen === 'intake' && (
+            <IntakeScreen
+              form={form}
+              set={set}
+              setVital={setVital}
+              onAnalyze={analyze}
+              busy={busy}
+              error={error}
+              demos={demos}
+              selectedDemo={selected}
+              onLoadDemo={loadDemo}
+              onBackToHome={() => setCurrentScreen('home')}
+            />
+          )}
+
+          {currentScreen !== 'home' && currentScreen !== 'intake' && (
             <div className="space-y-space-md">
-              <section className="bg-surface-container-lowest p-space-md rounded-xl shadow-sm border border-surface-container">
-                <div className="flex items-center justify-between mb-space-sm">
-                  <h3 className="font-headline-sm text-headline-sm text-on-surface">Patient Intake</h3>
-                  <button
-                    onClick={() => setCurrentScreen('home')}
-                    className="text-xs text-primary font-bold hover:underline"
-                  >
-                    ← Back to Home
-                  </button>
-                </div>
-
-                <div className="space-y-space-sm">
-                  <label className="block text-xs font-bold uppercase text-on-surface-variant">
-                    Symptoms & Concerns (Required)
-                  </label>
-                  <textarea
-                    className="w-full p-space-sm rounded-lg bg-surface-container-low border border-surface-container text-body-lg focus:outline-none focus:ring-2 focus:ring-primary"
-                    value={form.text}
-                    onChange={(e) => set('text', e.target.value)}
-                    placeholder="Describe what the patient is experiencing in their own words..."
-                    rows={4}
-                  />
-
-                  <div className="flex flex-wrap gap-space-sm items-center">
-                    <span className="text-xs text-on-surface-variant font-bold">Quick Demo:</span>
-                    <select
-                      className="p-1.5 rounded-lg bg-surface-container-low border border-surface-container text-xs"
-                      value={selected}
-                      onChange={(e) => loadDemo(e.target.value)}
-                    >
-                      <option value="">Select demo patient...</option>
-                      {demos.map((d) => (
-                        <option key={d.name} value={d.name}>
-                          {d.name}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-
-                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-space-sm pt-2">
-                    <div>
-                      <label className="block text-[11px] font-bold text-on-surface-variant">Age (years)</label>
-                      <input
-                        type="number"
-                        min="0"
-                        max="120"
-                        className="w-full p-2 rounded bg-surface-container-low border border-surface-container text-sm"
-                        value={form.age_years ?? ''}
-                        onChange={(e) => set('age_years', e.target.value === '' ? null : Number(e.target.value))}
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-[11px] font-bold text-on-surface-variant">Sex</label>
-                      <select
-                        className="w-full p-2 rounded bg-surface-container-low border border-surface-container text-sm"
-                        value={form.sex}
-                        onChange={(e) => set('sex', e.target.value)}
-                      >
-                        <option value="unknown">Unknown</option>
-                        <option value="female">Female</option>
-                        <option value="male">Male</option>
-                        <option value="other">Other</option>
-                      </select>
-                    </div>
-                    <div>
-                      <label className="block text-[11px] font-bold text-on-surface-variant">Temp (°C)</label>
-                      <input
-                        type="number"
-                        step="0.1"
-                        className="w-full p-2 rounded bg-surface-container-low border border-surface-container text-sm"
-                        value={form.vitals.temp_c ?? ''}
-                        onChange={(e) => setVital('temp_c', e.target.value)}
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-[11px] font-bold text-on-surface-variant">SpO2 (%)</label>
-                      <input
-                        type="number"
-                        className="w-full p-2 rounded bg-surface-container-low border border-surface-container text-sm"
-                        value={form.vitals.spo2_pct ?? ''}
-                        onChange={(e) => setVital('spo2_pct', e.target.value)}
-                      />
-                    </div>
-                  </div>
-
-                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-space-sm pt-2">
-                    <div>
-                      <label className="block text-[11px] font-bold text-on-surface-variant">Pulse (bpm)</label>
-                      <input
-                        type="number"
-                        className="w-full p-2 rounded bg-surface-container-low border border-surface-container text-sm"
-                        value={form.vitals.pulse_bpm ?? ''}
-                        onChange={(e) => setVital('pulse_bpm', e.target.value)}
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-[11px] font-bold text-on-surface-variant">BP Sys (mmHg)</label>
-                      <input
-                        type="number"
-                        className="w-full p-2 rounded bg-surface-container-low border border-surface-container text-sm"
-                        value={form.vitals.systolic_bp ?? ''}
-                        onChange={(e) => setVital('systolic_bp', e.target.value)}
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-[11px] font-bold text-on-surface-variant">Resp Rate (/min)</label>
-                      <input
-                        type="number"
-                        className="w-full p-2 rounded bg-surface-container-low border border-surface-container text-sm"
-                        value={form.vitals.resp_rate ?? ''}
-                        onChange={(e) => setVital('resp_rate', e.target.value)}
-                      />
-                    </div>
-                  </div>
-
-                  <div className="pt-2 flex items-center gap-2">
-                    <input
-                      type="checkbox"
-                      id="preg"
-                      checked={form.pregnant === true}
-                      onChange={(e) => set('pregnant', e.target.checked ? true : null)}
-                    />
-                    <label htmlFor="preg" className="text-sm text-on-surface">Patient is pregnant</label>
-                  </div>
-
-                  {error && <div className="p-3 bg-error-container text-on-error-container rounded-lg text-sm">{error}</div>}
-
-                  <button
-                    disabled={!ready || busy !== ''}
-                    onClick={analyze}
-                    className="w-full py-3 bg-primary text-on-primary rounded-xl font-bold shadow-md hover:bg-tertiary transition-all disabled:opacity-50"
-                  >
-                    {busy === 'analyze' ? 'Analyzing on device...' : 'Analyze Case →'}
-                  </button>
-                </div>
-              </section>
-
               {result && (
                 <section className="bg-surface-container-lowest p-space-md rounded-xl shadow-sm border border-surface-container">
                   <div className="flex items-center justify-between pb-space-sm mb-space-sm border-b border-surface-container">
                     <span className="font-bold text-primary">Triage Result</span>
                     <button
                       onClick={() => setCurrentScreen('referral')}
-                      className="px-3 py-1 bg-primary text-on-primary rounded text-xs font-bold"
+                      className="px-3 py-1 bg-primary text-on-primary rounded text-xs font-bold cursor-pointer"
                     >
                       View Referral Note →
                     </button>
