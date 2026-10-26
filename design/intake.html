@@ -1,0 +1,709 @@
+<!-- MediMitra - Patient Intake Form -->
+
+<!DOCTYPE html>
+
+
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_standard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Noto+Sans:wght@100..900&display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{colors:{"surface-tint":"#006a63","primary-fixed-dim":"#80d5cb","secondary":"#006b5f","inverse-primary":"#80d5cb","secondary-container":"#6df5e1","primary":"#005c55","surface":"#faf8ff","inverse-surface":"#283044","tertiary-fixed-dim":"#9ad1cb","primary-fixed":"#9cf2e8","background":"#faf8ff","surface-container":"#eaedff","surface-container-high":"#e2e7ff","on-tertiary-fixed":"#00201e","on-primary-container":"#a3faef","on-primary-fixed-variant":"#00504a","on-error":"#ffffff","tertiary-container":"#3c726e","surface-container-highest":"#dae2fd","outline-variant":"#bdc9c6","surface-container-lowest":"#ffffff","tertiary":"#225a55","error":"#ba1a1a","surface-bright":"#faf8ff","surface-variant":"#dae2fd","on-tertiary":"#ffffff","on-primary-fixed":"#00201d","on-secondary-container":"#006f64","on-primary":"#ffffff","on-secondary":"#ffffff","on-secondary-fixed-variant":"#005048","surface-dim":"#d2d9f4","tertiary-fixed":"#b5ede7","on-error-container":"#93000a","error-container":"#ffdad6","inverse-on-surface":"#eef0ff","on-secondary-fixed":"#00201c","outline":"#6e7977","primary-container":"#0f766e","on-tertiary-container":"#bdf5ef","on-surface":"#131b2e","on-tertiary-fixed-variant":"#144f4b","surface-container-low":"#f2f3ff","on-background":"#131b2e","on-surface-variant":"#3e4947","secondary-fixed-dim":"#4fdbc8","secondary-fixed":"#71f8e4"},borderRadius:{DEFAULT:"0.25rem",lg:"0.5rem",xl:"0.75rem",full:"9999px"},spacing:{"space-xl":"2rem","space-sm":"0.5rem","gutter-desktop":"2rem",gutter:"1rem","margin-desktop":"2.5rem",margin:"1rem","space-lg":"1.5rem","margin-tablet":"1.5rem","space-md":"1rem","gutter-tablet":"1.5rem","space-xs":"0.25rem"},fontFamily:{"body-sm":["Inter"],"body-bold":["Inter"],"body-xl":["Inter"],"headline-sm":["Noto Sans"],"label-triage":["Inter"],"body-lg":["Inter"],"label-meta":["Inter"],"headline-xl":["Noto Sans"],"headline-lg":["Noto Sans"],"headline-xl-mobile":["Noto Sans"]},fontSize:{"body-sm":["14px",{lineHeight:"20px",fontWeight:"500"}],"body-bold":["16px",{lineHeight:"24px",fontWeight:"600"}],"body-xl":["18px",{lineHeight:"28px",fontWeight:"400"}],"headline-sm":["20px",{lineHeight:"28px",fontWeight:"600"}],"label-triage":["15px",{lineHeight:"20px",letterSpacing:"0.03em",fontWeight:"700"}],"body-lg":["16px",{lineHeight:"24px",fontWeight:"400"}],"label-meta":["13px",{lineHeight:"18px",letterSpacing:"0.02em",fontWeight:"600"}],"headline-xl":["36px",{lineHeight:"44px",letterSpacing:"-0.02em",fontWeight:"700"}],"headline-lg":["26px",{lineHeight:"34px",letterSpacing:"-0.01em",fontWeight:"700"}],"headline-xl-mobile":["28px",{lineHeight:"36px",letterSpacing:"-0.01em",fontWeight:"700"}]}}}};</script></head><body class="bg-surface font-body-lg text-body-lg text-on-surface antialiased"><header class="fixed top-0 left-0 right-0 z-50 bg-surface-container-lowest/95 backdrop-blur-md shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="h-16 max-w-[1100px] mx-auto px-margin flex items-center justify-between gap-space-md"><div class="flex items-center gap-space-lg"><div class="flex items-center gap-space-sm"><img alt="MediMitra Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1UqfY-2Es_FOj_KMZtPui1fZlA6bj360BUxRZqPbMHjmX9Z1MzzaoSPfKSRNIxv1FxtWs0FK7tpB1rRGxJhbM_h-o3nQQMHA-XYpmgc8gDA1eAotD6aXj1mGCnkXM9Ijwj3Hb_LGTjdeQ3tLW0I-jpuIKe0uIiI3YPfhr1RDZ0-KQqWLJgtM9P0zijIJjSGKT7VpDMKGg9bcY0QrNqnENq1L1DBgf5kJkuZ-6cTeKXAjkXNIsZByzVHkQ"/><div class="flex flex-col"><span class="font-headline-sm text-headline-sm text-primary leading-tight tracking-tight">MediMitra</span><span class="font-label-meta text-label-meta text-on-surface-variant leading-none">Rural Health Triage</span></div></div><nav class="hidden md:flex items-center gap-space-xs" data-active-classes="bg-surface-container text-primary font-body-bold text-body-bold rounded-lg"><a class="px-space-md py-space-xs font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface rounded-lg transition-colors" data-path="home" href="#">Home</a><a aria-current="page" class="px-space-md py-space-xs transition-colors bg-surface-container text-primary font-body-bold text-body-bold rounded-lg" data-path="new-case" href="#">New Case</a><a class="px-space-md py-space-xs font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface rounded-lg transition-colors" data-path="referrals" href="#">Referrals</a></nav></div><div class="flex items-center gap-space-sm sm:gap-space-md"><div class="flex items-center gap-space-xs px-space-sm py-1 bg-surface-container-low rounded-full"><span class="w-2 h-2 rounded-full bg-secondary animate-pulse"></span><span class="hidden sm:inline font-label-meta text-label-meta text-on-surface-variant">On-Device / Offline Ready</span><span class="sm:hidden font-label-meta text-label-meta text-on-surface-variant">Offline</span></div><div class="hidden lg:flex items-center px-space-sm py-0.5 bg-surface-container-high rounded-full"><span class="font-label-meta text-label-meta text-on-surface-variant">Simulated demo</span></div><div class="flex items-center gap-space-xs px-space-sm py-1 bg-surface-container-low rounded-lg"><span class="material-symbols-outlined text-[18px] text-on-surface-variant">translate</span><select aria-label="Language Selector" class="bg-transparent font-label-meta text-label-meta text-on-surface focus:outline-none cursor-pointer pr-1"><option value="en">English</option><option value="hi">हिंदी - Hindi</option><option value="mr">मराठी - Marathi</option></select></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="w-full pt-16"><div class="max-w-[1100px] mx-auto px-margin min-h-[calc(100vh-10rem)]"><div class="flex flex-col w-full pb-space-xl">
+
+<!-- Step Progress Header Section -->
+
+<div class="w-full bg-surface-container-lowest rounded-xl shadow-sm p-space-md sm:p-space-lg mb-space-lg">
+
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm mb-space-md">
+
+<div class="flex items-center gap-space-sm">
+
+<span class="px-space-sm py-1 rounded-full bg-primary-fixed text-on-primary-fixed font-label-meta text-label-meta uppercase tracking-wider">Step 2 of 3</span>
+
+<h1 class="font-headline-sm text-headline-sm text-on-surface">Critical Danger Signs</h1>
+
+</div>
+
+<div class="flex items-center gap-space-xs font-label-meta text-label-meta text-on-surface-variant">
+
+<span class="material-symbols-outlined text-[18px] text-primary">memory</span>
+
+<span>Local Gemma 4 E4B Active</span>
+
+<span class="inline-block w-1.5 h-1.5 rounded-full bg-secondary ml-1"></span>
+
+</div>
+
+</div>
+
+<!-- Multi-step Stepper Indicator -->
+
+<div class="grid grid-cols-3 gap-space-sm relative mb-space-sm">
+
+<!-- Step 1 Complete -->
+
+<div class="flex items-center gap-space-xs sm:gap-space-sm group cursor-pointer">
+
+<div class="w-9 h-9 rounded-full bg-primary text-on-primary flex items-center justify-center shrink-0 shadow-sm transition-transform group-hover:scale-105">
+
+<span class="material-symbols-outlined text-[20px]">check</span>
+
+</div>
+
+<div class="min-w-0 hidden sm:flex flex-col">
+
+<span class="font-label-meta text-label-meta text-primary uppercase">Step 1</span>
+
+<span class="font-body-sm text-body-sm text-on-surface truncate">Patient & Complaint</span>
+
+</div>
+
+</div>
+
+<!-- Step 2 Active -->
+
+<div class="flex items-center gap-space-xs sm:gap-space-sm">
+
+<div class="w-9 h-9 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center shrink-0 shadow-sm ring-4 ring-primary-fixed/40">
+
+<span class="font-body-bold text-body-bold text-on-primary-container">2</span>
+
+</div>
+
+<div class="min-w-0 hidden sm:flex flex-col">
+
+<span class="font-label-meta text-label-meta text-primary font-bold uppercase">Step 2</span>
+
+<span class="font-body-bold text-body-bold text-primary truncate">Danger Signs</span>
+
+</div>
+
+</div>
+
+<!-- Step 3 Upcoming -->
+
+<div class="flex items-center gap-space-xs sm:gap-space-sm opacity-60">
+
+<div class="w-9 h-9 rounded-full bg-surface-container-high text-on-surface-variant flex items-center justify-center shrink-0">
+
+<span class="font-body-bold text-body-bold">3</span>
+
+</div>
+
+<div class="min-w-0 hidden sm:flex flex-col">
+
+<span class="font-label-meta text-label-meta text-on-surface-variant uppercase">Step 3</span>
+
+<span class="font-body-sm text-body-sm text-on-surface-variant truncate">Vitals & Tests</span>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- Progress Track Bar -->
+
+<div class="w-full bg-surface-container rounded-full h-2 overflow-hidden mt-space-sm">
+
+<div class="bg-primary h-full rounded-full transition-all duration-500 ease-out" style="width: 66.66%;"></div>
+
+</div>
+
+</div>
+
+<!-- Two-Column Triage Form Layout -->
+
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg items-start">
+
+<!-- Left Column: Form Core (approx 65% / 8 columns) -->
+
+<div class="lg:col-span-8 flex flex-col gap-space-md">
+
+<!-- Quick Patient Anchor Ribbon -->
+
+<div class="bg-surface-container-low rounded-xl p-space-md flex flex-wrap items-center justify-between gap-space-sm shadow-sm">
+
+<div class="flex items-center gap-space-sm">
+
+<div class="w-10 h-10 rounded-full bg-surface-container-highest text-primary flex items-center justify-center shrink-0">
+
+<span class="material-symbols-outlined text-[22px]">child_care</span>
+
+</div>
+
+<div>
+
+<div class="flex items-center gap-space-xs">
+
+<span class="font-headline-sm text-headline-sm text-on-surface leading-tight">Kabir</span>
+
+<span class="px-2 py-0.5 rounded-full bg-surface-container text-on-surface-variant font-label-meta text-label-meta">ID #R4829</span>
+
+</div>
+
+<p class="font-body-sm text-body-sm text-on-surface-variant">4 yrs • Male • Village Rampur • Onset: 3 days</p>
+
+</div>
+
+</div>
+
+<button class="px-space-sm py-1.5 rounded-lg bg-surface-container-highest hover:bg-surface-container text-primary font-label-meta text-label-meta flex items-center gap-1 transition-colors" type="button">
+
+<span class="material-symbols-outlined text-[16px]">edit</span>
+
+<span>Edit Step 1</span>
+
+</button>
+
+</div>
+
+<!-- Voice Note Transcription Field Banner -->
+
+<div class="bg-surface-container-lowest rounded-xl p-space-md sm:p-space-lg shadow-sm">
+
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm mb-space-sm">
+
+<div class="flex items-center gap-space-xs">
+
+<span class="material-symbols-outlined text-primary text-[22px]">mic</span>
+
+<h2 class="font-body-bold text-body-bold text-on-surface">Voice Observation (Hindi / Marathi)</h2>
+
+</div>
+
+<span class="font-label-meta text-label-meta text-on-surface-variant bg-surface-container-high px-2 py-0.5 rounded-full">On-device Whisper-Tiny</span>
+
+</div>
+
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-space-md">
+
+          Record mother's observations or local symptom descriptors. Audio translates locally without cloud upload.
+
+        </p>
+
+<div class="bg-surface-container-low rounded-xl p-space-sm flex flex-col sm:flex-row items-center gap-space-md">
+
+<!-- Press & Hold Action Button -->
+
+<button class="w-full sm:w-auto px-space-lg py-3 rounded-lg bg-primary hover:bg-tertiary text-on-primary font-body-bold text-body-bold flex items-center justify-center gap-space-xs transition-all active:scale-95 shrink-0 shadow-sm" id="voice-record-btn" type="button">
+
+<span class="material-symbols-outlined text-[20px] animate-pulse">radio_button_checked</span>
+
+<span id="voice-btn-label">Press & Hold to Speak</span>
+
+</button>
+
+<!-- Simulated Live Audio Waveform & Status -->
+
+<div class="flex-1 w-full flex items-center justify-between px-space-sm py-2">
+
+<div class="flex items-end gap-1 h-7 flex-1 mr-4">
+
+<span class="w-1.5 bg-primary/40 rounded-full h-2"></span>
+
+<span class="w-1.5 bg-primary/60 rounded-full h-4"></span>
+
+<span class="w-1.5 bg-primary rounded-full h-6 animate-pulse"></span>
+
+<span class="w-1.5 bg-primary/80 rounded-full h-5"></span>
+
+<span class="w-1.5 bg-primary/30 rounded-full h-2"></span>
+
+<span class="w-1.5 bg-primary/60 rounded-full h-3"></span>
+
+<span class="w-1.5 bg-primary/80 rounded-full h-6 animate-pulse"></span>
+
+<span class="w-1.5 bg-primary/40 rounded-full h-3"></span>
+
+<span class="w-1.5 bg-primary/90 rounded-full h-5"></span>
+
+<span class="w-1.5 bg-primary/30 rounded-full h-2"></span>
+
+<span class="w-1.5 bg-primary/70 rounded-full h-4"></span>
+
+</div>
+
+<span class="font-label-meta text-label-meta text-on-surface-variant whitespace-nowrap">Audio ready • 00:00</span>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- Danger Signs Interactive Checklist -->
+
+<div class="bg-surface-container-lowest rounded-xl p-space-md sm:p-space-lg shadow-sm">
+
+<div class="flex items-center justify-between mb-space-sm">
+
+<div>
+
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Red-Flag Danger Signs</h2>
+
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">Select all positive symptoms observed in the last 24 hours.</p>
+
+</div>
+
+<span class="material-symbols-outlined text-error text-[28px]" style="font-variation-settings: 'FILL' 1;">warning</span>
+
+</div>
+
+<!-- Warning Callout -->
+
+<div class="mb-space-md p-space-sm rounded-lg bg-error-container text-on-error-container flex items-start gap-space-xs font-body-sm text-body-sm">
+
+<span class="material-symbols-outlined text-[20px] text-error shrink-0">emergency</span>
+
+<span>Checking any item below instantly flags the referral category as <strong>URGENT (RED)</strong>.</span>
+
+</div>
+
+<form class="space-y-space-sm" id="danger-signs-form">
+
+<!-- Item 1: Breathing -->
+
+<label class="group relative flex items-start gap-space-md p-space-md rounded-xl bg-surface-container-lowest hover:bg-surface-container-low transition-all cursor-pointer shadow-sm select-none">
+
+<input class="mt-1 w-6 h-6 rounded text-primary focus:ring-primary accent-primary cursor-pointer shrink-0" name="danger_sign" type="checkbox" value="Breathing difficulty"/>
+
+<div class="flex-1 min-w-0">
+
+<div class="flex items-center gap-space-xs">
+
+<span class="material-symbols-outlined text-primary text-[20px]">air</span>
+
+<span class="font-body-bold text-body-bold text-on-surface">Breathing difficulty / Respiratory distress</span>
+
+</div>
+
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Stridor while calm, continuous fast breathing, chest in-drawing, or audible grunting.</p>
+
+</div>
+
+</label>
+
+<!-- Item 2: Unconscious/Lethargic -->
+
+<label class="group relative flex items-start gap-space-md p-space-md rounded-xl bg-surface-container-lowest hover:bg-surface-container-low transition-all cursor-pointer shadow-sm select-none">
+
+<input class="mt-1 w-6 h-6 rounded text-primary focus:ring-primary accent-primary cursor-pointer shrink-0" name="danger_sign" type="checkbox" value="Unconscious or lethargic"/>
+
+<div class="flex-1 min-w-0">
+
+<div class="flex items-center gap-space-xs">
+
+<span class="material-symbols-outlined text-primary text-[20px]">bed</span>
+
+<span class="font-body-bold text-body-bold text-on-surface">Unconscious or lethargic state</span>
+
+</div>
+
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Abnormally sleepy, completely unresponsive to voice, eye opening, or physical touch.</p>
+
+</div>
+
+</label>
+
+<!-- Item 3: Convulsions -->
+
+<label class="group relative flex items-start gap-space-md p-space-md rounded-xl bg-surface-container-lowest hover:bg-surface-container-low transition-all cursor-pointer shadow-sm select-none">
+
+<input class="mt-1 w-6 h-6 rounded text-primary focus:ring-primary accent-primary cursor-pointer shrink-0" name="danger_sign" type="checkbox" value="Convulsions or seizures"/>
+
+<div class="flex-1 min-w-0">
+
+<div class="flex items-center gap-space-xs">
+
+<span class="material-symbols-outlined text-primary text-[20px]">electric_bolt</span>
+
+<span class="font-body-bold text-body-bold text-on-surface">Convulsions / Active seizures</span>
+
+</div>
+
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Episodes of involuntary jerking, rigid shaking, or fitting within the past 24 hours.</p>
+
+</div>
+
+</label>
+
+<!-- Item 4: Severe Bleeding / Dehydration -->
+
+<label class="group relative flex items-start gap-space-md p-space-md rounded-xl bg-surface-container-lowest hover:bg-surface-container-low transition-all cursor-pointer shadow-sm select-none">
+
+<input class="mt-1 w-6 h-6 rounded text-primary focus:ring-primary accent-primary cursor-pointer shrink-0" name="danger_sign" type="checkbox" value="Severe bleeding / fluid loss"/>
+
+<div class="flex-1 min-w-0">
+
+<div class="flex items-center gap-space-xs">
+
+<span class="material-symbols-outlined text-primary text-[20px]">water_drop</span>
+
+<span class="font-body-bold text-body-bold text-on-surface">Severe bleeding or fluid collapse</span>
+
+</div>
+
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Uncontrolled bleeding, sunken eyes with skin pinch > 2 seconds, no urine passed for > 12 hours.</p>
+
+</div>
+
+</label>
+
+<!-- Item 5: Severe Chest Pain / Collapse -->
+
+<label class="group relative flex items-start gap-space-md p-space-md rounded-xl bg-surface-container-lowest hover:bg-surface-container-low transition-all cursor-pointer shadow-sm select-none">
+
+<input class="mt-1 w-6 h-6 rounded text-primary focus:ring-primary accent-primary cursor-pointer shrink-0" name="danger_sign" type="checkbox" value="Severe chest pain"/>
+
+<div class="flex-1 min-w-0">
+
+<div class="flex items-center gap-space-xs">
+
+<span class="material-symbols-outlined text-primary text-[20px]">cardiology</span>
+
+<span class="font-body-bold text-body-bold text-on-surface">Severe chest pain / Acute collapse</span>
+
+</div>
+
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Crushing retrosternal sensation radiating to jaw, sudden severe cyanosis, cold extremities.</p>
+
+</div>
+
+</label>
+
+<!-- Item 6: Self-Harm Distress -->
+
+<label class="group relative flex items-start gap-space-md p-space-md rounded-xl bg-surface-container-lowest hover:bg-surface-container-low transition-all cursor-pointer shadow-sm select-none">
+
+<input class="mt-1 w-6 h-6 rounded text-primary focus:ring-primary accent-primary cursor-pointer shrink-0" name="danger_sign" type="checkbox" value="Self-harm / acute distress"/>
+
+<div class="flex-1 min-w-0">
+
+<div class="flex items-center gap-space-xs">
+
+<span class="material-symbols-outlined text-primary text-[20px]">psychology_alt</span>
+
+<span class="font-body-bold text-body-bold text-on-surface">Self-harm distress signals</span>
+
+</div>
+
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Explicit statements of self-harm, severe disorientation, acute psychiatric trauma crisis.</p>
+
+</div>
+
+</label>
+
+</form>
+
+</div>
+
+<!-- Step Navigation Action Bar -->
+
+<div class="flex items-center justify-between gap-space-md pt-space-xs">
+
+<button class="px-space-lg py-3 rounded-lg bg-surface-container-lowest hover:bg-surface-container text-primary font-body-bold text-body-bold flex items-center gap-space-xs transition-colors shadow-sm min-h-[48px]" type="button">
+
+<span class="material-symbols-outlined text-[20px]">arrow_back</span>
+
+<span>Back to Step 1</span>
+
+</button>
+
+<button class="px-space-xl py-3 rounded-lg bg-primary hover:bg-primary-container text-on-primary font-body-bold text-body-bold flex items-center gap-space-xs transition-all shadow-md hover:shadow-lg min-h-[48px]" type="button">
+
+<span>Next: Enter Vitals</span>
+
+<span class="material-symbols-outlined text-[20px]">arrow_forward</span>
+
+</button>
+
+</div>
+
+</div>
+
+<!-- Right Column: Live Sticky "Case So Far" Summary (approx 35% / 4 columns) -->
+
+<div class="lg:col-span-4 sticky top-20 flex flex-col gap-space-md">
+
+<!-- Live Case Summary Card -->
+
+<div class="bg-surface-container-lowest rounded-xl p-space-md sm:p-space-lg shadow-sm">
+
+<!-- Header -->
+
+<div class="flex items-center justify-between pb-space-sm mb-space-md">
+
+<div class="flex items-center gap-space-xs">
+
+<span class="material-symbols-outlined text-primary text-[22px]">assignment</span>
+
+<h3 class="font-body-bold text-body-bold text-on-surface">Case Summary</h3>
+
+</div>
+
+<span class="px-2 py-0.5 rounded-full bg-surface-container-high text-on-surface-variant font-label-meta text-label-meta">Live State</span>
+
+</div>
+
+<!-- Patient Demographics Section -->
+
+<div class="space-y-space-xs pb-space-sm mb-space-sm">
+
+<span class="font-label-meta text-label-meta text-on-surface-variant uppercase">Patient Profile</span>
+
+<div class="flex items-center justify-between">
+
+<span class="font-body-bold text-body-bold text-on-surface">Kabir Sharma</span>
+
+<span class="font-body-sm text-body-sm text-on-surface-variant">4 yrs • Male</span>
+
+</div>
+
+<div class="text-body-sm font-body-sm text-on-surface-variant flex items-center gap-1">
+
+<span class="material-symbols-outlined text-[16px]">location_on</span>
+
+<span>Rampur PHC Cluster (Zone B)</span>
+
+</div>
+
+</div>
+
+<!-- Chief Complaint Section -->
+
+<div class="space-y-space-xs pb-space-sm mb-space-sm">
+
+<span class="font-label-meta text-label-meta text-on-surface-variant uppercase">Chief Complaint</span>
+
+<div class="bg-surface-container-low p-space-sm rounded-lg">
+
+<p class="font-body-bold text-body-bold text-on-surface">High fever (3 days duration)</p>
+
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">Recurring vomiting (4 episodes recorded today). Refusing solids.</p>
+
+</div>
+
+</div>
+
+<!-- Live Danger Signs Counter Card -->
+
+<div class="space-y-space-xs pb-space-sm mb-space-sm">
+
+<div class="flex items-center justify-between">
+
+<span class="font-label-meta text-label-meta text-on-surface-variant uppercase">Danger Signs Flagged</span>
+
+<span class="font-label-meta text-label-meta px-2 py-0.5 rounded-full bg-surface-container text-on-surface-variant" id="danger-count-badge">0 Selected</span>
+
+</div>
+
+<div class="bg-surface-container-low p-space-sm rounded-lg min-h-[56px] flex items-center justify-center text-center" id="danger-signs-list">
+
+<span class="font-body-sm text-body-sm text-on-surface-variant italic">No red-flag signs selected yet.</span>
+
+</div>
+
+</div>
+
+<!-- Recorded Vitals Preview Section -->
+
+<div class="space-y-space-xs pb-space-sm mb-space-sm">
+
+<span class="font-label-meta text-label-meta text-on-surface-variant uppercase">Recorded Field Vitals</span>
+
+<div class="grid grid-cols-3 gap-2">
+
+<div class="p-2 rounded-lg bg-surface-container-low text-center">
+
+<span class="font-label-meta text-label-meta text-on-surface-variant block">TEMP</span>
+
+<span class="font-body-bold text-body-bold text-error">38.9°C</span>
+
+<span class="text-[11px] text-on-surface-variant block">102.0°F</span>
+
+</div>
+
+<div class="p-2 rounded-lg bg-surface-container-low text-center">
+
+<span class="font-label-meta text-label-meta text-on-surface-variant block">PULSE</span>
+
+<span class="font-body-bold text-body-bold text-on-surface">118</span>
+
+<span class="text-[11px] text-on-surface-variant block">bpm</span>
+
+</div>
+
+<div class="p-2 rounded-lg bg-surface-container-low text-center">
+
+<span class="font-label-meta text-label-meta text-on-surface-variant block">SpO2</span>
+
+<span class="font-body-bold text-body-bold text-secondary">96%</span>
+
+<span class="text-[11px] text-on-surface-variant block">Normal</span>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- Urgency Logic Preview & Safety Notice -->
+
+<div class="p-space-sm rounded-lg bg-surface-container flex items-start gap-space-xs text-on-surface-variant">
+
+<span class="material-symbols-outlined text-[18px] text-primary shrink-0 mt-0.5">verified</span>
+
+<p class="font-label-meta text-label-meta">
+
+            Urgency classification will finalize upon completion of Step 3. Integrated clinical rules run on-device.
+
+          </p>
+
+</div>
+
+</div>
+
+<!-- Quick Field Reference Widget -->
+
+<div class="bg-surface-container-low rounded-xl p-space-md shadow-sm">
+
+<div class="flex items-center gap-space-xs mb-space-xs">
+
+<span class="material-symbols-outlined text-secondary text-[20px]">local_hospital</span>
+
+<h4 class="font-body-bold text-body-bold text-on-surface">Nearest Primary Center</h4>
+
+</div>
+
+<p class="font-body-sm text-body-sm text-on-surface font-medium">Bhavnagar Community Health Centre</p>
+
+<p class="font-label-meta text-label-meta text-on-surface-variant mt-0.5">Distance: 4.8 km • Ambulance standby active</p>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+  // Dynamic Danger Signs Checklist reactivity
+
+  const checkboxes = document.querySelectorAll('input[name="danger_sign"]');
+
+  const countBadge = document.getElementById('danger-count-badge');
+
+  const signsList = document.getElementById('danger-signs-list');
+
+  const recordBtn = document.getElementById('voice-record-btn');
+
+  const recordLabel = document.getElementById('voice-btn-label');
+
+
+
+  function updateLiveSummary() {
+
+    const checked = Array.from(checkboxes).filter(cb => cb.checked);
+
+    const count = checked.length;
+
+
+
+    if (count === 0) {
+
+      countBadge.textContent = '0 Selected';
+
+      countBadge.className = 'font-label-meta text-label-meta px-2 py-0.5 rounded-full bg-surface-container text-on-surface-variant';
+
+      signsList.innerHTML = '<span class="font-body-sm text-body-sm text-on-surface-variant italic">No red-flag signs selected yet.</span>';
+
+      signsList.className = 'bg-surface-container-low p-space-sm rounded-lg min-h-[56px] flex items-center justify-center text-center';
+
+    } else {
+
+      countBadge.textContent = count + ' Red Flag' + (count > 1 ? 's' : '');
+
+      countBadge.className = 'font-label-meta text-label-meta px-2 py-0.5 rounded-full bg-error-container text-on-error-container font-bold';
+
+      
+
+      const itemsHtml = checked.map(cb => `
+
+        <li class="flex items-center gap-1.5 text-error font-body-sm text-body-sm">
+
+          <span class="material-symbols-outlined text-[16px]">priority_high</span>
+
+          <span>${cb.value}</span>
+
+        </li>
+
+      `).join('');
+
+
+
+      signsList.innerHTML = `<ul class="space-y-1 w-full text-left">${itemsHtml}</ul>`;
+
+      signsList.className = 'bg-error-container/30 p-space-sm rounded-lg min-h-[56px] flex flex-col justify-start';
+
+    }
+
+  }
+
+
+
+  checkboxes.forEach(cb => {
+
+    cb.addEventListener('change', updateLiveSummary);
+
+  });
+
+
+
+  // Simulated Voice Recorder Interaction
+
+  let isRecording = false;
+
+  if (recordBtn) {
+
+    const startRecording = () => {
+
+      isRecording = true;
+
+      recordLabel.textContent = "Listening... (Release to Stop)";
+
+      recordBtn.classList.replace('bg-primary', 'bg-error');
+
+      recordBtn.classList.replace('hover:bg-tertiary', 'hover:bg-error');
+
+    };
+
+
+
+    const stopRecording = () => {
+
+      if (!isRecording) return;
+
+      isRecording = false;
+
+      recordLabel.textContent = "Voice Note Attached (0:04s)";
+
+      recordBtn.classList.replace('bg-error', 'bg-tertiary');
+
+    };
+
+
+
+    recordBtn.addEventListener('mousedown', startRecording);
+
+    window.addEventListener('mouseup', stopRecording);
+
+    recordBtn.addEventListener('touchstart', (e) => { e.preventDefault(); startRecording(); });
+
+    window.addEventListener('touchend', stopRecording);
+
+  }
+
+</script></div></main><footer class="w-full bg-inverse-surface text-inverse-on-surface py-space-md shadow-[0_-1px_6px_rgba(0,0,0,0.06)]"><div class="max-w-[1100px] mx-auto px-margin flex flex-col sm:flex-row items-center justify-between gap-space-sm text-center sm:text-left"><div class="flex items-center gap-space-xs"><span class="material-symbols-outlined text-[18px] text-secondary-fixed shrink-0">verified_user</span><p class="font-label-meta text-label-meta text-inverse-on-surface">Decision support only. Not a diagnosis, treatment, or dosage advice. Always defer to local emergency medical protocols.</p></div><div class="font-label-meta text-label-meta text-inverse-on-surface/80 shrink-0">MediMitra v2.4 (Field Edition) | Local Model: Gemma 4 E4B (On-device)</div></div></footer></body></html>

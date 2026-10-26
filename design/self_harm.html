@@ -1,0 +1,665 @@
+<!-- MediMitra - Self-Harm Safety Support -->
+
+<!DOCTYPE html>
+
+
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_standard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Noto+Sans:wght@100..900&display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{colors:{"surface-tint":"#006a63","primary-fixed-dim":"#80d5cb","secondary":"#006b5f","inverse-primary":"#80d5cb","secondary-container":"#6df5e1","primary":"#005c55","surface":"#faf8ff","inverse-surface":"#283044","tertiary-fixed-dim":"#9ad1cb","primary-fixed":"#9cf2e8","background":"#faf8ff","surface-container":"#eaedff","surface-container-high":"#e2e7ff","on-tertiary-fixed":"#00201e","on-primary-container":"#a3faef","on-primary-fixed-variant":"#00504a","on-error":"#ffffff","tertiary-container":"#3c726e","surface-container-highest":"#dae2fd","outline-variant":"#bdc9c6","surface-container-lowest":"#ffffff","tertiary":"#225a55","error":"#ba1a1a","surface-bright":"#faf8ff","surface-variant":"#dae2fd","on-tertiary":"#ffffff","on-primary-fixed":"#00201d","on-secondary-container":"#006f64","on-primary":"#ffffff","on-secondary":"#ffffff","on-secondary-fixed-variant":"#005048","surface-dim":"#d2d9f4","tertiary-fixed":"#b5ede7","on-error-container":"#93000a","error-container":"#ffdad6","inverse-on-surface":"#eef0ff","on-secondary-fixed":"#00201c","outline":"#6e7977","primary-container":"#0f766e","on-tertiary-container":"#bdf5ef","on-surface":"#131b2e","on-tertiary-fixed-variant":"#144f4b","surface-container-low":"#f2f3ff","on-background":"#131b2e","on-surface-variant":"#3e4947","secondary-fixed-dim":"#4fdbc8","secondary-fixed":"#71f8e4"},borderRadius:{DEFAULT:"0.25rem",lg:"0.5rem",xl:"0.75rem",full:"9999px"},spacing:{"space-xl":"2rem","space-sm":"0.5rem","gutter-desktop":"2rem",gutter:"1rem","margin-desktop":"2.5rem",margin:"1rem","space-lg":"1.5rem","margin-tablet":"1.5rem","space-md":"1rem","gutter-tablet":"1.5rem","space-xs":"0.25rem"},fontFamily:{"body-sm":["Inter"],"body-bold":["Inter"],"body-xl":["Inter"],"headline-sm":["Noto Sans"],"label-triage":["Inter"],"body-lg":["Inter"],"label-meta":["Inter"],"headline-xl":["Noto Sans"],"headline-lg":["Noto Sans"],"headline-xl-mobile":["Noto Sans"]},fontSize:{"body-sm":["14px",{lineHeight:"20px",fontWeight:"500"}],"body-bold":["16px",{lineHeight:"24px",fontWeight:"600"}],"body-xl":["18px",{lineHeight:"28px",fontWeight:"400"}],"headline-sm":["20px",{lineHeight:"28px",fontWeight:"600"}],"label-triage":["15px",{lineHeight:"20px",letterSpacing:"0.03em",fontWeight:"700"}],"body-lg":["16px",{lineHeight:"24px",fontWeight:"400"}],"label-meta":["13px",{lineHeight:"18px",letterSpacing:"0.02em",fontWeight:"600"}],"headline-xl":["36px",{lineHeight:"44px",letterSpacing:"-0.02em",fontWeight:"700"}],"headline-lg":["26px",{lineHeight:"34px",letterSpacing:"-0.01em",fontWeight:"700"}],"headline-xl-mobile":["28px",{lineHeight:"36px",letterSpacing:"-0.01em",fontWeight:"700"}]}}}};</script></head><body class="bg-surface font-body-lg text-body-lg text-on-surface antialiased"><header class="fixed top-0 left-0 right-0 z-50 bg-surface-container-lowest/95 backdrop-blur-md shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="h-16 max-w-[1100px] mx-auto px-margin flex items-center justify-between gap-space-md"><div class="flex items-center gap-space-lg"><div class="flex items-center gap-space-sm"><img alt="MediMitra Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1UqfY-2Es_FOj_KMZtPui1fZlA6bj360BUxRZqPbMHjmX9Z1MzzaoSPfKSRNIxv1FxtWs0FK7tpB1rRGxJhbM_h-o3nQQMHA-XYpmgc8gDA1eAotD6aXj1mGCnkXM9Ijwj3Hb_LGTjdeQ3tLW0I-jpuIKe0uIiI3YPfhr1RDZ0-KQqWLJgtM9P0zijIJjSGKT7VpDMKGg9bcY0QrNqnENq1L1DBgf5kJkuZ-6cTeKXAjkXNIsZByzVHkQ"/><div class="flex flex-col"><span class="font-headline-sm text-headline-sm text-primary leading-tight tracking-tight">MediMitra</span><span class="font-label-meta text-label-meta text-on-surface-variant leading-none">Rural Health Triage</span></div></div><nav class="hidden md:flex items-center gap-space-xs" data-active-classes="bg-surface-container text-primary font-body-bold text-body-bold rounded-lg"><a class="px-space-md py-space-xs font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface rounded-lg transition-colors" data-path="home" href="#">Home</a><a aria-current="page" class="px-space-md py-space-xs transition-colors bg-surface-container text-primary font-body-bold text-body-bold rounded-lg" data-path="new-case" href="#">New Case</a><a class="px-space-md py-space-xs font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface rounded-lg transition-colors" data-path="referrals" href="#">Referrals</a></nav></div><div class="flex items-center gap-space-sm sm:gap-space-md"><div class="flex items-center gap-space-xs px-space-sm py-1 bg-surface-container-low rounded-full"><span class="w-2 h-2 rounded-full bg-secondary animate-pulse"></span><span class="hidden sm:inline font-label-meta text-label-meta text-on-surface-variant">On-Device / Offline Ready</span><span class="sm:hidden font-label-meta text-label-meta text-on-surface-variant">Offline</span></div><div class="hidden lg:flex items-center px-space-sm py-0.5 bg-surface-container-high rounded-full"><span class="font-label-meta text-label-meta text-on-surface-variant">Simulated demo</span></div><div class="flex items-center gap-space-xs px-space-sm py-1 bg-surface-container-low rounded-lg"><span class="material-symbols-outlined text-[18px] text-on-surface-variant">translate</span><select aria-label="Language Selector" class="bg-transparent font-label-meta text-label-meta text-on-surface focus:outline-none cursor-pointer pr-1"><option value="en">English</option><option value="hi">हिंदी - Hindi</option><option value="mr">मराठी - Marathi</option></select></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="w-full pt-16"><div class="max-w-[1100px] mx-auto px-margin min-h-[calc(100vh-10rem)]"><div class="flex flex-col w-full pb-space-xl">
+
+<!-- Status Context Ribbon -->
+
+<div class="flex flex-wrap items-center justify-between gap-space-sm py-space-sm px-space-md bg-surface-container-low rounded-xl mb-space-md shadow-sm">
+
+<div class="flex items-center gap-space-sm">
+
+<div class="w-8 h-8 rounded-full bg-secondary/15 flex items-center justify-center text-secondary">
+
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">chevron_left</span>
+
+</div>
+
+<div>
+
+<p class="font-label-meta text-label-meta text-on-surface-variant uppercase tracking-wider">Priority Protocol Active</p>
+
+<p class="font-body-bold text-body-bold text-on-surface text-sm sm:text-base">Asha Field Case #MH-4092 • Ward 4, Vallabhipur</p>
+
+</div>
+
+</div>
+
+<div class="flex items-center gap-space-xs bg-surface-container px-space-sm py-1 rounded-full">
+
+<span class="w-2.5 h-2.5 rounded-full bg-secondary animate-pulse"></span>
+
+<span class="font-label-meta text-label-meta text-on-surface-variant">Priority Override • Standard Triage Paused</span>
+
+</div>
+
+</div>
+
+<!-- Hero Compassionate Safety Card -->
+
+<div class="relative overflow-hidden bg-surface-container-lowest rounded-xl shadow-md p-space-md sm:p-space-xl mb-space-lg">
+
+<!-- Soft Decorative Gradient Overlay -->
+
+<div class="absolute -right-16 -top-16 w-80 h-80 rounded-full bg-gradient-to-br from-secondary-container/30 to-surface-container-high/40 pointer-events-none blur-2xl"></div>
+
+<div class="relative flex flex-col md:flex-row items-start gap-space-lg">
+
+<!-- Empathetic Icon Anchor -->
+
+<div class="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-surface-container-low flex items-center justify-center shrink-0 shadow-sm">
+
+<span class="material-symbols-outlined text-[36px] sm:text-[44px] text-primary" style="font-variation-settings: 'FILL' 1;">volunteer_activism</span>
+
+</div>
+
+<!-- Core Reassurance Copy -->
+
+<div class="flex-1 min-w-0">
+
+<div class="inline-flex items-center gap-space-xs px-space-sm py-0.5 rounded-full bg-surface-container-high text-on-surface-variant font-label-meta text-label-meta mb-space-sm">
+
+<span class="material-symbols-outlined text-[16px] text-primary">spa</span>
+
+          Gentle Supportive Response
+
+        </div>
+
+<h1 class="font-headline-lg text-headline-lg text-on-surface tracking-tight mb-space-xs">
+
+          Please get immediate human support. Do not leave the person alone.
+
+        </h1>
+
+<p class="font-body-xl text-body-xl text-on-surface-variant max-w-3xl leading-relaxed mb-space-md">
+
+          A distress signal has been identified. This takes precedence over routine triage questionnaires. Maintain a supportive presence, speak gently, and connect with trained supervisory support immediately.
+
+        </p>
+
+<!-- Compassionate Guidance Pill Row -->
+
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-space-sm pt-space-xs">
+
+<div class="flex items-center gap-space-xs p-space-sm bg-surface-container-low rounded-lg">
+
+<span class="material-symbols-outlined text-secondary text-[20px]">hearing</span>
+
+<span class="font-body-sm text-body-sm text-on-surface">Listen with calm patience</span>
+
+</div>
+
+<div class="flex items-center gap-space-xs p-space-sm bg-surface-container-low rounded-lg">
+
+<span class="material-symbols-outlined text-secondary text-[20px]">handshake</span>
+
+<span class="font-body-sm text-body-sm text-on-surface">Stay physically beside them</span>
+
+</div>
+
+<div class="flex items-center gap-space-xs p-space-sm bg-surface-container-low rounded-lg">
+
+<span class="material-symbols-outlined text-secondary text-[20px]">sentiment_calm</span>
+
+<span class="font-body-sm text-body-sm text-on-surface">Validate without debate</span>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- Main Action & Protocol Grid -->
+
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-md mb-space-lg">
+
+<!-- Left Column: Supervisor Direct Line & Fast Contact (7 Columns) -->
+
+<div class="lg:col-span-7 flex flex-col gap-space-md">
+
+<!-- Supervisor Line Primary Card -->
+
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm flex flex-col justify-between">
+
+<div>
+
+<div class="flex items-center justify-between gap-space-sm mb-space-sm">
+
+<span class="font-label-meta text-label-meta uppercase tracking-wider text-secondary">Step 1 • Direct Assistance</span>
+
+<span class="px-2 py-0.5 rounded-full bg-secondary-container text-on-secondary-container font-label-meta text-label-meta">24/7 Available</span>
+
+</div>
+
+<h2 class="font-headline-sm text-headline-sm text-on-surface mb-space-xs">
+
+            District Mental Health Helpline & Supervisor
+
+          </h2>
+
+<p class="font-body-lg text-body-lg text-on-surface-variant mb-space-lg">
+
+            Directly connect with Tele-MANAS certified nodal psychologists and Bhavnagar district medical officers for live verbal guidance.
+
+          </p>
+
+<!-- Dial Option 1: National Tele-MANAS -->
+
+<div class="p-space-md rounded-xl bg-surface-container-low mb-space-md">
+
+<div class="flex items-center justify-between mb-space-sm">
+
+<div class="flex items-center gap-space-xs">
+
+<span class="material-symbols-outlined text-primary text-[22px]">phone_in_talk</span>
+
+<span class="font-body-bold text-body-bold text-on-surface">National Tele-MANAS Network</span>
+
+</div>
+
+<span class="font-label-meta text-label-meta text-on-surface-variant">Toll-Free • 14416 / 1800 891 4416</span>
+
+</div>
+
+<a class="w-full h-[52px] bg-primary-container text-on-primary font-body-bold text-body-bold rounded-lg flex items-center justify-center gap-space-sm transition-all hover:bg-primary shadow-sm active:scale-[0.99]" href="tel:14416">
+
+<span class="material-symbols-outlined text-[22px]">call</span>
+
+<span>Call Helpline (Toll-Free 14416 / Tele-MANAS)</span>
+
+</a>
+
+</div>
+
+<!-- Dial Option 2: District On-Duty Primary Supervisor -->
+
+<div class="p-space-md rounded-xl bg-surface-container-low">
+
+<div class="flex items-center justify-between mb-space-sm">
+
+<div>
+
+<p class="font-body-bold text-body-bold text-on-surface">Dr. Meera Trivedi (DMHP Bhavnagar)</p>
+
+<p class="font-body-sm text-body-sm text-on-surface-variant">District Nodal Officer • Direct Mobile Escort</p>
+
+</div>
+
+<span class="font-label-meta text-label-meta px-2 py-0.5 rounded bg-surface-container text-on-surface">Speed-Dial 2</span>
+
+</div>
+
+<div class="flex items-center gap-space-sm">
+
+<a class="flex-1 h-12 bg-surface-container-lowest text-primary font-body-bold text-body-bold rounded-lg flex items-center justify-center gap-space-xs shadow-sm hover:bg-surface-container transition-colors" href="tel:+919429012345">
+
+<span class="material-symbols-outlined text-[20px]">ring_volume</span>
+
+<span>+91 94290 12345</span>
+
+</a>
+
+<button class="h-12 px-space-md rounded-lg bg-surface-container text-on-surface font-body-sm text-body-sm hover:bg-surface-container-high transition-colors" onclick="navigator.clipboard && navigator.clipboard.writeText('9429012345'); this.innerText='Copied!';">
+
+                Copy
+
+              </button>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- Ambient Facility Context Visual Card -->
+
+<div class="mt-space-lg pt-space-md flex items-center gap-space-md">
+
+<div class="w-20 h-16 rounded-lg overflow-hidden shrink-0">
+
+<img class="w-full h-full object-cover" data-alt="A serene modern Indian district hospital counseling wing with soft morning sunlight, calming teal painted walls, welcoming wooden furniture, and comforting supportive environment." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBru5JBRxb1h-ypAHN5fgiPLR2KTy9tILW3yxoRyt_QkLMlUJhMWTNfg6BJT8JeXyW95koZ1YwUsPnpwt2sUY3w69O-jSY0kTjtd3MZFr3OX7uy02XLtr0wz5Xxmec28MTYaBEhq2pZHf8IThTASHevUxaf6qQXBaV441P85vfZ5DGowYYSya2wcb6EnjygOcIjuq-ZCRmSDm0iFixOtpQqJf3d-sgqwbNj43F6d_GolFHUo4ZZLvHX"/>
+
+</div>
+
+<div class="min-w-0">
+
+<p class="font-body-bold text-body-bold text-on-surface text-sm sm:text-base">Sub-District Hospital Bhavnagar</p>
+
+<p class="font-body-sm text-body-sm text-on-surface-variant truncate">Mental Health Crisis Stabilization Unit • 14 km away</p>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- Right Column: Immediate Protocol Interactive Checklist (5 Columns) -->
+
+<div class="lg:col-span-5 flex flex-col gap-space-md">
+
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm flex-1 flex flex-col">
+
+<div class="flex items-center justify-between mb-space-sm">
+
+<span class="font-label-meta text-label-meta uppercase tracking-wider text-secondary">Step 2 • On-Scene Safety</span>
+
+<span class="font-label-meta text-label-meta text-on-surface-variant" id="checklistProgress">0 of 4 Completed</span>
+
+</div>
+
+<h2 class="font-headline-sm text-headline-sm text-on-surface mb-space-xs">
+
+          Immediate Protocol Checklist
+
+        </h2>
+
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-space-md">
+
+          Field worker ground duties. Tap each item to verify compliance:
+
+        </p>
+
+<!-- Checklist Surface Tiles -->
+
+<div class="space-y-space-sm flex-1" id="protocolChecklist">
+
+<!-- Checklist Item 1 -->
+
+<label class="checklist-tile group flex items-start gap-space-sm p-space-md rounded-xl bg-surface-container-low cursor-pointer transition-all hover:bg-surface-container min-h-[56px] select-none">
+
+<input class="sr-only protocol-cb" onchange="updateTileState(this)" type="checkbox"/>
+
+<div class="tile-indicator w-6 h-6 rounded-md bg-surface-container-lowest flex items-center justify-center text-transparent transition-all mt-0.5 shrink-0 shadow-sm">
+
+<span class="material-symbols-outlined text-[18px]">check</span>
+
+</div>
+
+<div class="flex-1">
+
+<p class="font-body-bold text-body-bold text-on-surface leading-snug">Ensure safe, quiet space</p>
+
+<p class="font-body-sm text-body-sm text-on-surface-variant">Move away from hazards, tools, medicines, heights, or road traffic.</p>
+
+</div>
+
+</label>
+
+<!-- Checklist Item 2 -->
+
+<label class="checklist-tile group flex items-start gap-space-sm p-space-md rounded-xl bg-surface-container-low cursor-pointer transition-all hover:bg-surface-container min-h-[56px] select-none">
+
+<input class="sr-only protocol-cb" onchange="updateTileState(this)" type="checkbox"/>
+
+<div class="tile-indicator w-6 h-6 rounded-md bg-surface-container-lowest flex items-center justify-center text-transparent transition-all mt-0.5 shrink-0 shadow-sm">
+
+<span class="material-symbols-outlined text-[18px]">check</span>
+
+</div>
+
+<div class="flex-1">
+
+<p class="font-body-bold text-body-bold text-on-surface leading-snug">Trusted community presence</p>
+
+<p class="font-body-sm text-body-sm text-on-surface-variant">Keep an empathetic family member or respected elder gently beside the person.</p>
+
+</div>
+
+</label>
+
+<!-- Checklist Item 3 -->
+
+<label class="checklist-tile group flex items-start gap-space-sm p-space-md rounded-xl bg-surface-container-low cursor-pointer transition-all hover:bg-surface-container min-h-[56px] select-none">
+
+<input class="sr-only protocol-cb" onchange="updateTileState(this)" type="checkbox"/>
+
+<div class="tile-indicator w-6 h-6 rounded-md bg-surface-container-lowest flex items-center justify-center text-transparent transition-all mt-0.5 shrink-0 shadow-sm">
+
+<span class="material-symbols-outlined text-[18px]">check</span>
+
+</div>
+
+<div class="flex-1">
+
+<p class="font-body-bold text-body-bold text-on-surface leading-snug">Do not probe or express judgment</p>
+
+<p class="font-body-sm text-body-sm text-on-surface-variant">Avoid asking repetitive questions or giving unsolicited life advice.</p>
+
+</div>
+
+</label>
+
+<!-- Checklist Item 4 -->
+
+<label class="checklist-tile group flex items-start gap-space-sm p-space-md rounded-xl bg-surface-container-low cursor-pointer transition-all hover:bg-surface-container min-h-[56px] select-none">
+
+<input class="sr-only protocol-cb" onchange="updateTileState(this)" type="checkbox"/>
+
+<div class="tile-indicator w-6 h-6 rounded-md bg-surface-container-lowest flex items-center justify-center text-transparent transition-all mt-0.5 shrink-0 shadow-sm">
+
+<span class="material-symbols-outlined text-[18px]">check</span>
+
+</div>
+
+<div class="flex-1">
+
+<p class="font-body-bold text-body-bold text-on-surface leading-snug">Prepare emergency escort</p>
+
+<p class="font-body-sm text-body-sm text-on-surface-variant">Alert vehicle/108 ambulance for Bhavnagar Sub-District Hospital transit.</p>
+
+</div>
+
+</label>
+
+</div>
+
+<!-- Supportive Protocol Mini-Graphic -->
+
+<div class="mt-space-md p-space-sm bg-surface-container rounded-lg flex items-center gap-space-sm">
+
+<span class="material-symbols-outlined text-secondary text-[24px]">verified</span>
+
+<p class="font-label-meta text-label-meta text-on-surface-variant">
+
+            All 4 safeguards follow the WHO mhGAP Community Field Guidelines for Psychological First Aid.
+
+          </p>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- Primary Safety Actions & Navigation Strip -->
+
+<div class="bg-surface-container-lowest rounded-xl p-space-md sm:p-space-lg shadow-md mb-space-lg">
+
+<div class="flex flex-col md:flex-row items-center justify-between gap-space-md">
+
+<!-- Primary Emergency Hotline CTA -->
+
+<a class="w-full md:w-auto flex-1 min-h-[52px] bg-primary text-on-primary font-body-bold text-body-bold rounded-lg px-space-lg flex items-center justify-center gap-space-sm shadow-md hover:bg-surface-tint active:scale-[0.99] transition-all text-center" href="tel:14416">
+
+<span class="material-symbols-outlined text-[22px]">phone_enabled</span>
+
+<span>Call a supervisor or helpline</span>
+
+</a>
+
+<!-- Secondary Supervisor Active Continuation -->
+
+<button class="w-full md:w-auto min-h-[52px] bg-surface-container-low text-primary font-body-bold text-body-bold rounded-lg px-space-lg flex items-center justify-center gap-space-sm hover:bg-surface-container active:scale-[0.99] transition-all" onclick="handleSupervisorContinue()">
+
+<span class="material-symbols-outlined text-[20px]">headset_mic</span>
+
+<span>Continue triage with supervisor on line</span>
+
+</button>
+
+<!-- Directory Link Navigation -->
+
+<button class="w-full md:w-auto min-h-[48px] px-space-md text-on-surface-variant hover:text-primary font-body-bold text-body-bold flex items-center justify-center gap-space-xs transition-colors" onclick="toggleDirectoryModal()">
+
+<span class="material-symbols-outlined text-[20px]">contact_phone</span>
+
+<span>Emergency directory</span>
+
+</button>
+
+</div>
+
+</div>
+
+<!-- Reassuring Field Worker Reference Bar -->
+
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-md">
+
+<!-- Practical Words to Say Guide -->
+
+<div class="bg-surface-container-lowest rounded-xl p-space-md shadow-sm">
+
+<div class="flex items-center gap-space-xs text-primary mb-space-xs">
+
+<span class="material-symbols-outlined text-[20px]">chat</span>
+
+<span class="font-body-bold text-body-bold">Supportive Phrases to Use</span>
+
+</div>
+
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-space-sm">
+
+        "I am here with you right now. You are safe. We will walk through this together and get someone to support us."
+
+      </p>
+
+<div class="w-full h-1 bg-surface-container-low rounded-full overflow-hidden">
+
+<div class="w-3/4 h-full bg-secondary"></div>
+
+</div>
+
+</div>
+
+<!-- Bhavnagar Transit Details -->
+
+<div class="bg-surface-container-lowest rounded-xl p-space-md shadow-sm flex items-center justify-between">
+
+<div>
+
+<p class="font-label-meta text-label-meta uppercase tracking-wider text-secondary">Local Transit Hub</p>
+
+<p class="font-body-bold text-body-bold text-on-surface">108 Emergency Ambulance Dispatched</p>
+
+<p class="font-body-sm text-body-sm text-on-surface-variant">Bhavnagar District Referral Center Desk #4</p>
+
+</div>
+
+<div class="w-12 h-12 rounded-full bg-surface-container flex items-center justify-center text-primary">
+
+<span class="material-symbols-outlined text-[24px]">ambulance</span>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- Emergency Directory Modal (Gentle & Lightweight) -->
+
+<div class="hidden fixed inset-0 z-50 bg-inverse-surface/40 backdrop-blur-sm flex items-center justify-center p-space-md" id="directoryModal">
+
+<div class="bg-surface-container-lowest rounded-2xl max-w-lg w-full p-space-lg shadow-xl">
+
+<div class="flex items-center justify-between mb-space-md">
+
+<div class="flex items-center gap-space-xs text-primary">
+
+<span class="material-symbols-outlined text-[24px]">menu_book</span>
+
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Emergency Contact Directory</h3>
+
+</div>
+
+<button class="w-8 h-8 rounded-full bg-surface-container-low flex items-center justify-center text-on-surface-variant hover:bg-surface-container" onclick="toggleDirectoryModal()">
+
+<span class="material-symbols-outlined text-[20px]">close</span>
+
+</button>
+
+</div>
+
+<div class="space-y-space-sm mb-space-lg max-h-80 overflow-y-auto pr-1">
+
+<div class="p-space-sm bg-surface-container-low rounded-lg flex items-center justify-between">
+
+<div>
+
+<p class="font-body-bold text-body-bold text-on-surface">Tele-MANAS National</p>
+
+<p class="font-body-sm text-body-sm text-on-surface-variant">Mental Health Govt Service</p>
+
+</div>
+
+<a class="px-space-md py-1.5 bg-primary text-on-primary rounded-lg font-body-sm text-body-sm" href="tel:14416">14416</a>
+
+</div>
+
+<div class="p-space-sm bg-surface-container-low rounded-lg flex items-center justify-between">
+
+<div>
+
+<p class="font-body-bold text-body-bold text-on-surface">108 Emergency Medical</p>
+
+<p class="font-body-sm text-body-sm text-on-surface-variant">Ambulance & Transport</p>
+
+</div>
+
+<a class="px-space-md py-1.5 bg-primary text-on-primary rounded-lg font-body-sm text-body-sm" href="tel:108">108</a>
+
+</div>
+
+<div class="p-space-sm bg-surface-container-low rounded-lg flex items-center justify-between">
+
+<div>
+
+<p class="font-body-bold text-body-bold text-on-surface">Bhavnagar District Hospital</p>
+
+<p class="font-body-sm text-body-sm text-on-surface-variant">Emergency Triage Dept</p>
+
+</div>
+
+<a class="px-space-md py-1.5 bg-surface-container text-on-surface rounded-lg font-body-sm text-body-sm" href="tel:02782424001">0278-2424001</a>
+
+</div>
+
+<div class="p-space-sm bg-surface-container-low rounded-lg flex items-center justify-between">
+
+<div>
+
+<p class="font-body-bold text-body-bold text-on-surface">Kiran Helpline</p>
+
+<p class="font-body-sm text-body-sm text-on-surface-variant">Psychosocial Rehabilitation</p>
+
+</div>
+
+<a class="px-space-md py-1.5 bg-surface-container text-on-surface rounded-lg font-body-sm text-body-sm" href="tel:18005990019">1800-599-0019</a>
+
+</div>
+
+</div>
+
+<button class="w-full h-12 bg-surface-container text-on-surface rounded-lg font-body-bold text-body-bold hover:bg-surface-container-high transition-colors" onclick="toggleDirectoryModal()">
+
+        Close Directory
+
+      </button>
+
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+  function updateTileState(checkbox) {
+
+    const tile = checkbox.closest('.checklist-tile');
+
+    const indicator = tile.querySelector('.tile-indicator');
+
+    
+
+    if (checkbox.checked) {
+
+      tile.classList.remove('bg-surface-container-low');
+
+      tile.classList.add('bg-secondary-container/20');
+
+      indicator.classList.remove('text-transparent', 'bg-surface-container-lowest');
+
+      indicator.classList.add('text-on-primary', 'bg-primary');
+
+    } else {
+
+      tile.classList.add('bg-surface-container-low');
+
+      tile.classList.remove('bg-secondary-container/20');
+
+      indicator.classList.add('text-transparent', 'bg-surface-container-lowest');
+
+      indicator.classList.remove('text-on-primary', 'bg-primary');
+
+    }
+
+
+
+    const checkboxes = document.querySelectorAll('.protocol-cb');
+
+    const checkedCount = Array.from(checkboxes).filter(cb => cb.checked).length;
+
+    const progressText = document.getElementById('checklistProgress');
+
+    if (progressText) {
+
+      progressText.textContent = `${checkedCount} of ${checkboxes.length} Completed`;
+
+      if (checkedCount === checkboxes.length) {
+
+        progressText.classList.add('text-secondary', 'font-body-bold');
+
+      } else {
+
+        progressText.classList.remove('text-secondary', 'font-body-bold');
+
+      }
+
+    }
+
+  }
+
+
+
+  function handleSupervisorContinue() {
+
+    const confirmed = confirm("Are you connected with a supervisor or helpline counselor right now on call?");
+
+    if (confirmed) {
+
+      alert("Supervisor linked. Proceeding with assisted guidance protocol under clinical supervision.");
+
+    }
+
+  }
+
+
+
+  function toggleDirectoryModal() {
+
+    const modal = document.getElementById('directoryModal');
+
+    if (modal) {
+
+      modal.classList.toggle('hidden');
+
+    }
+
+  }
+
+</script></div></main><footer class="w-full bg-inverse-surface text-inverse-on-surface py-space-md shadow-[0_-1px_6px_rgba(0,0,0,0.06)]"><div class="max-w-[1100px] mx-auto px-margin flex flex-col sm:flex-row items-center justify-between gap-space-sm text-center sm:text-left"><div class="flex items-center gap-space-xs"><span class="material-symbols-outlined text-[18px] text-secondary-fixed shrink-0">verified_user</span><p class="font-label-meta text-label-meta text-inverse-on-surface">Decision support only. Not a diagnosis, treatment, or dosage advice. Always defer to local emergency medical protocols.</p></div><div class="font-label-meta text-label-meta text-inverse-on-surface/80 shrink-0">MediMitra v2.4 (Field Edition) | Local Model: Gemma 4 E4B (On-device)</div></div></footer></body></html>

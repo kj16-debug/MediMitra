@@ -1,6 +1,10 @@
 import { useEffect, useMemo, useState } from 'react';
 import { api } from './api';
 import type { AnalyzeRequest, DemoPatient, Status, TriageResult, Vitals } from './types';
+import { Header, type Screen } from './components/Header';
+import { Footer } from './components/Footer';
+import { RulesBanner } from './components/RulesBanner';
+import { HomeScreen } from './screens/HomeScreen';
 
 const emptyVitals: Vitals = {
   temp_c: null,
@@ -20,6 +24,7 @@ const blank: AnalyzeRequest = {
 };
 
 function App() {
+  const [currentScreen, setCurrentScreen] = useState<Screen>('home');
   const [form, setForm] = useState<AnalyzeRequest>(blank);
   const [demos, setDemos] = useState<DemoPatient[]>([]);
   const [status, setStatus] = useState<Status | null>(null);
@@ -71,7 +76,16 @@ function App() {
     setError('');
     setCloud(null);
     try {
-      setResult(await api.analyze(form));
+      const res = await api.analyze(form);
+      setResult(res);
+      const isSelfHarm =
+        res.rule_reasons.some((r) => r.toLowerCase().includes('self-harm') || r.toLowerCase().includes('human support')) ||
+        res.red_flags.some((f) => f.toLowerCase().includes('self-harm'));
+      if (isSelfHarm) {
+        setCurrentScreen('self_harm');
+      } else {
+        setCurrentScreen('summary');
+      }
     } catch (e) {
       setError(e instanceof Error ? e.message : 'Could not analyze. Please assess manually.');
     } finally {
@@ -84,7 +98,9 @@ function App() {
     setBusy('cloud');
     setError('');
     try {
-      setCloud(await api.escalate(form, result));
+      const cloudRes = await api.escalate(form, result);
+      setCloud(cloudRes);
+      setCurrentScreen('comparison');
     } catch (e) {
       setError(e instanceof Error ? e.message : 'Cloud escalation unavailable. Local result remains available.');
     } finally {
@@ -104,219 +120,209 @@ function App() {
   }
 
   const ready = useMemo(() => Boolean(form.text.trim()), [form.text]);
-  const statusLabel = status?.simulated
-    ? 'DEMO · ESCALATION SIMULATED'
-    : !status
-      ? 'BACKEND UNAVAILABLE'
-      : !status.local_ok
-        ? 'LOCAL MODEL UNAVAILABLE'
-        : browserOnline && status.cloud_ok
-          ? 'ONLINE · ESCALATION AVAILABLE'
-          : 'LOCAL MODE · ESCALATION UNAVAILABLE';
-  const statusDetail = status?.simulated
-    ? 'SIMULATED GEMMA 4 · NO MODEL CALLED'
-    : status?.local_model || 'Start backend on port 8000';
+  const isSelfHarm = Boolean(
+    result?.rule_reasons.some((r) => r.toLowerCase().includes('self-harm') || r.toLowerCase().includes('human support')) ||
+    result?.red_flags.some((f) => f.toLowerCase().includes('self-harm'))
+  );
 
   return (
-    <main className="shell">
-      <header className="top">
-        <a className="brand" href="#top" aria-label="MediMitra home">
-          <div className="brand-icon" aria-hidden="true"><span>+</span></div>
-          <div>
-            <div className="eyebrow">COMMUNITY CARE · FIELD NOTES</div>
-            <h1>Medi<span>Mitra</span></h1>
-          </div>
-        </a>
-        <nav className="top-nav" aria-label="Main navigation">
-          <a href="#how-it-works">How it works</a>
-          <a className="nav-cta" href="#intake">Open workspace <span aria-hidden="true">↘</span></a>
-        </nav>
-        <div className={`status ${status?.simulated || !status?.local_ok || !browserOnline || !status.cloud_ok ? 'offline' : 'online'}`}>
-          <i aria-hidden="true" />
-          <div><strong>{statusLabel}</strong><small>{statusDetail}</small></div>
-        </div>
-      </header>
+    <div className="min-h-screen flex flex-col bg-surface font-sans text-body-lg text-on-surface">
+      <Header
+        currentScreen={currentScreen}
+        onNavigate={setCurrentScreen}
+        isOnline={browserOnline}
+        hasResult={Boolean(result)}
+        hasCloud={Boolean(cloud)}
+        isSelfHarm={isSelfHarm}
+      />
 
-      <section className="hero" id="top" aria-labelledby="hero-title">
-        <div className="hero-copy">
-          <span className="hero-kicker"><i aria-hidden="true" /> A SUPPORTIVE TOOL FOR COMMUNITY CARE</span>
-          <h2 id="hero-title">Care starts with <em>listening.</em></h2>
-          <p className="hero-description">
-            Turn a patient’s story into a clearer handoff. Capture symptoms, surface safety signals,
-            and prepare for the next conversation.
-          </p>
-          <div className="hero-actions">
-            <a className="primary hero-primary" href="#intake">Start a case <span aria-hidden="true">→</span></a>
-            <a className="text-link" href="#demo-cases">Explore a demo case <span aria-hidden="true">↘</span></a>
-          </div>
-          <div className="hero-assurance" aria-label="Product principles">
-            <span><b aria-hidden="true">✓</b> Human review stays central</span>
-            <span><b aria-hidden="true">✓</b> Local-first workflow</span>
-          </div>
-        </div>
+      <main className="w-full pt-20 md:pt-24 flex-1">
+        <div className="max-w-[1100px] mx-auto px-margin min-h-[calc(100vh-10rem)]">
+          <RulesBanner show={Boolean(result?.rules_only)} />
 
-        <div className="hero-visual" aria-label="How MediMitra supports a clinical handoff">
-          <div className="visual-glow" aria-hidden="true" />
-          <div className="visual-orbit orbit-one" aria-hidden="true" />
-          <div className="visual-orbit orbit-two" aria-hidden="true" />
-          <div className="visual-cross cross-one" aria-hidden="true">+</div>
-          <div className="visual-cross cross-two" aria-hidden="true">+</div>
-          <div className="preview-card">
-            <div className="preview-topline">
-              <span className="preview-mark" aria-hidden="true">✳</span>
-              <span>THE MEDIMITRA APPROACH</span>
-              <span className="preview-badge"><i aria-hidden="true" /> HUMAN-LED</span>
+          {currentScreen === 'home' && (
+            <HomeScreen
+              onStartNewCase={() => setCurrentScreen('intake')}
+              onLoadDemo={(name) => {
+                loadDemo(name);
+                setCurrentScreen('intake');
+              }}
+              onViewReferrals={() => {
+                if (result) setCurrentScreen('referral');
+                else setCurrentScreen('intake');
+              }}
+              demos={demos}
+              isOnline={browserOnline}
+            />
+          )}
+
+          {currentScreen !== 'home' && (
+            <div className="space-y-space-md">
+              <section className="bg-surface-container-lowest p-space-md rounded-xl shadow-sm border border-surface-container">
+                <div className="flex items-center justify-between mb-space-sm">
+                  <h3 className="font-headline-sm text-headline-sm text-on-surface">Patient Intake</h3>
+                  <button
+                    onClick={() => setCurrentScreen('home')}
+                    className="text-xs text-primary font-bold hover:underline"
+                  >
+                    ← Back to Home
+                  </button>
+                </div>
+
+                <div className="space-y-space-sm">
+                  <label className="block text-xs font-bold uppercase text-on-surface-variant">
+                    Symptoms & Concerns (Required)
+                  </label>
+                  <textarea
+                    className="w-full p-space-sm rounded-lg bg-surface-container-low border border-surface-container text-body-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                    value={form.text}
+                    onChange={(e) => set('text', e.target.value)}
+                    placeholder="Describe what the patient is experiencing in their own words..."
+                    rows={4}
+                  />
+
+                  <div className="flex flex-wrap gap-space-sm items-center">
+                    <span className="text-xs text-on-surface-variant font-bold">Quick Demo:</span>
+                    <select
+                      className="p-1.5 rounded-lg bg-surface-container-low border border-surface-container text-xs"
+                      value={selected}
+                      onChange={(e) => loadDemo(e.target.value)}
+                    >
+                      <option value="">Select demo patient...</option>
+                      {demos.map((d) => (
+                        <option key={d.name} value={d.name}>
+                          {d.name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-space-sm pt-2">
+                    <div>
+                      <label className="block text-[11px] font-bold text-on-surface-variant">Age (years)</label>
+                      <input
+                        type="number"
+                        min="0"
+                        max="120"
+                        className="w-full p-2 rounded bg-surface-container-low border border-surface-container text-sm"
+                        value={form.age_years ?? ''}
+                        onChange={(e) => set('age_years', e.target.value === '' ? null : Number(e.target.value))}
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-[11px] font-bold text-on-surface-variant">Sex</label>
+                      <select
+                        className="w-full p-2 rounded bg-surface-container-low border border-surface-container text-sm"
+                        value={form.sex}
+                        onChange={(e) => set('sex', e.target.value)}
+                      >
+                        <option value="unknown">Unknown</option>
+                        <option value="female">Female</option>
+                        <option value="male">Male</option>
+                        <option value="other">Other</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label className="block text-[11px] font-bold text-on-surface-variant">Temp (°C)</label>
+                      <input
+                        type="number"
+                        step="0.1"
+                        className="w-full p-2 rounded bg-surface-container-low border border-surface-container text-sm"
+                        value={form.vitals.temp_c ?? ''}
+                        onChange={(e) => setVital('temp_c', e.target.value)}
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-[11px] font-bold text-on-surface-variant">SpO2 (%)</label>
+                      <input
+                        type="number"
+                        className="w-full p-2 rounded bg-surface-container-low border border-surface-container text-sm"
+                        value={form.vitals.spo2_pct ?? ''}
+                        onChange={(e) => setVital('spo2_pct', e.target.value)}
+                      />
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-space-sm pt-2">
+                    <div>
+                      <label className="block text-[11px] font-bold text-on-surface-variant">Pulse (bpm)</label>
+                      <input
+                        type="number"
+                        className="w-full p-2 rounded bg-surface-container-low border border-surface-container text-sm"
+                        value={form.vitals.pulse_bpm ?? ''}
+                        onChange={(e) => setVital('pulse_bpm', e.target.value)}
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-[11px] font-bold text-on-surface-variant">BP Sys (mmHg)</label>
+                      <input
+                        type="number"
+                        className="w-full p-2 rounded bg-surface-container-low border border-surface-container text-sm"
+                        value={form.vitals.systolic_bp ?? ''}
+                        onChange={(e) => setVital('systolic_bp', e.target.value)}
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-[11px] font-bold text-on-surface-variant">Resp Rate (/min)</label>
+                      <input
+                        type="number"
+                        className="w-full p-2 rounded bg-surface-container-low border border-surface-container text-sm"
+                        value={form.vitals.resp_rate ?? ''}
+                        onChange={(e) => setVital('resp_rate', e.target.value)}
+                      />
+                    </div>
+                  </div>
+
+                  <div className="pt-2 flex items-center gap-2">
+                    <input
+                      type="checkbox"
+                      id="preg"
+                      checked={form.pregnant === true}
+                      onChange={(e) => set('pregnant', e.target.checked ? true : null)}
+                    />
+                    <label htmlFor="preg" className="text-sm text-on-surface">Patient is pregnant</label>
+                  </div>
+
+                  {error && <div className="p-3 bg-error-container text-on-error-container rounded-lg text-sm">{error}</div>}
+
+                  <button
+                    disabled={!ready || busy !== ''}
+                    onClick={analyze}
+                    className="w-full py-3 bg-primary text-on-primary rounded-xl font-bold shadow-md hover:bg-tertiary transition-all disabled:opacity-50"
+                  >
+                    {busy === 'analyze' ? 'Analyzing on device...' : 'Analyze Case →'}
+                  </button>
+                </div>
+              </section>
+
+              {result && (
+                <section className="bg-surface-container-lowest p-space-md rounded-xl shadow-sm border border-surface-container">
+                  <div className="flex items-center justify-between pb-space-sm mb-space-sm border-b border-surface-container">
+                    <span className="font-bold text-primary">Triage Result</span>
+                    <button
+                      onClick={() => setCurrentScreen('referral')}
+                      className="px-3 py-1 bg-primary text-on-primary rounded text-xs font-bold"
+                    >
+                      View Referral Note →
+                    </button>
+                  </div>
+                  <div className={`p-4 rounded-xl mb-4 ${result.urgency === 'red' ? 'bg-error-container text-on-error-container' : result.urgency === 'yellow' ? 'bg-amber-500/15 text-amber-900' : 'bg-surface-container'}`}>
+                    <div className="font-black text-lg uppercase tracking-wide">
+                      {result.urgency === 'yellow' ? 'YELLOW - REFER SOON' : `${result.urgency.toUpperCase()} - ${result.urgency === 'red' ? 'REFER NOW' : 'ROUTINE'}`}
+                    </div>
+                    <p className="mt-1 font-medium">{result.urgency_reason}</p>
+                  </div>
+                  <p className="text-sm text-on-surface-variant">{result.summary_plain}</p>
+                </section>
+              )}
             </div>
-            <div className="preview-heading">
-              <span className="kicker">A CLEARER NEXT STEP</span>
-              <h3>From first words<br />to thoughtful care.</h3>
-            </div>
-            <div className="preview-steps" id="how-it-works">
-              <div className="preview-step">
-                <span className="step-number">01</span>
-                <span className="step-icon story-icon" aria-hidden="true">⌁</span>
-                <span className="step-copy"><b>Listen to the story</b><small>Symptoms and context</small></span>
-                <span className="step-arrow" aria-hidden="true">↗</span>
-              </div>
-              <div className="preview-step">
-                <span className="step-number">02</span>
-                <span className="step-icon safety-icon" aria-hidden="true">✳</span>
-                <span className="step-copy"><b>Notice safety signals</b><small>Red flags stay visible</small></span>
-                <span className="step-arrow" aria-hidden="true">↗</span>
-              </div>
-              <div className="preview-step">
-                <span className="step-number">03</span>
-                <span className="step-icon handoff-icon" aria-hidden="true">→</span>
-                <span className="step-copy"><b>Prepare the handoff</b><small>A note ready to review</small></span>
-                <span className="step-arrow" aria-hidden="true">↗</span>
-              </div>
-            </div>
-            <div className="preview-footer"><span aria-hidden="true">✦</span> Support for the conversation, not a substitute for care.</div>
-          </div>
-          <div className="visual-caption"><span className="caption-dot" /> LOCAL-FIRST, FOCUSED, HUMAN-CENTERED</div>
+          )}
         </div>
-      </section>
+      </main>
 
-      <section className="workspace-intro" aria-labelledby="workspace-title">
-        <div>
-          <span className="kicker">THE WORKSPACE</span>
-          <h2 id="workspace-title">A thoughtful handoff, in three steps.</h2>
-          <p>Start with what you know. Leave anything unknown blank.</p>
-        </div>
-        <a href="#demo-cases" className="workspace-demo-link">New here? Try a fictional case <span aria-hidden="true">↘</span></a>
-      </section>
-
-      <div className="workspace" id="intake">
-        <section className="panel intake" aria-labelledby="intake-title">
-          <div className="panel-heading">
-            <div><span className="kicker">PATIENT INTAKE</span><h3 id="intake-title">Start with their words</h3></div>
-            <span className="step">01 / 03</span>
-          </div>
-          <label className="field-label" htmlFor="symptoms-input">SYMPTOMS &amp; CONCERNS <span>Required</span></label>
-          <textarea id="symptoms-input" value={form.text} onChange={(e) => set('text', e.target.value)} placeholder="Describe what the patient is experiencing, in their own words…" rows={5} />
-          <div className="demo-row">
-            <label htmlFor="demo-cases">TRY A FICTIONAL CASE</label>
-            <select id="demo-cases" value={selected} onChange={(e) => loadDemo(e.target.value)}>
-              <option value="">Load demo patient…</option>
-              {demos.map((demo) => <option key={demo.name}>{demo.name}</option>)}
-            </select>
-          </div>
-          <div className="grid two">
-            <Field label="AGE" unit="years"><input type="number" min="0" max="120" value={form.age_years ?? ''} onChange={(e) => set('age_years', e.target.value === '' ? null : Number(e.target.value))} /></Field>
-            <Field label="SEX"><select value={form.sex} onChange={(e) => set('sex', e.target.value)}><option value="unknown">Unknown</option><option value="female">Female</option><option value="male">Male</option><option value="other">Other</option></select></Field>
-          </div>
-          <label className="check"><input type="checkbox" checked={form.pregnant === true} onChange={(e) => set('pregnant', e.target.checked ? true : null)} /><span>Patient is pregnant</span><small>Optional</small></label>
-          <div className="subheading"><span>VITALS</span><small>Leave blank if unknown</small></div>
-          <div className="grid vitals-grid">
-            <Field label="TEMP" unit="°C"><input type="number" step="0.1" value={form.vitals.temp_c ?? ''} onChange={(e) => setVital('temp_c', e.target.value)} /></Field>
-            <Field label="PULSE" unit="bpm"><input type="number" value={form.vitals.pulse_bpm ?? ''} onChange={(e) => setVital('pulse_bpm', e.target.value)} /></Field>
-            <Field label="SpO₂" unit="%"><input type="number" value={form.vitals.spo2_pct ?? ''} onChange={(e) => setVital('spo2_pct', e.target.value)} /></Field>
-            <Field label="BP · SYS" unit="mmHg"><input type="number" value={form.vitals.systolic_bp ?? ''} onChange={(e) => setVital('systolic_bp', e.target.value)} /></Field>
-            <Field label="RESP" unit="/min"><input type="number" min="0" max="100" value={form.vitals.resp_rate ?? ''} onChange={(e) => setVital('resp_rate', e.target.value)} /></Field>
-          </div>
-          <div className="language">
-            <label className="field-label" htmlFor="output-language">OUTPUT LANGUAGE</label>
-            <select id="output-language" value={form.output_language} onChange={(e) => set('output_language', e.target.value)}>{['English', 'Hindi', 'Marathi', 'Bengali', 'Tamil', 'Telugu'].map((language) => <option key={language}>{language}</option>)}</select>
-            <small>Demo output uses English. Translation requires a configured model.</small>
-          </div>
-          <button className="primary analyze-button" disabled={!ready || busy !== ''} onClick={analyze}>
-            {busy === 'analyze' ? <><span className="spinner" /> Creating structured summary…</> : <>Analyze case <span>→</span></>}
-          </button>
-          <p className="privacy"><span aria-hidden="true">⌑</span> Demo data stays in memory and is not saved to disk.</p>
-        </section>
-
-        <section className="panel result-panel" aria-labelledby="result-title">
-          <div className="panel-heading">
-            <div><span className="kicker">TRIAGE SUMMARY</span><h3 id="result-title">Case overview</h3></div>
-            <span className="step">02 / 03</span>
-          </div>
-          {error && <div className="error" role="alert">{error}</div>}
-          {!result
-            ? <div className="empty"><div className="empty-art"><span>✳</span><i /><i /><i /></div><h4>Your case summary will appear here</h4><p>Enter symptoms or load a fictional demo patient to see the structured handoff.</p><div className="empty-rule" /><small>AI supports the workflow. Safety rules protect it.</small></div>
-            : <Result result={result} onEscalate={escalate} cloudEnabled={Boolean(status?.cloud_ok)} cloudModel={status?.cloud_model || 'Gemma 4 26B A4B IT'} simulated={Boolean(status?.simulated)} loading={busy === 'cloud'} cloud={cloud} />}
-        </section>
-      </div>
-
-      <footer><span>DECISION-SUPPORT PROTOTYPE · NOT A DIAGNOSTIC TOOL · MOCK DATA ONLY</span><span>MediMitra <b>·</b> PRIVATE FIELD SUPPORT</span></footer>
-    </main>
+      <Footer />
+    </div>
   );
-}
-
-function Field({ label, unit, children }: { label: string; unit?: string; children: React.ReactNode }) {
-  return <label className="field"><span>{label}{unit && <small>{unit}</small>}</span>{children}</label>;
-}
-
-function Result({ result: r, onEscalate, cloudEnabled, cloudModel, simulated, loading, cloud }: { result: TriageResult; onEscalate: () => void; cloudEnabled: boolean; cloudModel: string; simulated: boolean; loading: boolean; cloud: TriageResult | null }) {
-  const [copyState, setCopyState] = useState<'idle' | 'copied' | 'failed'>('idle');
-
-  async function copy() {
-    try {
-      if (navigator?.clipboard?.writeText) {
-        await navigator.clipboard.writeText(r.referral_note);
-        setCopyState('copied');
-      } else {
-        const textarea = document.createElement('textarea');
-        textarea.value = r.referral_note;
-        textarea.style.position = 'fixed';
-        textarea.style.left = '-9999px';
-        document.body.appendChild(textarea);
-        textarea.select();
-        const ok = document.execCommand('copy');
-        document.body.removeChild(textarea);
-        if (!ok) throw new Error('Copy command failed');
-        setCopyState('copied');
-      }
-      setTimeout(() => setCopyState('idle'), 1800);
-    } catch {
-      setCopyState('failed');
-      setTimeout(() => setCopyState('idle'), 2500);
-    }
-  }
-
-  const isRulesOnly = Boolean(r.rules_only);
-
-  return <>
-    {isRulesOnly && (
-      <div className="rules-only-banner" role="alert">
-        <strong>⚠ AI UNAVAILABLE — RULES ONLY</strong>
-        <p>AI inference is currently unavailable. Urgency and recommendations are based strictly on deterministic clinical safety rules. Please conduct manual clinical assessment.</p>
-      </div>
-    )}
-    <div className={`urgency ${r.urgency}`}><div><span className="kicker">URGENCY · {r.source === 'local' ? 'LOCAL ANALYSIS' : 'CLOUD SECOND OPINION'}</span><strong>{r.urgency.toUpperCase()}</strong></div><p>{r.urgency_reason}</p></div>
-    {r.rule_reasons.length > 0 && <div className="rulebox"><strong>⚑ &nbsp;Safety rule triggered</strong>{r.rule_reasons.map((reason) => <span key={reason}>{reason}</span>)}</div>}
-    <div className="detail"><span className="kicker">CHIEF COMPLAINT</span><b>{r.chief_complaint}</b>{r.duration && <small>Duration noted: {r.duration}</small>}</div>
-    <div className="detail"><span className="kicker">SYMPTOMS REPORTED</span><div className="chips">{r.symptoms.map((symptom) => <span key={symptom}>{symptom}</span>)}</div></div>
-    {r.red_flags.length > 0 && <div className="detail"><span className="kicker">RED FLAGS</span><div className="chips flags">{r.red_flags.map((flag) => <span key={flag}>{flag}</span>)}</div></div>}
-    <div className="text-card"><span className="kicker">PLAIN-LANGUAGE SUMMARY</span><p>{r.summary_plain}</p></div>
-    <div className="referral"><div className="referral-head"><span className="kicker">REFERRAL NOTE</span><button className={copyState === 'failed' ? 'failed' : ''} onClick={copy}>{copyState === 'copied' ? 'COPIED ✓' : copyState === 'failed' ? 'COPY FAILED ⚠' : 'COPY ↗'}</button></div><p>{r.referral_note}</p></div>
-    <div className="questions"><span className="kicker">FOLLOW-UP QUESTIONS</span>{r.suggested_questions.map((question, index) => <p key={question}><b>0{index + 1}</b>{question}</p>)}</div>
-    <button className="secondary" disabled={!cloudEnabled || loading} onClick={onEscalate}>
-      {loading ? <><span className="spinner dark" /> Requesting second opinion…</> : <>Escalate to {cloudModel.replace(' (simulated demo)', '')} <span>↗</span></>}
-      {!cloudEnabled && <small>Cloud endpoint not configured</small>}
-    </button>
-    {cloud && <div className="cloud-result"><span className="kicker">{simulated ? 'SIMULATED CLOUD COMPARISON' : 'CLOUD SECOND OPINION'}</span><div className={`urgency compact ${cloud.urgency}`}><strong>{cloud.urgency.toUpperCase()}</strong><p>{cloud.urgency_reason}</p></div><p>{cloud.referral_note}</p></div>}
-    <div className="result-disclaimer">{r.disclaimer}</div>
-  </>;
 }
 
 export default App;

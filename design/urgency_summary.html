@@ -1,0 +1,685 @@
+<!-- MediMitra - Urgency Summary (RED) -->
+
+<!DOCTYPE html>
+
+
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_standard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Noto+Sans:wght@100..900&display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{colors:{"surface-tint":"#006a63","primary-fixed-dim":"#80d5cb","secondary":"#006b5f","inverse-primary":"#80d5cb","secondary-container":"#6df5e1","primary":"#005c55","surface":"#faf8ff","inverse-surface":"#283044","tertiary-fixed-dim":"#9ad1cb","primary-fixed":"#9cf2e8","background":"#faf8ff","surface-container":"#eaedff","surface-container-high":"#e2e7ff","on-tertiary-fixed":"#00201e","on-primary-container":"#a3faef","on-primary-fixed-variant":"#00504a","on-error":"#ffffff","tertiary-container":"#3c726e","surface-container-highest":"#dae2fd","outline-variant":"#bdc9c6","surface-container-lowest":"#ffffff","tertiary":"#225a55","error":"#ba1a1a","surface-bright":"#faf8ff","surface-variant":"#dae2fd","on-tertiary":"#ffffff","on-primary-fixed":"#00201d","on-secondary-container":"#006f64","on-primary":"#ffffff","on-secondary":"#ffffff","on-secondary-fixed-variant":"#005048","surface-dim":"#d2d9f4","tertiary-fixed":"#b5ede7","on-error-container":"#93000a","error-container":"#ffdad6","inverse-on-surface":"#eef0ff","on-secondary-fixed":"#00201c","outline":"#6e7977","primary-container":"#0f766e","on-tertiary-container":"#bdf5ef","on-surface":"#131b2e","on-tertiary-fixed-variant":"#144f4b","surface-container-low":"#f2f3ff","on-background":"#131b2e","on-surface-variant":"#3e4947","secondary-fixed-dim":"#4fdbc8","secondary-fixed":"#71f8e4"},borderRadius:{DEFAULT:"0.25rem",lg:"0.5rem",xl:"0.75rem",full:"9999px"},spacing:{"space-xl":"2rem","space-sm":"0.5rem","gutter-desktop":"2rem",gutter:"1rem","margin-desktop":"2.5rem",margin:"1rem","space-lg":"1.5rem","margin-tablet":"1.5rem","space-md":"1rem","gutter-tablet":"1.5rem","space-xs":"0.25rem"},fontFamily:{"body-sm":["Inter"],"body-bold":["Inter"],"body-xl":["Inter"],"headline-sm":["Noto Sans"],"label-triage":["Inter"],"body-lg":["Inter"],"label-meta":["Inter"],"headline-xl":["Noto Sans"],"headline-lg":["Noto Sans"],"headline-xl-mobile":["Noto Sans"]},fontSize:{"body-sm":["14px",{lineHeight:"20px",fontWeight:"500"}],"body-bold":["16px",{lineHeight:"24px",fontWeight:"600"}],"body-xl":["18px",{lineHeight:"28px",fontWeight:"400"}],"headline-sm":["20px",{lineHeight:"28px",fontWeight:"600"}],"label-triage":["15px",{lineHeight:"20px",letterSpacing:"0.03em",fontWeight:"700"}],"body-lg":["16px",{lineHeight:"24px",fontWeight:"400"}],"label-meta":["13px",{lineHeight:"18px",letterSpacing:"0.02em",fontWeight:"600"}],"headline-xl":["36px",{lineHeight:"44px",letterSpacing:"-0.02em",fontWeight:"700"}],"headline-lg":["26px",{lineHeight:"34px",letterSpacing:"-0.01em",fontWeight:"700"}],"headline-xl-mobile":["28px",{lineHeight:"36px",letterSpacing:"-0.01em",fontWeight:"700"}]}}}};</script></head><body class="bg-surface font-body-lg text-body-lg text-on-surface antialiased"><header class="fixed top-0 left-0 right-0 z-50 bg-surface-container-lowest/95 backdrop-blur-md shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="h-16 max-w-[1100px] mx-auto px-margin flex items-center justify-between gap-space-md"><div class="flex items-center gap-space-lg"><div class="flex items-center gap-space-sm"><img alt="MediMitra Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1UqfY-2Es_FOj_KMZtPui1fZlA6bj360BUxRZqPbMHjmX9Z1MzzaoSPfKSRNIxv1FxtWs0FK7tpB1rRGxJhbM_h-o3nQQMHA-XYpmgc8gDA1eAotD6aXj1mGCnkXM9Ijwj3Hb_LGTjdeQ3tLW0I-jpuIKe0uIiI3YPfhr1RDZ0-KQqWLJgtM9P0zijIJjSGKT7VpDMKGg9bcY0QrNqnENq1L1DBgf5kJkuZ-6cTeKXAjkXNIsZByzVHkQ"/><div class="flex flex-col"><span class="font-headline-sm text-headline-sm text-primary leading-tight tracking-tight">MediMitra</span><span class="font-label-meta text-label-meta text-on-surface-variant leading-none">Rural Health Triage</span></div></div><nav class="hidden md:flex items-center gap-space-xs" data-active-classes="bg-surface-container text-primary font-body-bold text-body-bold rounded-lg"><a class="px-space-md py-space-xs font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface rounded-lg transition-colors" data-path="home" href="#">Home</a><a aria-current="page" class="px-space-md py-space-xs transition-colors bg-surface-container text-primary font-body-bold text-body-bold rounded-lg" data-path="new-case" href="#">New Case</a><a class="px-space-md py-space-xs font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface rounded-lg transition-colors" data-path="referrals" href="#">Referrals</a></nav></div><div class="flex items-center gap-space-sm sm:gap-space-md"><div class="flex items-center gap-space-xs px-space-sm py-1 bg-surface-container-low rounded-full"><span class="w-2 h-2 rounded-full bg-secondary animate-pulse"></span><span class="hidden sm:inline font-label-meta text-label-meta text-on-surface-variant">On-Device / Offline Ready</span><span class="sm:hidden font-label-meta text-label-meta text-on-surface-variant">Offline</span></div><div class="hidden lg:flex items-center px-space-sm py-0.5 bg-surface-container-high rounded-full"><span class="font-label-meta text-label-meta text-on-surface-variant">Simulated demo</span></div><div class="flex items-center gap-space-xs px-space-sm py-1 bg-surface-container-low rounded-lg"><span class="material-symbols-outlined text-[18px] text-on-surface-variant">translate</span><select aria-label="Language Selector" class="bg-transparent font-label-meta text-label-meta text-on-surface focus:outline-none cursor-pointer pr-1"><option value="en">English</option><option value="hi">हिंदी - Hindi</option><option value="mr">मराठी - Marathi</option></select></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="w-full pt-16"><div class="max-w-[1100px] mx-auto px-margin min-h-[calc(100vh-10rem)]"><div class="flex flex-col w-full pb-space-xl">
+
+<!-- Case Context Header & Breadcrumb -->
+
+<div class="py-space-md flex flex-col md:flex-row md:items-center justify-between gap-space-sm">
+
+<div class="flex items-center gap-space-sm flex-wrap">
+
+<div class="flex items-center gap-space-xs px-space-sm py-1 bg-surface-container rounded-full text-on-surface-variant font-label-meta text-label-meta">
+
+<span class="material-symbols-outlined text-[16px] text-primary">folder_open</span>
+
+<span>Case #R4829</span>
+
+</div>
+
+<span class="text-on-surface-variant font-label-meta text-label-meta hidden sm:inline">•</span>
+
+<span class="font-body-bold text-body-bold text-on-surface">Kabir (4 yrs, Male)</span>
+
+<span class="text-on-surface-variant font-label-meta text-label-meta hidden sm:inline">•</span>
+
+<div class="flex items-center gap-space-xs text-on-surface-variant font-body-sm text-body-sm">
+
+<span class="material-symbols-outlined text-[16px] text-secondary">pin_drop</span>
+
+<span>Completed in Sector 4 (Rampur Cluster)</span>
+
+</div>
+
+</div>
+
+<div class="flex items-center gap-space-xs">
+
+<span class="inline-flex items-center gap-1.5 px-space-sm py-1 rounded-full bg-surface-container-high text-on-surface font-label-meta text-label-meta">
+
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+
+        Assessed: Today, 11:42 AM
+
+      </span>
+
+<button class="p-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-container rounded-lg transition-colors" title="Print Summary" type="button">
+
+<span class="material-symbols-outlined text-[20px]">print</span>
+
+</button>
+
+</div>
+
+</div>
+
+<!-- Primary Emergency Urgency Banner (RED Triage) -->
+
+<div class="mt-space-xs rounded-xl bg-error-container text-on-error-container p-space-md sm:p-space-lg shadow-md relative overflow-hidden">
+
+<div class="flex flex-col md:flex-row md:items-start justify-between gap-space-md relative z-10">
+
+<div class="flex items-start gap-space-md">
+
+<div class="w-14 h-14 sm:w-16 sm:h-16 rounded-xl bg-error text-on-error flex items-center justify-center shrink-0 shadow-sm">
+
+<span class="material-symbols-outlined text-[36px]" style="font-variation-settings: 'FILL' 1;">emergency</span>
+
+</div>
+
+<div class="flex flex-col gap-1 max-w-2xl">
+
+<div class="flex items-center gap-space-sm flex-wrap">
+
+<span class="px-space-sm py-0.5 bg-error text-on-error rounded-md font-label-triage text-label-triage tracking-wide uppercase">
+
+              RED - REFER NOW
+
+            </span>
+
+<span class="font-label-meta text-label-meta bg-error/15 text-error px-space-xs py-0.5 rounded font-bold">Priority Code 1</span>
+
+</div>
+
+<h1 class="font-headline-lg text-headline-lg text-on-error-container leading-tight mt-1">
+
+            Immediate Clinical Transfer Required
+
+          </h1>
+
+<p class="font-body-bold text-body-bold text-on-error-container mt-1">
+
+            High fever accompanied by severe dehydration signs and rapid pulse in child under 5.
+
+          </p>
+
+<div class="mt-space-sm flex items-center gap-space-xs text-on-error-container bg-surface-container-lowest/80 backdrop-blur-sm p-3 rounded-lg">
+
+<span class="material-symbols-outlined text-error text-[22px] shrink-0">local_hospital</span>
+
+<div class="flex flex-col">
+
+<span class="font-label-meta text-label-meta text-error uppercase tracking-wider">Mandatory Action</span>
+
+<span class="font-body-bold text-body-bold text-on-surface">Immediate transfer to Bhavnagar Community Health Centre (CHC).</span>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="flex flex-col items-start md:items-end gap-space-xs shrink-0 self-stretch md:self-auto justify-between border-t md:border-t-0 pt-space-sm md:pt-0">
+
+<div class="bg-surface-container-lowest/90 px-space-md py-2 rounded-lg text-left md:text-right w-full md:w-auto shadow-sm">
+
+<span class="font-label-meta text-label-meta text-on-surface-variant block">Nearest Designated Facility</span>
+
+<span class="font-body-bold text-body-bold text-primary block">Bhavnagar CHC (4.2 km)</span>
+
+<span class="font-label-meta text-label-meta text-on-surface-variant flex items-center md:justify-end gap-1 mt-0.5">
+
+<span class="material-symbols-outlined text-[14px] text-secondary">check_circle</span>
+
+            Pediatric Ward Open
+
+          </span>
+
+</div>
+
+<div class="text-right w-full hidden md:block">
+
+<span class="font-label-meta text-label-meta text-error font-bold">Transit Window: < 45 Mins</span>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- Safety Rules Triggered Highlight Card -->
+
+<div class="mt-space-md rounded-xl bg-surface-container-lowest p-space-md sm:p-space-lg shadow-sm">
+
+<div class="flex flex-col md:flex-row md:items-start justify-between gap-space-md">
+
+<div class="flex items-start gap-space-md">
+
+<div class="w-10 h-10 rounded-lg bg-surface-container-high text-primary flex items-center justify-center shrink-0">
+
+<span class="material-symbols-outlined text-[24px]">verified_user</span>
+
+</div>
+
+<div class="space-y-space-xs">
+
+<div class="flex items-center gap-space-xs">
+
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Deterministic Safety Rules Triggered</h2>
+
+<span class="px-space-xs py-0.5 rounded text-error bg-error-container font-label-meta text-label-meta">1 Rule Active</span>
+
+</div>
+
+<p class="font-body-lg text-body-lg text-on-surface font-body-bold">
+
+            Critical Pediatric Rule #14: Continuous high fever (>3 days) + prolonged vomiting elevated base urgency to RED.
+
+          </p>
+
+<div class="flex items-center gap-space-xs text-on-surface-variant bg-surface-container-low px-space-sm py-2 rounded-lg">
+
+<span class="material-symbols-outlined text-primary text-[18px]">lock</span>
+
+<p class="font-label-meta text-label-meta text-on-surface">
+
+<strong class="font-body-bold text-primary">Clinical Invariant:</strong> Safety rules can only raise urgency, never lower it. Automated safeguards cannot be manually downgraded by field staff.
+
+            </p>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="shrink-0 flex md:flex-col items-center md:items-end justify-between gap-1 text-on-surface-variant font-label-meta text-label-meta bg-surface-container px-space-md py-2 rounded-lg">
+
+<span class="text-on-surface font-body-bold">Protocol v4.1</span>
+
+<span>MOHFW Rural Guidelines</span>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- Key Findings Cards Grid (3 Cards) -->
+
+<div class="mt-space-md grid grid-cols-1 md:grid-cols-3 gap-space-md">
+
+<!-- 1. Patient Demographics & Onset -->
+
+<div class="rounded-xl bg-surface-container-lowest p-space-md shadow-sm flex flex-col justify-between">
+
+<div>
+
+<div class="flex items-center justify-between pb-space-sm">
+
+<div class="flex items-center gap-space-xs">
+
+<div class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center text-primary">
+
+<span class="material-symbols-outlined text-[18px]">person</span>
+
+</div>
+
+<span class="font-body-bold text-body-bold text-on-surface">Patient Profile</span>
+
+</div>
+
+<span class="font-label-meta text-label-meta text-on-surface-variant">Cluster A-12</span>
+
+</div>
+
+<div class="space-y-space-sm mt-space-xs">
+
+<div class="flex justify-between items-baseline py-1 bg-surface-container-low px-2 rounded">
+
+<span class="font-label-meta text-label-meta text-on-surface-variant">Name</span>
+
+<span class="font-body-bold text-body-bold text-on-surface">Kabir</span>
+
+</div>
+
+<div class="flex justify-between items-baseline py-1 px-2">
+
+<span class="font-label-meta text-label-meta text-on-surface-variant">Age & Sex</span>
+
+<span class="font-body-lg text-body-lg text-on-surface">4 yrs • Male</span>
+
+</div>
+
+<div class="flex justify-between items-baseline py-1 bg-surface-container-low px-2 rounded">
+
+<span class="font-label-meta text-label-meta text-on-surface-variant">Symptom Duration</span>
+
+<span class="font-body-bold text-body-bold text-error">3 continuous days</span>
+
+</div>
+
+<div class="flex justify-between items-baseline py-1 px-2">
+
+<span class="font-label-meta text-label-meta text-on-surface-variant">Location</span>
+
+<span class="font-body-sm text-body-sm text-on-surface">Rampur PHC Cluster</span>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="mt-space-md pt-space-xs flex items-center gap-space-xs text-on-surface-variant font-label-meta text-label-meta">
+
+<span class="material-symbols-outlined text-[16px] text-secondary">family_restroom</span>
+
+<span>Accompanied by Mother (Sunita Devi)</span>
+
+</div>
+
+</div>
+
+<!-- 2. Clinical Vitals -->
+
+<div class="rounded-xl bg-surface-container-lowest p-space-md shadow-sm flex flex-col justify-between">
+
+<div>
+
+<div class="flex items-center justify-between pb-space-sm">
+
+<div class="flex items-center gap-space-xs">
+
+<div class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center text-primary">
+
+<span class="material-symbols-outlined text-[18px]">vital_signs</span>
+
+</div>
+
+<span class="font-body-bold text-body-bold text-on-surface">Clinical Vitals</span>
+
+</div>
+
+<span class="font-label-meta text-label-meta text-error font-bold flex items-center gap-1">
+
+<span class="w-2 h-2 rounded-full bg-error"></span> 2 Abnormal
+
+          </span>
+
+</div>
+
+<div class="grid grid-cols-2 gap-space-xs mt-space-xs">
+
+<!-- Temp -->
+
+<div class="bg-surface-container-low p-2.5 rounded-lg flex flex-col justify-between">
+
+<span class="font-label-meta text-label-meta text-on-surface-variant">Temp</span>
+
+<div class="mt-1">
+
+<span class="font-headline-sm text-headline-sm text-error">38.9°C</span>
+
+<span class="font-label-meta text-label-meta text-on-surface-variant block">102.0°F</span>
+
+</div>
+
+</div>
+
+<!-- Pulse -->
+
+<div class="bg-surface-container-low p-2.5 rounded-lg flex flex-col justify-between">
+
+<span class="font-label-meta text-label-meta text-on-surface-variant">Pulse Rate</span>
+
+<div class="mt-1">
+
+<span class="font-headline-sm text-headline-sm text-error">118</span>
+
+<span class="font-label-meta text-label-meta text-on-surface-variant block">bpm (High)</span>
+
+</div>
+
+</div>
+
+<!-- SpO2 -->
+
+<div class="bg-surface-container-low p-2.5 rounded-lg flex flex-col justify-between">
+
+<span class="font-label-meta text-label-meta text-on-surface-variant">Oxygen SpO2</span>
+
+<div class="mt-1">
+
+<span class="font-headline-sm text-headline-sm text-on-surface">96%</span>
+
+<span class="font-label-meta text-label-meta text-secondary block">Normal range</span>
+
+</div>
+
+</div>
+
+<!-- Respiratory Rate -->
+
+<div class="bg-surface-container-low p-2.5 rounded-lg flex flex-col justify-between">
+
+<span class="font-label-meta text-label-meta text-on-surface-variant">Resp. Rate</span>
+
+<div class="mt-1">
+
+<span class="font-headline-sm text-headline-sm text-error">38</span>
+
+<span class="font-label-meta text-label-meta text-on-surface-variant block">/min (Elevated)</span>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="mt-space-md pt-space-xs flex items-center justify-between text-on-surface-variant font-label-meta text-label-meta">
+
+<span>Tachypneic threshold exceeded</span>
+
+<span class="material-symbols-outlined text-[16px] text-error">trending_up</span>
+
+</div>
+
+</div>
+
+<!-- 3. Primary Observations -->
+
+<div class="rounded-xl bg-surface-container-lowest p-space-md shadow-sm flex flex-col justify-between">
+
+<div>
+
+<div class="flex items-center justify-between pb-space-sm">
+
+<div class="flex items-center gap-space-xs">
+
+<div class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center text-primary">
+
+<span class="material-symbols-outlined text-[18px]">clinical_notes</span>
+
+</div>
+
+<span class="font-body-bold text-body-bold text-on-surface">Physical Signs</span>
+
+</div>
+
+<span class="font-label-meta text-label-meta px-2 py-0.5 bg-surface-container-high rounded text-on-surface">Caregiver Report</span>
+
+</div>
+
+<div class="space-y-space-sm mt-space-xs">
+
+<div class="flex items-start gap-space-xs p-2 rounded bg-surface-container-low">
+
+<span class="material-symbols-outlined text-[18px] text-error shrink-0 mt-0.5">water_drop</span>
+
+<span class="font-body-sm text-body-sm text-on-surface">Mother reports child unable to retain oral fluids; continuous vomiting >24 hrs.</span>
+
+</div>
+
+<div class="flex items-start gap-space-xs p-2 rounded bg-surface-container-low">
+
+<span class="material-symbols-outlined text-[18px] text-error shrink-0 mt-0.5">visibility</span>
+
+<span class="font-body-sm text-body-sm text-on-surface">Mild sunken eyes observed upon initial clinical inspection.</span>
+
+</div>
+
+<div class="flex items-start gap-space-xs p-2 rounded bg-surface-container-low">
+
+<span class="material-symbols-outlined text-[18px] text-error shrink-0 mt-0.5">timer</span>
+
+<span class="font-body-sm text-body-sm text-on-surface">Abdominal skin pinch test: skin fold returns very slowly (>2 seconds).</span>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="mt-space-md pt-space-xs flex items-center gap-space-xs text-on-surface-variant font-label-meta text-label-meta">
+
+<span class="material-symbols-outlined text-[16px] text-error">priority_high</span>
+
+<span>WHO Severe Dehydration Markers Present</span>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- Facility Routing & Direct Dispatch Map Teaser -->
+
+<div class="mt-space-md rounded-xl bg-surface-container-lowest p-space-md shadow-sm">
+
+<div class="flex flex-col lg:flex-row gap-space-md items-stretch">
+
+<div class="flex-1 flex flex-col justify-between">
+
+<div>
+
+<div class="flex items-center gap-space-xs text-primary font-label-meta text-label-meta uppercase tracking-wider mb-1">
+
+<span class="material-symbols-outlined text-[18px]">near_me</span>
+
+            Direct Routing & Transit Protocol
+
+          </div>
+
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Bhavnagar Community Health Centre (CHC)</h3>
+
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">
+
+            Sector-4 ambulance dispatch line is alerted with active case pre-notification. Maternal tracking card #MH-8819 ready for transfer.
+
+          </p>
+
+</div>
+
+<div class="grid grid-cols-2 sm:grid-cols-3 gap-space-sm my-space-md">
+
+<div class="p-2.5 rounded-lg bg-surface-container-low">
+
+<span class="font-label-meta text-label-meta text-on-surface-variant block">Distance</span>
+
+<span class="font-body-bold text-body-bold text-on-surface">4.2 Kilometers</span>
+
+</div>
+
+<div class="p-2.5 rounded-lg bg-surface-container-low">
+
+<span class="font-label-meta text-label-meta text-on-surface-variant block">Est. Transit</span>
+
+<span class="font-body-bold text-body-bold text-on-surface">18 - 22 mins</span>
+
+</div>
+
+<div class="p-2.5 rounded-lg bg-surface-container-low col-span-2 sm:col-span-1">
+
+<span class="font-label-meta text-label-meta text-on-surface-variant block">Duty Officer</span>
+
+<span class="font-body-bold text-body-bold text-primary">Dr. P. Varma (Ped.)</span>
+
+</div>
+
+</div>
+
+<div class="flex items-center gap-space-sm flex-wrap text-on-surface-variant font-label-meta text-label-meta">
+
+<span class="flex items-center gap-1">
+
+<span class="material-symbols-outlined text-[16px] text-secondary">phone_in_talk</span>
+
+            CHC Desk: +91 278 242 8100
+
+          </span>
+
+<span>•</span>
+
+<span class="flex items-center gap-1">
+
+<span class="material-symbols-outlined text-[16px] text-secondary">battery_full</span>
+
+            Pre-referral ORS packet handed to parent
+
+          </span>
+
+</div>
+
+</div>
+
+<div class="w-full lg:w-80 h-44 lg:h-auto rounded-lg overflow-hidden relative shadow-inner">
+
+<div class="w-full h-full bg-cover bg-center" data-location="Bhavnagar Community Health Centre, Gujarat, India" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCMD-Kr8PLP-XjiG8SzpLa6X2yofc1AoPI-dJfW2u0YwE9NCPLBhxYiK_cORq8I4v8-UHwkov9VbDFS9QdlNAVze0j0ItP4P9Pi-exl0ui5VNYyX3frJeOXpSLcSd7rt9DaAesVJRv0iJUI_3kZAfjaZY9e9lXeIhO3Dwuji_IY6HCsooHH94-Z4EUevUxkf0UhgCpkn0SFSFMJfOycdZJztX_ODs-tC5qxSk3JsA-BFkkIL-dWwAdd');"></div>
+
+<div class="absolute inset-0 bg-gradient-to-t from-inverse-surface/80 via-transparent to-transparent flex items-end p-3 pointer-events-none">
+
+<span class="text-inverse-on-surface font-label-meta text-label-meta flex items-center gap-1">
+
+<span class="material-symbols-outlined text-[16px] text-secondary-fixed">navigation</span>
+
+            Live Transit Corridor: Clear
+
+          </span>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- Bottom Action Bar (Clear 48px+ touch targets) -->
+
+<div class="mt-space-lg pt-space-md border-t border-surface-container-high flex flex-col md:flex-row items-stretch md:items-center justify-between gap-space-md">
+
+<div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-space-sm order-2 md:order-1">
+
+<!-- Tertiary Link -->
+
+<a class="h-12 px-space-md rounded-lg flex items-center justify-center gap-space-xs text-on-surface-variant hover:text-on-surface hover:bg-surface-container font-body-bold text-body-bold transition-colors" href="#">
+
+<span class="material-symbols-outlined text-[20px]">edit_note</span>
+
+<span>Re-check vitals / Edit case</span>
+
+</a>
+
+<!-- Secondary Button (Cloud Second Opinion) -->
+
+<button class="h-12 px-space-md rounded-lg bg-surface-container-lowest text-primary hover:bg-surface-container font-body-bold text-body-bold flex items-center justify-center gap-space-xs shadow-sm transition-all" id="cloud-opinion-btn" type="button">
+
+<span class="material-symbols-outlined text-[20px]">cloud_sync</span>
+
+<span id="cloud-opinion-text">Escalate to cloud second opinion</span>
+
+</button>
+
+</div>
+
+<!-- Primary Urgent Referral CTA -->
+
+<div class="order-1 md:order-2 flex items-stretch">
+
+<a class="w-full md:w-auto h-13 min-h-[52px] px-space-xl rounded-lg bg-primary hover:bg-tertiary text-on-primary font-body-bold text-body-bold flex items-center justify-center gap-space-sm shadow-md transition-all" href="#">
+
+<span class="material-symbols-outlined text-[22px]">description</span>
+
+<span>View referral note</span>
+
+<span class="material-symbols-outlined text-[20px]">arrow_forward</span>
+
+</a>
+
+</div>
+
+</div>
+
+<!-- Quick Confirmation Feedback Toast Modal (Hidden by Default) -->
+
+<div class="fixed bottom-6 right-6 z-50 transform translate-y-24 opacity-0 transition-all duration-300 pointer-events-none" id="status-toast">
+
+<div class="bg-inverse-surface text-inverse-on-surface px-space-md py-3 rounded-lg shadow-xl flex items-center gap-space-sm">
+
+<span class="material-symbols-outlined text-secondary-fixed text-[22px]">cloud_done</span>
+
+<div class="flex flex-col">
+
+<span class="font-body-bold text-body-bold text-inverse-on-surface">Case Pack Dispatched</span>
+
+<span class="font-label-meta text-label-meta text-inverse-on-surface/80">Pending tele-triage review by Dr. P. Varma</span>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+  (function setupUrgencyActions() {
+
+    const cloudBtn = document.getElementById('cloud-opinion-btn');
+
+    const cloudText = document.getElementById('cloud-opinion-text');
+
+    const toast = document.getElementById('status-toast');
+
+
+
+    if (cloudBtn && toast) {
+
+      cloudBtn.addEventListener('click', function() {
+
+        cloudBtn.disabled = true;
+
+        cloudText.textContent = "Syncing with CHC cloud...";
+
+        
+
+        setTimeout(() => {
+
+          cloudText.textContent = "Second Opinion Requested";
+
+          cloudBtn.classList.add('bg-surface-container');
+
+          
+
+          // Show toast
+
+          toast.classList.remove('translate-y-24', 'opacity-0');
+
+          toast.classList.add('translate-y-0', 'opacity-100');
+
+          
+
+          setTimeout(() => {
+
+            toast.classList.remove('translate-y-0', 'opacity-100');
+
+            toast.classList.add('translate-y-24', 'opacity-0');
+
+            cloudBtn.disabled = false;
+
+          }, 3500);
+
+        }, 1200);
+
+      });
+
+    }
+
+  })();
+
+</script></div></main><footer class="w-full bg-inverse-surface text-inverse-on-surface py-space-md shadow-[0_-1px_6px_rgba(0,0,0,0.06)]"><div class="max-w-[1100px] mx-auto px-margin flex flex-col sm:flex-row items-center justify-between gap-space-sm text-center sm:text-left"><div class="flex items-center gap-space-xs"><span class="material-symbols-outlined text-[18px] text-secondary-fixed shrink-0">verified_user</span><p class="font-label-meta text-label-meta text-inverse-on-surface">Decision support only. Not a diagnosis, treatment, or dosage advice. Always defer to local emergency medical protocols.</p></div><div class="font-label-meta text-label-meta text-inverse-on-surface/80 shrink-0">MediMitra v2.4 (Field Edition) | Local Model: Gemma 4 E4B (On-device)</div></div></footer></body></html>
