@@ -109,8 +109,10 @@ async def call_model(req: AnalyzeRequest, cloud: bool = False) -> TriageResult:
     base = config.CLOUD_BASE_URL if cloud else config.LOCAL_BASE_URL
     key = config.CLOUD_API_KEY if cloud else config.LOCAL_API_KEY
     model = config.CLOUD_MODEL if cloud else config.LOCAL_MODEL
-    if config.DEMO_MODE or not (base and model and (not cloud or key)):
+    if config.DEMO_MODE:
         return mock_result(req, "cloud" if cloud else "local")
+    if not (base and model and (not cloud or key)):
+        raise RuntimeError("Model endpoint is not configured")
     client = AsyncOpenAI(base_url=base, api_key=key or "ollama", timeout=config.CLOUD_TIMEOUT_SECONDS if cloud else config.LOCAL_TIMEOUT_SECONDS)
     prompt = f"Input: {req.model_dump_json()}\nOutput language: {req.output_language}"
     response = await client.chat.completions.create(

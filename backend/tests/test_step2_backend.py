@@ -105,3 +105,25 @@ def test_analyze_endpoint_live_mode_fallback(monkeypatch):
     assert res.urgency in ("yellow", "red")
     assert res.urgency != "green"
     assert "AI unavailable - assess manually" in res.urgency_reason
+
+def test_mock_result_never_used_when_demo_mode_false(monkeypatch):
+    import asyncio
+    from app import config, main, llm
+    monkeypatch.setattr(config, "DEMO_MODE", False)
+    monkeypatch.setattr(config, "LOCAL_MODEL", "")
+
+    with pytest.raises(RuntimeError, match="Model endpoint is not configured"):
+        asyncio.run(llm.call_model(AnalyzeRequest(text="Headache")))
+
+    res = asyncio.run(main.analyze(AnalyzeRequest(text="Headache")))
+    assert "SIMULATED DEMO ANALYSIS" not in res.urgency_reason
+    assert "AI unavailable - assess manually" in res.urgency_reason
+    assert res.urgency == "yellow"
+
+def test_demo_mode_returns_simulated_result_with_label(monkeypatch):
+    import asyncio
+    from app import config, main
+    monkeypatch.setattr(config, "DEMO_MODE", True)
+
+    res = asyncio.run(main.analyze(AnalyzeRequest(text="Headache")))
+    assert "SIMULATED DEMO ANALYSIS" in res.urgency_reason
