@@ -7,6 +7,7 @@ import { RulesBanner } from './components/RulesBanner';
 import { HomeScreen } from './screens/HomeScreen';
 import { IntakeScreen } from './screens/IntakeScreen';
 import { SummaryScreen } from './screens/SummaryScreen';
+import { SelfHarmScreen } from './screens/SelfHarmScreen';
 
 const emptyVitals: Vitals = {
   temp_c: null,
@@ -199,7 +200,14 @@ function App() {
             </div>
           )}
 
-          {currentScreen !== 'home' && currentScreen !== 'intake' && currentScreen !== 'summary' && (
+          {currentScreen === 'self_harm' && (
+            <SelfHarmScreen
+              onContinueToSummary={() => setCurrentScreen('summary')}
+              onBackToIntake={() => setCurrentScreen('intake')}
+            />
+          )}
+
+          {currentScreen !== 'home' && currentScreen !== 'intake' && currentScreen !== 'summary' && currentScreen !== 'self_harm' && (
             <div className="space-y-space-md">
               {result && (
                 <section className="bg-surface-container-lowest p-space-md rounded-xl shadow-sm border border-surface-container">
