@@ -10,6 +10,7 @@ import { SummaryScreen } from './screens/SummaryScreen';
 import { SelfHarmScreen } from './screens/SelfHarmScreen';
 import { ReferralScreen } from './screens/ReferralScreen';
 import { ComparisonScreen } from './screens/ComparisonScreen';
+import { StatesScreen } from './screens/StatesScreen';
 
 const emptyVitals: Vitals = {
   temp_c: null,
@@ -254,29 +255,12 @@ function App() {
             </div>
           )}
 
-          {currentScreen !== 'home' && currentScreen !== 'intake' && currentScreen !== 'summary' && currentScreen !== 'self_harm' && currentScreen !== 'referral' && currentScreen !== 'comparison' && (
-            <div className="space-y-space-md">
-              {result && (
-                <section className="bg-surface-container-lowest p-space-md rounded-xl shadow-sm border border-surface-container">
-                  <div className="flex items-center justify-between pb-space-sm mb-space-sm border-b border-surface-container">
-                    <span className="font-bold text-primary">Triage Result</span>
-                    <button
-                      onClick={() => setCurrentScreen('referral')}
-                      className="px-3 py-1 bg-primary text-on-primary rounded text-xs font-bold cursor-pointer"
-                    >
-                      View Referral Note →
-                    </button>
-                  </div>
-                  <div className={`p-4 rounded-xl mb-4 ${result.urgency === 'red' ? 'bg-error-container text-on-error-container' : result.urgency === 'yellow' ? 'bg-amber-500/15 text-amber-900' : 'bg-surface-container'}`}>
-                    <div className="font-black text-lg uppercase tracking-wide">
-                      {result.urgency === 'yellow' ? 'YELLOW - REFER SOON' : `${result.urgency.toUpperCase()} - ${result.urgency === 'red' ? 'REFER NOW' : 'ROUTINE'}`}
-                    </div>
-                    <p className="mt-1 font-medium">{result.urgency_reason}</p>
-                  </div>
-                  <p className="text-sm text-on-surface-variant">{result.summary_plain}</p>
-                </section>
-              )}
-            </div>
+          {currentScreen === 'states' && (
+            <StatesScreen
+              status={status}
+              isOnline={browserOnline}
+              onGoToIntake={() => setCurrentScreen('intake')}
+            />
           )}
         </div>
       </main>
