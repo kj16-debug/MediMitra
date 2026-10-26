@@ -152,13 +152,13 @@ export function ReferralScreen({
             </div>
             <div>
               <span className="font-label-meta text-label-meta uppercase tracking-wider text-primary font-bold">
-                Government of Gujarat • Health & Family Welfare
+                Health & Family Welfare • Primary Triage Unit
               </span>
               <h1 className="font-headline-sm sm:font-headline-lg text-headline-sm sm:text-headline-lg text-on-surface leading-tight tracking-tight uppercase font-black">
                 Community Health Worker Field Referral Slip
               </h1>
               <p className="font-body-sm text-body-sm text-on-surface-variant font-medium">
-                MediMitra Decision Support System • Bhavnagar PHC Network
+                MediMitra Decision Support System
               </p>
             </div>
           </div>
@@ -166,10 +166,10 @@ export function ReferralScreen({
           {/* Slip Meta Badge Box */}
           <div className="flex flex-col sm:items-end justify-center bg-surface-container-lowest px-space-md py-space-sm rounded-xl shadow-sm border border-surface-container">
             <div className="flex items-center gap-space-xs text-primary font-bold">
-              <span>REF-2025-08429</span>
+              <span>REF-DEMO-2025</span>
             </div>
             <span className="font-label-meta text-label-meta text-on-surface-variant">
-              Timestamp: Today, 10:45 AM IST
+              Triage Assessment Time: Current Session
             </span>
             <span className="font-label-meta text-label-meta text-secondary font-bold">
               Priority Dispatch: {isRed ? 'Immediate' : isYellow ? 'Urgent' : 'Routine'}
@@ -181,28 +181,28 @@ export function ReferralScreen({
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-space-sm bg-surface-container-high/40 p-space-sm rounded-xl mb-space-lg text-on-surface border border-surface-container">
           <div className="flex flex-col px-space-xs">
             <span className="font-label-meta text-label-meta text-on-surface-variant uppercase">
-              Designated ASHA Worker
+              Designated Worker
             </span>
-            <span className="font-body-bold text-body-bold">Sunita Kumari</span>
+            <span className="font-body-bold text-body-bold">Field Worker (Illustrative)</span>
           </div>
           <div className="flex flex-col px-space-xs">
             <span className="font-label-meta text-label-meta text-on-surface-variant uppercase">
               Cadre / State ID
             </span>
-            <span className="font-body-sm text-body-sm font-semibold">ASHA #4092</span>
+            <span className="font-body-sm text-body-sm font-semibold">ASHA #4092 (Demo)</span>
           </div>
           <div className="flex flex-col px-space-xs">
             <span className="font-label-meta text-label-meta text-on-surface-variant uppercase">
               Assigned Center
             </span>
-            <span className="font-body-sm text-body-sm">Sub-Center Pipariya</span>
+            <span className="font-body-sm text-body-sm">Sub-Center (Demo)</span>
           </div>
           <div className="flex flex-col px-space-xs">
             <span className="font-label-meta text-label-meta text-on-surface-variant uppercase">
               Destination Facility
             </span>
             <span className="font-body-sm text-body-sm font-bold text-primary">
-              CHC Bhavnagar (4.2 km)
+              Primary Facility (Illustrative)
             </span>
           </div>
         </div>
@@ -389,24 +389,7 @@ export function ReferralScreen({
               </div>
             </div>
 
-            {/* Stability Pulse Line SVG */}
-            <div className="mt-space-md pt-space-xs border-t border-surface-container">
-              <div className="flex items-center justify-between text-on-surface-variant font-label-meta text-label-meta mb-1">
-                <span>Clinical Stability Indicator</span>
-                <span className="text-secondary font-bold">Monitored</span>
-              </div>
-              <div className="w-full h-8 bg-surface-container-lowest rounded-lg p-1 flex items-center border border-surface-container">
-                <svg className="w-full h-full text-secondary" fill="none" preserveAspectRatio="none" viewBox="0 0 200 30">
-                  <path
-                    d="M0,15 L30,15 L40,6 L50,24 L60,15 L85,15 L95,4 L105,26 L115,15 L140,15 L150,5 L160,25 L170,15 L200,15"
-                    stroke="currentColor"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2.5"
-                  />
-                </svg>
-              </div>
-            </div>
+            {/* Stability Pulse Line removed per compliance */}
           </div>
         </div>
 
@@ -431,18 +414,18 @@ export function ReferralScreen({
           <div className="bg-surface-container-low p-space-md rounded-xl flex flex-col justify-between min-h-[140px] border border-surface-container">
             <div>
               <span className="font-label-meta text-label-meta uppercase tracking-wider text-on-surface-variant font-bold">
-                Referring ASHA Field Worker Attestation
+                Referring Health Worker Attestation (Illustrative - simulated demo)
               </span>
-              <div className="mt-1 font-body-bold text-body-bold text-on-surface">Sunita Kumari (ID #4092)</div>
+              <div className="mt-1 font-body-bold text-body-bold text-on-surface">Field Worker ID #4092</div>
               <p className="font-label-meta text-label-meta text-on-surface-variant">
-                Signature authenticated via biometric mASHA device
+                Field referral generated via MediMitra decision support
               </p>
             </div>
             <div className="pt-space-md flex items-end justify-between border-t border-surface-container">
               <span className="text-secondary font-label-meta text-label-meta font-bold">
-                Digital Cryptographic Stamp: Valid
+                Triage Status: Verified
               </span>
-              <span className="font-label-meta text-label-meta text-on-surface-variant">Date: 26/10/2026</span>
+              <span className="font-label-meta text-label-meta text-on-surface-variant">Standard Protocol</span>
             </div>
           </div>
 
@@ -452,7 +435,7 @@ export function ReferralScreen({
                 <span className="font-label-meta text-label-meta uppercase tracking-wider text-on-surface-variant font-bold">
                   Receiving Facility Acknowledgment
                 </span>
-                <span className="font-label-meta text-label-meta text-primary font-bold">CHC Bhavnagar</span>
+                <span className="font-label-meta text-label-meta text-primary font-bold">Designated Facility</span>
               </div>
               <p className="font-label-meta text-label-meta text-on-surface-variant mt-1">
                 To be stamped and countersigned by Medical Officer / Staff Nurse on arrival
@@ -462,18 +445,6 @@ export function ReferralScreen({
               <span>Arrival Time: ____ : ____</span>
               <span>Officer: ________________</span>
             </div>
-          </div>
-        </div>
-
-        {/* Thermal Printer Barcode Simulation */}
-        <div className="mt-space-lg pt-space-md flex flex-col sm:flex-row items-center justify-between gap-space-sm text-on-surface-variant border-t border-surface-container">
-          <div className="flex items-center gap-space-sm">
-            <span className="font-label-meta text-label-meta tracking-wider font-mono bg-surface-container px-2 py-1 rounded">
-              REF-2025-08429-KB-TAL
-            </span>
-          </div>
-          <div className="font-label-meta text-label-meta text-right">
-            <span>Gemma 4 Field Model • Confidence: High (94.2%)</span>
           </div>
         </div>
       </div>

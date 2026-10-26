@@ -133,9 +133,9 @@ export function HomeScreen({
               Clinical Guidelines
             </span>
           </div>
-          <h3 className="font-body-bold text-body-bold text-on-surface mb-1">Integrated IMNCI Standards</h3>
+          <h3 className="font-body-bold text-body-bold text-on-surface mb-1">Standardized Clinical Triage</h3>
           <p className="font-body-sm text-body-sm text-on-surface-variant">
-            Standardized rural triage guidelines for pediatric fever, respiratory distress, and dehydration signs.
+            Standardized triage guidance for pediatric fever, respiratory distress, and dehydration signs.
           </p>
         </div>
 

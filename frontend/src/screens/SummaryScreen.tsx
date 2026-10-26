@@ -223,8 +223,8 @@ export function SummaryScreen({
               </div>
             </div>
             <div className="shrink-0 flex md:flex-col items-center md:items-end justify-between gap-1 text-on-surface-variant font-label-meta text-label-meta bg-surface-container px-space-md py-2 rounded-xl">
-              <span className="text-on-surface font-body-bold">Protocol v4.1</span>
-              <span>MOHFW Rural Guidelines</span>
+              <span className="text-on-surface font-body-bold">Safety Engine</span>
+              <span>Deterministic Triage</span>
             </div>
           </div>
         </div>
@@ -387,38 +387,34 @@ export function SummaryScreen({
             <div>
               <div className="flex items-center gap-space-xs text-primary font-label-meta text-label-meta uppercase tracking-wider mb-1 font-bold">
                 <HospitalIcon size={18} />
-                <span>Direct Facility Routing & Transit Protocol</span>
+                <span>Direct Facility Routing & Transit Protocol (Illustrative - simulated demo)</span>
               </div>
               <h3 className="font-headline-sm text-headline-sm text-on-surface font-bold">
-                Bhavnagar Community Health Centre (CHC)
+                Community Health Centre (CHC) Referral Routing
               </h3>
               <p className="font-body-sm text-body-sm text-on-surface-variant mt-1 leading-relaxed">
-                Emergency dispatch line alerted. Maternal and child tracking card #MH-8819 prepared for handover.
+                Emergency protocol alerted. Facility handover information prepared for referral.
               </p>
             </div>
 
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-space-sm my-space-md">
               <div className="p-2.5 rounded-xl bg-surface-container-low border border-surface-container">
-                <span className="font-label-meta text-label-meta text-on-surface-variant block">Distance</span>
+                <span className="font-label-meta text-label-meta text-on-surface-variant block">Distance (Illustrative)</span>
                 <span className="font-body-bold text-body-bold text-on-surface">4.2 Kilometers</span>
               </div>
               <div className="p-2.5 rounded-xl bg-surface-container-low border border-surface-container">
-                <span className="font-label-meta text-label-meta text-on-surface-variant block">Est. Transit</span>
+                <span className="font-label-meta text-label-meta text-on-surface-variant block">Est. Transit (Illustrative)</span>
                 <span className="font-body-bold text-body-bold text-on-surface">18 - 22 mins</span>
               </div>
               <div className="p-2.5 rounded-xl bg-surface-container-low border border-surface-container col-span-2 sm:col-span-1">
-                <span className="font-label-meta text-label-meta text-on-surface-variant block">Duty Officer</span>
-                <span className="font-body-bold text-body-bold text-primary">Dr. P. Varma (Ped.)</span>
+                <span className="font-label-meta text-label-meta text-on-surface-variant block">Duty Support</span>
+                <span className="font-body-bold text-body-bold text-primary">On-call Officer</span>
               </div>
             </div>
 
             <div className="flex items-center gap-space-sm flex-wrap text-on-surface-variant font-label-meta text-label-meta">
-              <span className="flex items-center gap-1">
-                CHC Desk: +91 278 242 8100
-              </span>
-              <span>•</span>
               <span className="flex items-center gap-1 text-secondary font-bold">
-                Ambulance Line: 108 Standby
+                Contact your supervisor or local emergency services
               </span>
             </div>
           </div>

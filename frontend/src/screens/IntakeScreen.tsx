@@ -77,8 +77,6 @@ export function IntakeScreen({
 }: IntakeScreenProps) {
   const [activeStep, setActiveStep] = useState<1 | 2 | 3>(1);
   const [selectedSigns, setSelectedSigns] = useState<string[]>([]);
-  const [isRecording, setIsRecording] = useState(false);
-  const [voiceNoteRecorded, setVoiceNoteRecorded] = useState(false);
   const [patientName, setPatientName] = useState(
     selectedDemo ? selectedDemo : form.text.toLowerCase().includes('kabir') ? 'Kabir' : form.text.toLowerCase().includes('dev') ? 'Dev' : 'Field Patient'
   );
@@ -100,21 +98,6 @@ export function IntakeScreen({
       }
     }
     setSelectedSigns(next);
-  }
-
-  function handleVoiceClick() {
-    if (!isRecording) {
-      setIsRecording(true);
-      setTimeout(() => {
-        setIsRecording(false);
-        setVoiceNoteRecorded(true);
-        if (!form.text.includes('Voice observation:')) {
-          const sampleAudio = 'Mother reports high grade continuous fever since yesterday evening, recurring vomiting, child crying continuously and refusing oral rehydration fluids.';
-          const next = form.text.trim() ? `${form.text.trim()}\nVoice observation: ${sampleAudio}` : `Voice observation: ${sampleAudio}`;
-          set('text', next);
-        }
-      }, 2000);
-    }
   }
 
   const tempF = form.vitals.temp_c ? ((form.vitals.temp_c * 9) / 5 + 32).toFixed(1) : null;
@@ -274,7 +257,7 @@ export function IntakeScreen({
               Patient Demographics & Onset
             </h2>
             <p className="font-body-sm text-body-sm text-on-surface-variant mb-space-md">
-              Basic age, gender, and duration information for standardized IMNCI protocols.
+              Basic age, gender, and duration information for standardized triage protocols.
             </p>
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-space-sm mb-space-md">
@@ -351,56 +334,33 @@ export function IntakeScreen({
             </div>
           </div>
 
-          {/* Voice Note Transcription Banner */}
+          {/* Voice Note Section */}
           <div className="bg-surface-container-lowest rounded-2xl p-space-md sm:p-space-lg shadow-sm border border-surface-container">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm mb-space-sm">
               <div className="flex items-center gap-space-xs">
-                <MicIcon size={22} className="text-primary" />
+                <MicIcon size={22} className="text-on-surface-variant" />
                 <h2 className="font-body-bold text-body-bold text-on-surface">
-                  Voice Observation (Hindi / Marathi / Regional)
+                  Voice Observation
                 </h2>
               </div>
               <span className="font-label-meta text-label-meta text-on-surface-variant bg-surface-container-high px-2 py-0.5 rounded-full">
-                On-device Whisper-Tiny
+                Demo Environment
               </span>
             </div>
             <p className="font-body-sm text-body-sm text-on-surface-variant mb-space-md">
-              Record mother's observations or local symptom descriptors. Audio translates locally without cloud upload.
+              Voice recording is not active in this demo. Enter patient observations directly in the text field above.
             </p>
 
-            <div className="bg-surface-container-low rounded-xl p-space-sm flex flex-col sm:flex-row items-center gap-space-md border border-surface-container">
+            <div className="bg-surface-container-low rounded-xl p-space-sm flex items-center gap-space-md border border-surface-container">
               <button
                 type="button"
-                onClick={handleVoiceClick}
-                className={`w-full sm:w-auto px-space-lg py-3 rounded-lg font-body-bold text-body-bold flex items-center justify-center gap-space-xs transition-all active:scale-95 shrink-0 shadow-sm cursor-pointer ${
-                  isRecording
-                    ? 'bg-error text-on-error animate-pulse'
-                    : voiceNoteRecorded
-                    ? 'bg-secondary text-on-secondary'
-                    : 'bg-primary hover:bg-tertiary text-on-primary'
-                }`}
+                disabled={true}
+                title="Voice note: Not available in demo"
+                className="w-full sm:w-auto px-space-lg py-3 rounded-lg font-body-bold text-body-bold flex items-center justify-center gap-space-xs transition-all shrink-0 shadow-sm bg-surface-container text-on-surface-variant opacity-60 cursor-not-allowed border border-surface-container"
               >
                 <MicIcon size={20} />
-                <span>
-                  {isRecording ? 'Listening (Tap to stop)...' : voiceNoteRecorded ? 'Voice Note Attached ✓' : 'Tap to Record Voice Note'}
-                </span>
+                <span>Voice note: Not available in demo</span>
               </button>
-
-              <div className="flex-1 w-full flex items-center justify-between px-space-sm py-2">
-                <div className="flex items-end gap-1 h-7 flex-1 mr-4">
-                  <span className="w-1.5 bg-primary/40 rounded-full h-2" />
-                  <span className="w-1.5 bg-primary/60 rounded-full h-4" />
-                  <span className={`w-1.5 bg-primary rounded-full h-6 ${isRecording ? 'animate-pulse' : ''}`} />
-                  <span className="w-1.5 bg-primary/80 rounded-full h-5" />
-                  <span className="w-1.5 bg-primary/30 rounded-full h-2" />
-                  <span className="w-1.5 bg-primary/60 rounded-full h-3" />
-                  <span className={`w-1.5 bg-primary/80 rounded-full h-6 ${isRecording ? 'animate-pulse' : ''}`} />
-                  <span className="w-1.5 bg-primary/40 rounded-full h-3" />
-                </div>
-                <span className="font-label-meta text-label-meta text-on-surface-variant whitespace-nowrap">
-                  {voiceNoteRecorded ? 'Audio attached (0:04s)' : 'Audio ready • 00:00'}
-                </span>
-              </div>
             </div>
           </div>
 
@@ -698,13 +658,13 @@ export function IntakeScreen({
           <div className="bg-surface-container-low rounded-xl p-space-md shadow-sm border border-surface-container">
             <div className="flex items-center gap-space-xs mb-space-xs">
               <HospitalIcon size={20} className="text-secondary" />
-              <h4 className="font-body-bold text-body-bold text-on-surface">Nearest Primary Center</h4>
+              <h4 className="font-body-bold text-body-bold text-on-surface">Emergency Support</h4>
             </div>
             <p className="font-body-sm text-body-sm text-on-surface font-semibold">
-              Bhavnagar Community Health Centre (CHC)
+              Contact your supervisor or local emergency services
             </p>
             <p className="font-label-meta text-label-meta text-on-surface-variant mt-0.5">
-              Distance: 4.8 km • Ambulance standby line: 108
+              Follow established clinical referral pathways for emergency transport.
             </p>
           </div>
         </div>

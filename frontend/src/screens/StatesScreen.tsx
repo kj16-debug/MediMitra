@@ -81,7 +81,7 @@ export function StatesScreen({
                 : 'text-on-surface-variant hover:text-on-surface'
             }`}
           >
-            Compute
+            Compute (Demo)
           </button>
           <button
             onClick={() => setFilter('offline')}
@@ -91,7 +91,7 @@ export function StatesScreen({
                 : 'text-on-surface-variant hover:text-on-surface'
             }`}
           >
-            Offline
+            Offline (Demo)
           </button>
           <button
             onClick={() => setFilter('error')}
@@ -101,7 +101,7 @@ export function StatesScreen({
                 : 'text-on-surface-variant hover:text-on-surface'
             }`}
           >
-            Recovery
+            Recovery (Demo)
           </button>
         </div>
       </div>
@@ -156,7 +156,7 @@ export function StatesScreen({
           </div>
           <div className="flex flex-col min-w-0">
             <span className="font-label-meta text-label-meta text-on-surface-variant uppercase truncate font-bold">
-              Field Efficiency
+              Field Efficiency (Demo)
             </span>
             <span className="font-body-bold text-body-bold text-on-surface truncate text-sm">
               8.2 mW / Inference
@@ -237,7 +237,7 @@ export function StatesScreen({
                 >
                   <MemoryIcon size={18} />
                   <span>
-                    {demoStateActive === 'tensors' ? 'Tensors Verified (Active)' : 'Inspect Realtime Tensors'}
+                    {demoStateActive === 'tensors' ? 'Tensors Verified (Active)' : 'Inspect Realtime Tensors (Demo only)'}
                   </span>
                 </button>
               </div>
@@ -288,7 +288,7 @@ export function StatesScreen({
                   </span>
                 </div>
                 <p className="font-body-sm text-body-sm text-on-surface mt-1">
-                  • 24/24 Deterministic IMNCI Rules<br />
+                  • Deterministic Safety Rules<br />
                   • Pediatric Dehydration Logic<br />
                   • Hypoxemia Vital Thresholds
                 </p>
@@ -308,7 +308,7 @@ export function StatesScreen({
                 >
                   <ShieldIcon size={18} />
                   <span>
-                    {demoStateActive === 'offlineTest' ? 'Offline Validated ✓' : 'Test Offline Pipeline'}
+                    {demoStateActive === 'offlineTest' ? 'Offline Validated ✓' : 'Test Offline Pipeline (Demo only)'}
                   </span>
                 </button>
               </div>
@@ -379,7 +379,7 @@ export function StatesScreen({
                 >
                   <WarningIcon size={18} />
                   <span>
-                    {demoStateActive === 'recovery' ? 'Safety Floor Verified ✓' : 'Simulate Recovery Pipeline'}
+                    {demoStateActive === 'recovery' ? 'Safety Floor Verified ✓' : 'Simulate Recovery Pipeline (Demo only)'}
                   </span>
                 </button>
               </div>

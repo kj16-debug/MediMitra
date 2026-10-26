@@ -228,11 +228,11 @@ export function ComparisonScreen({
               </p>
             </div>
 
-            {/* Confidence & Metric Visualization */}
+            {/* Confidence & Metric Visualization (Illustrative - simulated demo) */}
             <div className="grid grid-cols-2 gap-space-sm mb-space-md">
               <div className="p-space-sm bg-surface-container rounded-xl border border-surface-container">
                 <div className="font-label-meta text-label-meta text-on-surface-variant mb-1">
-                  Confidence Score
+                  Confidence Score (Demo)
                 </div>
                 <div className="flex items-baseline gap-1">
                   <span className="font-headline-lg text-headline-lg text-primary font-bold">94.2%</span>
@@ -245,7 +245,7 @@ export function ComparisonScreen({
 
               <div className="p-space-sm bg-surface-container rounded-xl border border-surface-container">
                 <div className="font-label-meta text-label-meta text-on-surface-variant mb-1">
-                  Compute Latency
+                  Compute Latency (Demo)
                 </div>
                 <div className="flex items-baseline gap-1">
                   <span className="font-headline-lg text-headline-lg text-on-surface font-bold">312</span>
@@ -367,11 +367,11 @@ export function ComparisonScreen({
               </p>
             </div>
 
-            {/* Confidence & Metric Visualization */}
+            {/* Confidence & Metric Visualization (Illustrative - simulated demo) */}
             <div className="grid grid-cols-2 gap-space-sm mb-space-md">
               <div className="p-space-sm bg-surface-container rounded-xl border border-surface-container">
                 <div className="font-label-meta text-label-meta text-on-surface-variant mb-1">
-                  Confidence Score
+                  Confidence Score (Demo)
                 </div>
                 <div className="flex items-baseline gap-1">
                   <span className="font-headline-lg text-headline-lg text-tertiary font-bold">98.1%</span>
@@ -384,7 +384,7 @@ export function ComparisonScreen({
 
               <div className="p-space-sm bg-surface-container rounded-xl border border-surface-container">
                 <div className="font-label-meta text-label-meta text-on-surface-variant mb-1">
-                  Compute Latency
+                  Compute Latency (Demo)
                 </div>
                 <div className="flex items-baseline gap-1">
                   <span className="font-headline-lg text-headline-lg text-on-surface font-bold">1,820</span>
@@ -396,11 +396,11 @@ export function ComparisonScreen({
               </div>
             </div>
 
-            {/* Clinical Differential Augmentation */}
+            {/* Extended Context Observation */}
             <div className="p-space-sm bg-surface-container-high rounded-xl mb-space-lg flex items-start gap-space-xs text-on-surface-variant border border-surface-container">
               <HospitalIcon size={18} className="text-tertiary shrink-0 mt-0.5" />
               <div className="font-body-sm text-body-sm">
-                <strong className="font-body-bold text-on-surface">Differential Added:</strong> Dehydration risk secondary to oral refusal. Prepared IV cannula 24G advisory.
+                <strong className="font-body-bold text-on-surface">Cloud Observation:</strong> Second opinion evaluation incorporates extended context for clinical assessment.
               </div>
             </div>
 
