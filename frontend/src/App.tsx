@@ -9,6 +9,7 @@ import { IntakeScreen } from './screens/IntakeScreen';
 import { SummaryScreen } from './screens/SummaryScreen';
 import { SelfHarmScreen } from './screens/SelfHarmScreen';
 import { ReferralScreen } from './screens/ReferralScreen';
+import { ComparisonScreen } from './screens/ComparisonScreen';
 
 const emptyVitals: Vitals = {
   temp_c: null,
@@ -229,7 +230,31 @@ function App() {
             </div>
           )}
 
-          {currentScreen !== 'home' && currentScreen !== 'intake' && currentScreen !== 'summary' && currentScreen !== 'self_harm' && currentScreen !== 'referral' && (
+          {currentScreen === 'comparison' && result && (
+            <ComparisonScreen
+              localResult={result}
+              cloudResult={cloud}
+              form={form}
+              onSelectResult={() => setCurrentScreen('referral')}
+              onBackToSummary={() => setCurrentScreen('summary')}
+              simulated={Boolean(status?.simulated)}
+            />
+          )}
+
+          {currentScreen === 'comparison' && !result && (
+            <div className="bg-surface-container-lowest p-space-lg rounded-2xl border border-surface-container text-center py-16">
+              <h3 className="font-headline-sm text-headline-sm text-on-surface mb-2">No Case For Comparison</h3>
+              <p className="text-on-surface-variant mb-4">Please analyze a patient case before running dual evaluation.</p>
+              <button
+                onClick={() => setCurrentScreen('intake')}
+                className="px-6 py-2.5 bg-primary text-on-primary rounded-xl font-bold cursor-pointer"
+              >
+                Go to Intake Form →
+              </button>
+            </div>
+          )}
+
+          {currentScreen !== 'home' && currentScreen !== 'intake' && currentScreen !== 'summary' && currentScreen !== 'self_harm' && currentScreen !== 'referral' && currentScreen !== 'comparison' && (
             <div className="space-y-space-md">
               {result && (
                 <section className="bg-surface-container-lowest p-space-md rounded-xl shadow-sm border border-surface-container">
