@@ -1,5 +1,5 @@
 import { useState, useId } from 'react';
-import type { AnalyzeRequest, DemoPatient, Vitals } from '../types';
+import type { AnalyzeRequest, DemoPatient, Vitals, Status } from '../types';
 import {
   ChildIcon,
   MicIcon,
@@ -22,6 +22,7 @@ interface IntakeScreenProps {
   selectedDemo: string;
   onLoadDemo: (name: string) => void;
   onBackToHome: () => void;
+  status?: Status | null;
 }
 
 const DANGER_SIGNS = [
@@ -74,6 +75,7 @@ export function IntakeScreen({
   selectedDemo,
   onLoadDemo,
   onBackToHome,
+  status,
 }: IntakeScreenProps) {
   const [activeStep, setActiveStep] = useState<1 | 2 | 3>(1);
   const [selectedSigns, setSelectedSigns] = useState<string[]>([]);
@@ -122,7 +124,13 @@ export function IntakeScreen({
           </div>
           <div className="flex items-center gap-space-xs font-label-meta text-label-meta text-on-surface-variant">
             <MemoryIcon size={18} className="text-primary" />
-            <span>Local Gemma 4 E4B Active</span>
+            <span>
+              {status?.demo_mode
+                ? 'Simulated Gemma 4 Active'
+                : status?.local_model && status.local_model !== 'Not configured'
+                ? `${status.local_model} Active`
+                : 'Deterministic Rules Active'}
+            </span>
             <span className="inline-block w-2 h-2 rounded-full bg-secondary ml-1 animate-pulse" />
           </div>
         </div>

@@ -4,7 +4,7 @@ import re
 from openai import AsyncOpenAI
 from . import config
 from .schemas import AnalyzeRequest, TriageResult
-from .prompts import SYSTEM_PROMPT
+from .prompts import SYSTEM_PROMPT, build_user_prompt
 
 DISCLAIMER = "Decision-support prototype. Not a diagnostic tool. Mock data only."
 
@@ -108,21 +108,45 @@ def rules_only_result(req: AnalyzeRequest, source: str = "local") -> TriageResul
     )
 
 async def call_model(req: AnalyzeRequest, cloud: bool = False) -> TriageResult:
+    if config.DEMO_MODE:
+        return mock_result(req, "cloud" if cloud else "local")
+
     base = config.CLOUD_BASE_URL if cloud else config.LOCAL_BASE_URL
     key = config.CLOUD_API_KEY if cloud else config.LOCAL_API_KEY
     model = config.CLOUD_MODEL if cloud else config.LOCAL_MODEL
-    if config.DEMO_MODE:
-        return mock_result(req, "cloud" if cloud else "local")
-    if not (base and model and (not cloud or key)):
-        raise RuntimeError("Model endpoint is not configured")
-    client = AsyncOpenAI(base_url=base, api_key=key or "ollama", timeout=config.CLOUD_TIMEOUT_SECONDS if cloud else config.LOCAL_TIMEOUT_SECONDS)
-    prompt = f"Input: {req.model_dump_json()}\nOutput language: {req.output_language}"
-    response = await client.chat.completions.create(
-        model=model,
-        temperature=0.2,
-        response_format={"type": "json_object"},
-        messages=[{"role": "system", "content": SYSTEM_PROMPT}, {"role": "user", "content": prompt}],
-    )
+    timeout = config.CLOUD_TIMEOUT_SECONDS if cloud else config.LOCAL_TIMEOUT_SECONDS
+
+    if cloud:
+        if not (base and key and model):
+            raise RuntimeError("Model endpoint is not configured")
+    else:
+        if not (base and model):
+            raise RuntimeError("Model endpoint is not configured")
+
+    client = AsyncOpenAI(base_url=base, api_key=key or "ollama", timeout=timeout)
+    user_prompt = build_user_prompt(req)
+
+    try:
+        response = await client.chat.completions.create(
+            model=model,
+            temperature=0.2,
+            response_format={"type": "json_object"},
+            messages=[
+                {"role": "system", "content": SYSTEM_PROMPT},
+                {"role": "user", "content": user_prompt},
+            ],
+        )
+    except Exception:
+        # Retry without response_format if endpoint does not support json_object mode
+        response = await client.chat.completions.create(
+            model=model,
+            temperature=0.2,
+            messages=[
+                {"role": "system", "content": SYSTEM_PROMPT},
+                {"role": "user", "content": user_prompt},
+            ],
+        )
+
     raw_content = response.choices[0].message.content or ""
     payload = clean_llm_output(raw_content)
-    return TriageResult.model_validate(payload).model_copy(update={"source": "cloud" if cloud else "local"})
+    return TriageResult.model_validate(payload).model_copy(update={"source": "cloud" if cloud else "local", "rules_only": False})

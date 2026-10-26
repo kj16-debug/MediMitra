@@ -121,33 +121,22 @@ app.add_middleware(
 
 @app.get("/api/status")
 async def status():
+    local_configured = bool(config.LOCAL_BASE_URL and config.LOCAL_MODEL)
+    cloud_configured = bool(config.CLOUD_BASE_URL and config.CLOUD_API_KEY and config.CLOUD_MODEL)
+
     if config.DEMO_MODE:
-        return {
-            "local_ok": True,
-            "cloud_ok": True,
-            "local_model": "Simulated Gemma 4 E4B demo",
-            "cloud_model": f"{config.CLOUD_MODEL or 'Gemma 4 26B A4B IT'} (simulated demo)",
-            "simulated": True,
-        }
-    async def reachable(base: str, key: str) -> bool:
-        if not base:
-            return False
-        try:
-            async with httpx.AsyncClient(timeout=3) as client:
-                response = await client.get(base.rstrip("/") + "/models", headers={"Authorization": f"Bearer {key}"} if key else {})
-                return response.is_success
-        except httpx.HTTPError:
-            return False
-    local_ok, cloud_ok = await __import__("asyncio").gather(
-        reachable(config.LOCAL_BASE_URL, config.LOCAL_API_KEY),
-        reachable(config.CLOUD_BASE_URL, config.CLOUD_API_KEY),
-    )
+        local_model = config.LOCAL_MODEL or "Simulated Gemma 4 E4B demo"
+        cloud_model = config.CLOUD_MODEL or "gemma-4-26b-a4b-it (simulated demo)"
+    else:
+        local_model = config.LOCAL_MODEL or "Not configured"
+        cloud_model = config.CLOUD_MODEL or "Not configured"
+
     return {
-        "local_ok": local_ok,
-        "cloud_ok": cloud_ok and bool(config.CLOUD_MODEL),
-        "local_model": config.LOCAL_MODEL or "Not configured",
-        "cloud_model": config.CLOUD_MODEL or "Not configured",
-        "simulated": False,
+        "demo_mode": bool(config.DEMO_MODE),
+        "local_configured": local_configured,
+        "cloud_configured": cloud_configured,
+        "local_model": local_model,
+        "cloud_model": cloud_model,
     }
 
 @app.post("/api/analyze")

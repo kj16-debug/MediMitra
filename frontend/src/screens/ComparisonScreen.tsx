@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import type { TriageResult, AnalyzeRequest } from '../types';
+import type { TriageResult, AnalyzeRequest, Status } from '../types';
 import {
   EmergencyIcon,
   WarningIcon,
@@ -17,6 +17,7 @@ interface ComparisonScreenProps {
   onSelectResult: (tier: 'local' | 'cloud') => void;
   onBackToSummary: () => void;
   simulated: boolean;
+  status?: Status | null;
 }
 
 export function ComparisonScreen({
@@ -26,6 +27,7 @@ export function ComparisonScreen({
   onSelectResult,
   onBackToSummary,
   simulated,
+  status,
 }: ComparisonScreenProps) {
   const [layoutMode, setLayoutMode] = useState<'side' | 'diff'>('side');
   const [toastMessage, setToastMessage] = useState('');
@@ -35,6 +37,14 @@ export function ComparisonScreen({
     : form.text.toLowerCase().includes('dev')
     ? 'Dev'
     : 'Field Patient';
+
+  const localModelName = status?.local_model && status.local_model !== 'Not configured'
+    ? status.local_model
+    : (simulated ? 'Gemma 4 E4B (Demo)' : 'On-Device Engine');
+
+  const cloudModelName = status?.cloud_model && status.cloud_model !== 'Not configured'
+    ? status.cloud_model
+    : (simulated ? 'Gemma 4 26B A4B IT (Demo)' : 'Cloud Model');
 
   const localUrgency = local.urgency.toLowerCase();
   const cloudUrgency = cloud ? cloud.urgency.toLowerCase() : localUrgency;
@@ -166,7 +176,7 @@ export function ComparisonScreen({
             </div>
 
             <h2 className="font-headline-sm text-headline-sm text-on-surface mb-space-xs font-bold">
-              On-device Analysis (Gemma 4 E4B)
+              On-device Analysis ({localModelName})
             </h2>
             <p className="font-label-meta text-label-meta text-on-surface-variant mb-space-md">
               Zero data leaves handset. Real-time inference on local neural engine.
@@ -274,7 +284,7 @@ export function ComparisonScreen({
                   Model Specification
                 </div>
                 <p className="font-body-sm text-body-sm">
-                  Gemma 4 E4B (4-bit quantized edge weights, zero network egress)
+                  {localModelName} (Local execution, zero network egress)
                 </p>
               </div>
             </div>
@@ -285,7 +295,7 @@ export function ComparisonScreen({
               className="w-full h-[48px] rounded-xl bg-primary hover:bg-tertiary text-on-primary font-body-bold text-body-bold flex items-center justify-center gap-space-xs shadow-md transition-all cursor-pointer"
             >
               <CheckIcon size={20} />
-              <span>Use this result (On-device)</span>
+              <span>Use this result ({localModelName})</span>
             </button>
           </div>
         </article>
@@ -305,7 +315,7 @@ export function ComparisonScreen({
             </div>
 
             <h2 className="font-headline-sm text-headline-sm text-on-surface mb-space-xs font-bold">
-              Cloud Second Opinion (Gemma 4 26B A4B IT)
+              Cloud Second Opinion ({cloudModelName})
             </h2>
             <p className="font-label-meta text-label-meta text-on-surface-variant mb-space-md">
               Synced via telemetry link. Deep multi-token synthetic chain-of-thought analysis.
@@ -411,7 +421,7 @@ export function ComparisonScreen({
                   Model Specification
                 </div>
                 <p className="font-body-sm text-body-sm">
-                  Gemma 4 26B A4B IT (Cloud server cluster with extended diagnostic support context)
+                  {cloudModelName} (Cloud cluster execution with extended context)
                 </p>
               </div>
             </div>
@@ -422,7 +432,7 @@ export function ComparisonScreen({
               className="w-full h-[48px] rounded-xl bg-surface-container-lowest hover:bg-surface-container text-primary font-body-bold text-body-bold shadow-sm flex items-center justify-center gap-space-xs transition-all border border-surface-container cursor-pointer"
             >
               <CloudIcon size={20} />
-              <span>Use this result (Cloud verified)</span>
+              <span>Use this result ({cloudModelName})</span>
             </button>
           </div>
         </article>

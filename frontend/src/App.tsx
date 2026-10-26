@@ -140,6 +140,7 @@ function App() {
         hasResult={Boolean(result)}
         hasCloud={Boolean(cloud)}
         isSelfHarm={isSelfHarm}
+        status={status}
       />
 
       <main className="w-full pt-20 md:pt-24 flex-1">
@@ -174,6 +175,7 @@ function App() {
               selectedDemo={selected}
               onLoadDemo={loadDemo}
               onBackToHome={() => setCurrentScreen('home')}
+              status={status}
             />
           )}
 
@@ -184,8 +186,8 @@ function App() {
               onEditCase={() => setCurrentScreen('intake')}
               onViewReferral={() => setCurrentScreen('referral')}
               onEscalate={escalate}
-              cloudEnabled={Boolean(status?.cloud_ok)}
-              cloudModel={status?.cloud_model || 'Gemma 4 26B A4B IT'}
+              cloudEnabled={Boolean(status?.demo_mode || status?.cloud_configured)}
+              cloudModel={status?.cloud_model || 'Cloud Model'}
               loadingCloud={busy === 'cloud'}
             />
           )}
@@ -238,7 +240,8 @@ function App() {
               form={form}
               onSelectResult={() => setCurrentScreen('referral')}
               onBackToSummary={() => setCurrentScreen('summary')}
-              simulated={Boolean(status?.simulated)}
+              simulated={Boolean(status?.demo_mode)}
+              status={status}
             />
           )}
 
@@ -265,7 +268,7 @@ function App() {
         </div>
       </main>
 
-      <Footer />
+      <Footer status={status} />
     </div>
   );
 }

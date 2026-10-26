@@ -1,4 +1,5 @@
 import React from 'react';
+import type { Status } from '../types';
 import { CrossIcon, PersonIcon, TranslateIcon } from './Icons';
 
 export type Screen = 'home' | 'intake' | 'summary' | 'self_harm' | 'referral' | 'comparison' | 'states';
@@ -10,6 +11,7 @@ interface HeaderProps {
   hasResult: boolean;
   hasCloud: boolean;
   isSelfHarm?: boolean;
+  status?: Status | null;
 }
 
 export function Header({
@@ -19,6 +21,7 @@ export function Header({
   hasResult,
   hasCloud,
   isSelfHarm = false,
+  status,
 }: HeaderProps) {
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-surface-container-lowest/95 backdrop-blur-md shadow-[0_1px_8px_rgba(0,0,0,0.04)] border-b border-surface-container">
@@ -143,10 +146,12 @@ export function Header({
             </span>
           </div>
 
-          {/* Simulated Demo Pill - Always visible as required */}
+          {/* Dynamic Status Pill */}
           <div className="flex items-center px-space-sm py-0.5 bg-surface-container-high rounded-full border border-surface-container-highest">
             <span className="font-label-meta text-label-meta text-on-surface-variant font-medium">
-              Simulated demo
+              {status?.demo_mode
+                ? 'Simulated demo'
+                : `Live: ${status?.local_model && status.local_model !== 'Not configured' ? status.local_model : status?.cloud_configured ? `Cloud (${status.cloud_model})` : 'Rules only'}`}
             </span>
           </div>
 

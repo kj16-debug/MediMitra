@@ -50,7 +50,7 @@ export function StatesScreen({
             </span>
             <span className="font-label-meta text-label-meta text-on-surface-variant flex items-center gap-1">
               <span className="w-2 h-2 rounded-full bg-primary animate-ping" />
-              {status?.simulated ? 'Simulated Runtime Environment' : 'Field Runtime Mode'}
+              {status?.demo_mode ? 'Simulated Runtime Environment' : 'Field Runtime Mode'}
             </span>
           </div>
           <h1 className="font-headline-lg text-headline-lg text-on-surface font-bold">
@@ -117,7 +117,9 @@ export function StatesScreen({
               Neural Runtime
             </span>
             <span className="font-body-bold text-body-bold text-on-surface truncate text-sm">
-              {status?.local_model || 'Gemma 4 E4B (4-bit)'}
+              {status?.local_model && status.local_model !== 'Not configured'
+                ? status.local_model
+                : (status?.demo_mode ? 'Gemma 4 E4B (Demo)' : 'Deterministic Rules')}
             </span>
           </div>
         </div>
@@ -196,7 +198,7 @@ export function StatesScreen({
                   Analyzing on this device...
                 </h2>
                 <p className="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
-                  Executing Gemma 4 E4B local neural weights and evaluating 24 deterministic rural safety rules. Zero internet connection required.
+                  Executing {status?.local_model && status.local_model !== 'Not configured' ? status.local_model : 'local neural'} weights and evaluating deterministic rural safety rules. Zero internet connection required.
                 </p>
               </div>
 
