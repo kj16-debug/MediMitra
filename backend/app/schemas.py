@@ -19,7 +19,7 @@ class AnalyzeRequest(BaseModel):
 class TriageResult(BaseModel):
     chief_complaint: str
     symptoms: list[str]
-    duration: str | None
+    duration: str | None = None
     red_flags: list[str]
     urgency: Literal["green", "yellow", "red"]
     urgency_reason: str

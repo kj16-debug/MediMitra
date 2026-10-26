@@ -31,15 +31,17 @@ async def status():
 
 @app.post("/api/analyze")
 async def analyze(req: AnalyzeRequest):
-    try:
+    if config.DEMO_MODE:
         result = await call_model(req)
         return apply_red_flag_rules(req, result)
+
+    try:
+        result = await call_model(req)
     except Exception:
-        from .llm import mock_result
-        safe = mock_result(req)
-        safe.urgency = "yellow" if safe.urgency == "green" else safe.urgency
-        safe.urgency_reason = "Could not fully analyze. Please assess manually. " + safe.urgency_reason
-        return apply_red_flag_rules(req, safe)
+        from .llm import rules_only_result
+        result = rules_only_result(req, source="local")
+
+    return apply_red_flag_rules(req, result)
 
 @app.post("/api/escalate")
 async def escalate(body: EscalateRequest):
