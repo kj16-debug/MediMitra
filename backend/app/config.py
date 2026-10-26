@@ -29,3 +29,18 @@ LOCAL_TIMEOUT_SECONDS = _safe_float(os.getenv("LOCAL_TIMEOUT_SECONDS"), 60.0)
 CLOUD_TIMEOUT_SECONDS = _safe_float(os.getenv("CLOUD_TIMEOUT_SECONDS"), 20.0)
 DEBUG_LOG = os.getenv("DEBUG_LOG", "0") == "1"
 DEMO_MODE = os.getenv("DEMO_MODE", "1") == "1"
+
+DEFAULT_CORS_ORIGINS = [
+    "http://localhost:5173",
+    "http://127.0.0.1:5173",
+    "http://localhost:4173",
+    "http://127.0.0.1:4173",
+]
+_raw_origins = os.getenv("CORS_ORIGINS", "")
+CORS_ORIGINS = [o.strip() for o in _raw_origins.split(",") if o.strip()] if _raw_origins.strip() else DEFAULT_CORS_ORIGINS
+CORS_ORIGINS = [o for o in CORS_ORIGINS if o != "*"]
+if not CORS_ORIGINS:
+    CORS_ORIGINS = DEFAULT_CORS_ORIGINS
+
+MAX_BODY_SIZE = _safe_int(os.getenv("MAX_BODY_SIZE"), 1_000_000)
+RATE_LIMIT_PER_MINUTE = _safe_int(os.getenv("RATE_LIMIT_PER_MINUTE"), 60)
