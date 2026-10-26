@@ -227,11 +227,12 @@ function App() {
           </div>
           <label className="check"><input type="checkbox" checked={form.pregnant === true} onChange={(e) => set('pregnant', e.target.checked ? true : null)} /><span>Patient is pregnant</span><small>Optional</small></label>
           <div className="subheading"><span>VITALS</span><small>Leave blank if unknown</small></div>
-          <div className="grid four">
+          <div className="grid vitals-grid">
             <Field label="TEMP" unit="°C"><input type="number" step="0.1" value={form.vitals.temp_c ?? ''} onChange={(e) => setVital('temp_c', e.target.value)} /></Field>
             <Field label="PULSE" unit="bpm"><input type="number" value={form.vitals.pulse_bpm ?? ''} onChange={(e) => setVital('pulse_bpm', e.target.value)} /></Field>
             <Field label="SpO₂" unit="%"><input type="number" value={form.vitals.spo2_pct ?? ''} onChange={(e) => setVital('spo2_pct', e.target.value)} /></Field>
             <Field label="BP · SYS" unit="mmHg"><input type="number" value={form.vitals.systolic_bp ?? ''} onChange={(e) => setVital('systolic_bp', e.target.value)} /></Field>
+            <Field label="RESP" unit="/min"><input type="number" min="0" max="100" value={form.vitals.resp_rate ?? ''} onChange={(e) => setVital('resp_rate', e.target.value)} /></Field>
           </div>
           <div className="language">
             <label className="field-label" htmlFor="output-language">OUTPUT LANGUAGE</label>
@@ -266,21 +267,50 @@ function Field({ label, unit, children }: { label: string; unit?: string; childr
 }
 
 function Result({ result: r, onEscalate, cloudEnabled, cloudModel, simulated, loading, cloud }: { result: TriageResult; onEscalate: () => void; cloudEnabled: boolean; cloudModel: string; simulated: boolean; loading: boolean; cloud: TriageResult | null }) {
-  const [copied, setCopied] = useState(false);
+  const [copyState, setCopyState] = useState<'idle' | 'copied' | 'failed'>('idle');
+
   async function copy() {
-    await navigator.clipboard.writeText(r.referral_note);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 1800);
+    try {
+      if (navigator?.clipboard?.writeText) {
+        await navigator.clipboard.writeText(r.referral_note);
+        setCopyState('copied');
+      } else {
+        const textarea = document.createElement('textarea');
+        textarea.value = r.referral_note;
+        textarea.style.position = 'fixed';
+        textarea.style.left = '-9999px';
+        document.body.appendChild(textarea);
+        textarea.select();
+        const ok = document.execCommand('copy');
+        document.body.removeChild(textarea);
+        if (!ok) throw new Error('Copy command failed');
+        setCopyState('copied');
+      }
+      setTimeout(() => setCopyState('idle'), 1800);
+    } catch {
+      setCopyState('failed');
+      setTimeout(() => setCopyState('idle'), 2500);
+    }
   }
 
+  const isRulesOnly =
+    r.urgency_reason.toLowerCase().includes('ai unavailable') ||
+    r.summary_plain.toLowerCase().includes('ai unavailable');
+
   return <>
+    {isRulesOnly && (
+      <div className="rules-only-banner" role="alert">
+        <strong>⚠ AI UNAVAILABLE — RULES ONLY</strong>
+        <p>AI inference is currently unavailable. Urgency and recommendations are based strictly on deterministic clinical safety rules. Please conduct manual clinical assessment.</p>
+      </div>
+    )}
     <div className={`urgency ${r.urgency}`}><div><span className="kicker">URGENCY · {r.source === 'local' ? 'LOCAL ANALYSIS' : 'CLOUD SECOND OPINION'}</span><strong>{r.urgency.toUpperCase()}</strong></div><p>{r.urgency_reason}</p></div>
     {r.rule_reasons.length > 0 && <div className="rulebox"><strong>⚑ &nbsp;Safety rule triggered</strong>{r.rule_reasons.map((reason) => <span key={reason}>{reason}</span>)}</div>}
     <div className="detail"><span className="kicker">CHIEF COMPLAINT</span><b>{r.chief_complaint}</b>{r.duration && <small>Duration noted: {r.duration}</small>}</div>
     <div className="detail"><span className="kicker">SYMPTOMS REPORTED</span><div className="chips">{r.symptoms.map((symptom) => <span key={symptom}>{symptom}</span>)}</div></div>
     {r.red_flags.length > 0 && <div className="detail"><span className="kicker">RED FLAGS</span><div className="chips flags">{r.red_flags.map((flag) => <span key={flag}>{flag}</span>)}</div></div>}
     <div className="text-card"><span className="kicker">PLAIN-LANGUAGE SUMMARY</span><p>{r.summary_plain}</p></div>
-    <div className="referral"><div className="referral-head"><span className="kicker">REFERRAL NOTE</span><button onClick={copy}>{copied ? 'COPIED ✓' : 'COPY ↗'}</button></div><p>{r.referral_note}</p></div>
+    <div className="referral"><div className="referral-head"><span className="kicker">REFERRAL NOTE</span><button className={copyState === 'failed' ? 'failed' : ''} onClick={copy}>{copyState === 'copied' ? 'COPIED ✓' : copyState === 'failed' ? 'COPY FAILED ⚠' : 'COPY ↗'}</button></div><p>{r.referral_note}</p></div>
     <div className="questions"><span className="kicker">FOLLOW-UP QUESTIONS</span>{r.suggested_questions.map((question, index) => <p key={question}><b>0{index + 1}</b>{question}</p>)}</div>
     <button className="secondary" disabled={!cloudEnabled || loading} onClick={onEscalate}>
       {loading ? <><span className="spinner dark" /> Requesting second opinion…</> : <>Escalate to {cloudModel.replace(' (simulated demo)', '')} <span>↗</span></>}
