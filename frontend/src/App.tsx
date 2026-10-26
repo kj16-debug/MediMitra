@@ -6,6 +6,7 @@ import { Footer } from './components/Footer';
 import { RulesBanner } from './components/RulesBanner';
 import { HomeScreen } from './screens/HomeScreen';
 import { IntakeScreen } from './screens/IntakeScreen';
+import { SummaryScreen } from './screens/SummaryScreen';
 
 const emptyVitals: Vitals = {
   temp_c: null,
@@ -172,7 +173,33 @@ function App() {
             />
           )}
 
-          {currentScreen !== 'home' && currentScreen !== 'intake' && (
+          {currentScreen === 'summary' && result && (
+            <SummaryScreen
+              result={result}
+              form={form}
+              onEditCase={() => setCurrentScreen('intake')}
+              onViewReferral={() => setCurrentScreen('referral')}
+              onEscalate={escalate}
+              cloudEnabled={Boolean(status?.cloud_ok)}
+              cloudModel={status?.cloud_model || 'Gemma 4 26B A4B IT'}
+              loadingCloud={busy === 'cloud'}
+            />
+          )}
+
+          {currentScreen === 'summary' && !result && (
+            <div className="bg-surface-container-lowest p-space-lg rounded-2xl border border-surface-container text-center py-16">
+              <h3 className="font-headline-sm text-headline-sm text-on-surface mb-2">No Case Triaged Yet</h3>
+              <p className="text-on-surface-variant mb-4">Please input patient details or load a demo case first.</p>
+              <button
+                onClick={() => setCurrentScreen('intake')}
+                className="px-6 py-2.5 bg-primary text-on-primary rounded-xl font-bold cursor-pointer"
+              >
+                Go to Intake Form →
+              </button>
+            </div>
+          )}
+
+          {currentScreen !== 'home' && currentScreen !== 'intake' && currentScreen !== 'summary' && (
             <div className="space-y-space-md">
               {result && (
                 <section className="bg-surface-container-lowest p-space-md rounded-xl shadow-sm border border-surface-container">
