@@ -293,9 +293,7 @@ function Result({ result: r, onEscalate, cloudEnabled, cloudModel, simulated, lo
     }
   }
 
-  const isRulesOnly =
-    r.urgency_reason.toLowerCase().includes('ai unavailable') ||
-    r.summary_plain.toLowerCase().includes('ai unavailable');
+  const isRulesOnly = Boolean(r.rules_only);
 
   return <>
     {isRulesOnly && (

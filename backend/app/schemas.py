@@ -28,6 +28,7 @@ class TriageResult(BaseModel):
     suggested_questions: list[str] = Field(max_length=3)
     rule_reasons: list[str] = []
     source: Literal["local", "cloud"] = "local"
+    rules_only: bool = False
     disclaimer: str = "Decision-support prototype. Not a diagnostic tool. Mock data only."
 
 class EscalateRequest(BaseModel):

@@ -104,6 +104,7 @@ def test_analyze_endpoint_live_mode_fallback(monkeypatch):
     res = asyncio.run(main.analyze(req))
     assert res.urgency in ("yellow", "red")
     assert res.urgency != "green"
+    assert res.rules_only is True
     assert "AI unavailable - assess manually" in res.urgency_reason
 
 def test_mock_result_never_used_when_demo_mode_false(monkeypatch):
@@ -127,3 +128,4 @@ def test_demo_mode_returns_simulated_result_with_label(monkeypatch):
 
     res = asyncio.run(main.analyze(AnalyzeRequest(text="Headache")))
     assert "SIMULATED DEMO ANALYSIS" in res.urgency_reason
+    assert res.rules_only is False

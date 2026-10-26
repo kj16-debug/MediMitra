@@ -82,6 +82,7 @@ def mock_result(req: AnalyzeRequest, source: str = "local") -> TriageResult:
         referral_note=f"Referral (demo): Please assess the reported concern: {text}. Urgency: {urgency}. {DISCLAIMER}",
         suggested_questions=["When did this start?", "Has it changed or worsened?", "Are there other symptoms?"],
         source=source,
+        rules_only=False,
         disclaimer=DISCLAIMER,
     )
 
@@ -102,6 +103,7 @@ def rules_only_result(req: AnalyzeRequest, source: str = "local") -> TriageResul
         referral_note=f"Referral (manual triage): Please assess reported concern: {text}. Urgency: YELLOW. {DISCLAIMER}",
         suggested_questions=["When did this start?", "Has it changed or worsened?", "Are there other symptoms?"],
         source=source,
+        rules_only=True,
         disclaimer=DISCLAIMER,
     )
 

@@ -59,12 +59,12 @@ async function fetchJson<T>(path: string, init?: RequestInit): Promise<T> {
 
   if (!response.ok) {
     let message = 'Something went wrong. Please try again.';
-    if (body && body.detail !== undefined) {
-      message = formatErrorDetail(body.detail);
-    } else if (response.status === 413) {
-      message = 'Request payload too large.';
+    if (response.status === 413) {
+      message = 'Case text is too long';
     } else if (response.status === 429) {
-      message = 'Rate limit exceeded. Please wait a moment.';
+      message = 'Too many requests, please wait a minute and try again';
+    } else if (body && body.detail !== undefined) {
+      message = formatErrorDetail(body.detail);
     } else if (response.statusText) {
       message = `${response.status} ${response.statusText}`;
     }
