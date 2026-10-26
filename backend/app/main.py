@@ -19,6 +19,12 @@ _rate_limits: dict[str, list[float]] = defaultdict(list)
 def _check_rate_limit(client_ip: str) -> bool:
     now = time.time()
     cutoff = now - 60.0
+    # Clean up empty or stale IPs to prevent unbounded memory growth
+    if len(_rate_limits) > 500:
+        stale_keys = [ip for ip, times in _rate_limits.items() if not times or times[-1] <= cutoff]
+        for ip in stale_keys:
+            _rate_limits.pop(ip, None)
+
     timestamps = [t for t in _rate_limits[client_ip] if t > cutoff]
     if len(timestamps) >= config.RATE_LIMIT_PER_MINUTE:
         _rate_limits[client_ip] = timestamps
@@ -56,7 +62,7 @@ async def generic_exception_handler(request: Request, exc: Exception):
 # 3. Security, body size limit, and rate limit middleware
 @app.middleware("http")
 async def security_and_limits_middleware(request: Request, call_next):
-    # Check Content-Length to enforce body size limit
+    # Check Content-Length header first if provided
     content_length = request.headers.get("content-length")
     if content_length:
         try:
@@ -67,6 +73,24 @@ async def security_and_limits_middleware(request: Request, call_next):
                 )
         except (ValueError, TypeError):
             pass
+
+    # Read and buffer request stream to enforce size limits on actual bytes (including chunked requests)
+    total_bytes = 0
+    chunks = []
+    async for chunk in request.stream():
+        total_bytes += len(chunk)
+        if total_bytes > config.MAX_BODY_SIZE:
+            return JSONResponse(
+                status_code=413,
+                content={"detail": "Request payload too large."},
+            )
+        chunks.append(chunk)
+
+    body = b"".join(chunks)
+    request._body = body
+    async def receive():
+        return {"type": "http.request", "body": body, "more_body": False}
+    request._receive = receive
 
     # In-memory rate limit on triage endpoints (does not log request bodies)
     if request.url.path in ("/api/analyze", "/api/escalate"):
@@ -86,12 +110,12 @@ async def security_and_limits_middleware(request: Request, call_next):
 
     return response
 
-# 4. CORS configuration strictly restricted to configured origins (no wildcard)
+# 4. CORS configuration strictly restricted to configured origins and allowed headers/methods
 app.add_middleware(
     CORSMiddleware,
     allow_origins=config.CORS_ORIGINS,
     allow_methods=["GET", "POST", "OPTIONS"],
-    allow_headers=["*"],
+    allow_headers=["Content-Type"],
     allow_credentials=False,
 )
 
