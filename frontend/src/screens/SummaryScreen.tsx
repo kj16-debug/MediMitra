@@ -238,9 +238,9 @@ export function SummaryScreen({
             <div className="flex items-center justify-between pb-space-sm border-b border-surface-container">
               <div className="flex items-center gap-space-xs">
                 <PersonIcon size={18} className="text-primary" />
-                <span className="font-body-bold text-body-bold text-on-surface">Patient Profile</span>
+                <span className="font-body-bold text-body-bold text-on-surface">Patient Profile (Illustrative - simulated demo)</span>
               </div>
-              <span className="font-label-meta text-label-meta text-on-surface-variant">Cluster A-12</span>
+              <span className="font-label-meta text-label-meta text-on-surface-variant">Cluster A-12 (Demo)</span>
             </div>
             <div className="space-y-space-sm mt-space-sm text-sm">
               <div className="flex justify-between items-baseline py-1 bg-surface-container-low px-2 rounded-lg">
@@ -261,7 +261,7 @@ export function SummaryScreen({
               </div>
               <div className="flex justify-between items-baseline py-1 px-2">
                 <span className="font-label-meta text-label-meta text-on-surface-variant">Location</span>
-                <span className="font-body-sm text-body-sm text-on-surface">Rampur PHC Cluster</span>
+                <span className="font-body-sm text-body-sm text-on-surface">Rampur PHC (Illustrative - simulated demo)</span>
               </div>
             </div>
           </div>

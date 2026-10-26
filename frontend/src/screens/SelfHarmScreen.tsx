@@ -14,6 +14,7 @@ export function SelfHarmScreen({
   onContinueToSummary,
   onBackToIntake,
 }: SelfHarmScreenProps) {
+  const helplineText = (import.meta as any).env?.VITE_HELPLINE_TEXT || '';
   return (
     <div className="flex flex-col w-full pb-space-xl">
       {/* Priority Protocol Active Status Ribbon */}
@@ -111,6 +112,17 @@ export function SelfHarmScreen({
             Contact your supervisor or local emergency services.
           </p>
         </div>
+
+        {helplineText ? (
+          <div className="mt-space-sm p-space-md rounded-xl bg-surface-container-high border border-surface-container">
+            <span className="font-label-meta text-label-meta text-on-surface-variant uppercase font-bold block mb-1">
+              Configured Emergency Support Line
+            </span>
+            <p className="font-body-bold text-body-bold text-primary">
+              {helplineText}
+            </p>
+          </div>
+        ) : null}
       </div>
 
       {/* Safety Navigation Actions */}

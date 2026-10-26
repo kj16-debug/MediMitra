@@ -212,7 +212,7 @@ export function ReferralScreen({
           <div className="flex items-center gap-space-xs mb-space-xs">
             <PersonIcon size={20} className="text-primary" />
             <h3 className="font-headline-sm text-headline-sm text-on-surface font-bold">
-              Patient Demographic Profile
+              Patient Demographic Profile (Illustrative - simulated demo)
             </h3>
           </div>
           <div className="bg-surface-container-low rounded-xl p-space-md border border-surface-container">
@@ -231,7 +231,7 @@ export function ReferralScreen({
               </div>
               <div>
                 <span className="font-label-meta text-label-meta text-on-surface-variant">Village</span>
-                <p className="font-body-bold text-body-bold text-on-surface">Rampur</p>
+                <p className="font-body-bold text-body-bold text-on-surface">Rampur (Demo)</p>
               </div>
               <div>
                 <span className="font-label-meta text-label-meta text-on-surface-variant">Duration</span>

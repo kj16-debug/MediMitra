@@ -151,13 +151,13 @@ export function Header({
           </div>
 
           {/* Language Selector: Disabled with "More languages coming soon" as instructed */}
-          <div className="hidden sm:flex items-center gap-space-xs px-space-sm py-1 bg-surface-container-low rounded-lg opacity-80" title="Translation not configured - More languages coming soon">
+          <div className="hidden sm:flex items-center gap-space-xs px-space-sm py-1 bg-surface-container-low rounded-lg opacity-80 cursor-not-allowed" title="More languages coming soon">
             <TranslateIcon size={16} className="text-on-surface-variant" />
             <span className="font-label-meta text-label-meta text-on-surface-variant">
               English
             </span>
-            <span className="text-[10px] text-on-surface-variant bg-surface-container-high px-1 py-0.5 rounded">
-              More soon
+            <span className="text-[10px] text-on-surface-variant bg-surface-container-high px-1.5 py-0.5 rounded font-medium">
+              More languages coming soon
             </span>
           </div>
 

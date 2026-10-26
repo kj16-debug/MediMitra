@@ -84,7 +84,7 @@ export function HomeScreen({
           <div className="w-full md:w-72 shrink-0 rounded-xl bg-surface-container-lowest p-space-md shadow-sm flex flex-col gap-space-sm border border-surface-container">
             <div className="flex items-center justify-between pb-space-xs">
               <span className="font-label-meta text-label-meta uppercase text-on-surface-variant tracking-wider">
-                Field Operative
+                Field Operative (Illustrative - simulated demo)
               </span>
               <span className="inline-flex items-center gap-1 font-label-meta text-label-meta text-secondary font-bold">
                 <span className="w-2 h-2 rounded-full bg-secondary" /> {isOnline ? 'Online Ready' : 'Offline'}
