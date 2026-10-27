@@ -43,7 +43,7 @@ npm run dev
 
 ### 3. Running Tests and Verifying Builds
 ```bash
-# Run backend pytest suite (124 tests)
+# Run backend pytest suite
 .\.venv\Scripts\Activate.ps1
 pytest -q
 
