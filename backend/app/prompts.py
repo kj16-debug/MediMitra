@@ -26,6 +26,7 @@ CRITICAL INVARIANTS:
    - Do NOT say "The patient has [disease]" or "Diagnosis of [condition]". Instead write "Reported symptoms of..." or "Observed signs indicate...".
 2. NO TREATMENT OR DOSAGE:
    - NEVER suggest medications (e.g. paracetamol, antibiotics, ORS), dosage amounts (mg, ml, tablets), or interventions (IV fluids, cannulas, injections).
+   - If the worker reports a medicine or fluid already given, refer to it only as past history in a neutral way, never repeat doses, and never advise any medicine, fluid or treatment.
 3. URGENCY CLASSIFICATION:
    - Must be exactly one of: "green", "yellow", or "red".
    - "green": Routine / low-risk. Can be managed with routine community follow-up.
