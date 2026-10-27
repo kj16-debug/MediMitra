@@ -148,3 +148,38 @@ def test_call_model_passes_echoed_history_but_rejects_advice(monkeypatch):
         mock_create.return_value = mock_resp_prohibited
         res = asyncio.run(call_model(req, cloud=False))
         assert res.rules_only is True
+
+def test_echo_history_in_non_main_field_is_treated_as_echoed(monkeypatch):
+    import asyncio
+    from app.llm import extract_case_text
+    monkeypatch.setattr(config, "DEMO_MODE", False)
+    monkeypatch.setattr(config, "LOCAL_BASE_URL", "http://localhost:11434/v1")
+    monkeypatch.setattr(config, "LOCAL_MODEL", "gemma4:e4b")
+    monkeypatch.setattr(config, "LOCAL_API_KEY", "ollama")
+
+    # req.text has only general complaints, but output_language (a non-main string field) contains the echo history
+    req = AnalyzeRequest(
+        text="Child with fever and cough for 2 days.",
+        output_language="Hindi (Mother gave paracetamol last night)",
+    )
+
+    case_text = extract_case_text(req)
+    assert "paracetamol" in case_text
+
+    # Model response echoes the paracetamol from the non-main field
+    allowed_json = (
+        '{"urgency": "yellow", "chief_complaint": "Fever", '
+        '"summary_plain": "Mother gave paracetamol last night.", '
+        '"urgency_reason": "Child has fever.", '
+        '"referral_note": "Mother gave paracetamol last night. Decision support only. Not a diagnosis.", '
+        '"suggested_questions": ["How long?"]}'
+    )
+    mock_resp = MagicMock()
+    mock_resp.choices = [MagicMock()]
+    mock_resp.choices[0].message.content = allowed_json
+
+    with patch("openai.resources.chat.completions.AsyncCompletions.create", new_callable=AsyncMock) as mock_create:
+        mock_create.return_value = mock_resp
+        res = asyncio.run(call_model(req, cloud=False))
+        assert res.rules_only is False
+        assert "Decision support only. Not a diagnosis." in res.referral_note

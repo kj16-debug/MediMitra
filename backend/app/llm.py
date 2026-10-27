@@ -11,6 +11,18 @@ logger = logging.getLogger("app.llm")
 
 DISCLAIMER = "Decision support only. Not a diagnosis."
 
+def extract_case_text(req: AnalyzeRequest) -> str:
+    """Extract all user-typed string fields from AnalyzeRequest for echo matching."""
+    parts = []
+    for k, v in req.model_dump().items():
+        if isinstance(v, str) and v.strip():
+            parts.append(v.strip())
+        elif isinstance(v, dict):
+            for sub_k, sub_v in v.items():
+                if isinstance(sub_v, str) and sub_v.strip():
+                    parts.append(sub_v.strip())
+    return " ".join(parts)
+
 def clean_llm_output(raw: str) -> dict:
     text = (raw or "").strip()
     # Strip reasoning tags (e.g. <think>...</think>)
@@ -174,7 +186,7 @@ async def call_model(req: AnalyzeRequest, cloud: bool = False) -> TriageResult:
 
     payload = clean_llm_output(raw_content)
 
-    case_text = req.text.strip()
+    case_text = extract_case_text(req)
 
     from .output_filter import contains_treatment_or_dosage, logger as filter_logger
     if contains_treatment_or_dosage(payload, case_text=case_text):
