@@ -174,13 +174,15 @@ async def call_model(req: AnalyzeRequest, cloud: bool = False) -> TriageResult:
 
     payload = clean_llm_output(raw_content)
 
+    case_text = req.text.strip()
+
     from .output_filter import contains_treatment_or_dosage, logger as filter_logger
-    if contains_treatment_or_dosage(payload):
+    if contains_treatment_or_dosage(payload, case_text=case_text):
         filter_logger.warning("model output rejected by filter")
         return rules_only_result(req, source="cloud" if cloud else "local")
 
     result = TriageResult.model_validate(payload).model_copy(update={"source": "cloud" if cloud else "local", "rules_only": False})
-    if contains_treatment_or_dosage(result):
+    if contains_treatment_or_dosage(result, case_text=case_text):
         filter_logger.warning("model output rejected by filter")
         return rules_only_result(req, source="cloud" if cloud else "local")
 
