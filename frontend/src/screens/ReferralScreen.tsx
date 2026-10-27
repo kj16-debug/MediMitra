@@ -403,6 +403,9 @@ export function ReferralScreen({
             <p className="font-body-sm text-body-sm font-medium leading-relaxed text-on-surface mt-0.5">
               <strong>No diagnosis made. No prescription medications or medicinal dosages administered.</strong> This field referral note was generated automatically based on standard triage screening protocols to assist prompt intake. Refer child immediately for comprehensive clinical assessment by a licensed medical officer.
             </p>
+            <p className="text-xs font-bold text-on-surface mt-1">
+              Decision support only. Not a diagnosis.
+            </p>
             <p className="text-xs text-on-surface-variant mt-1 italic">
               {r.disclaimer}
             </p>

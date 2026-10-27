@@ -13,7 +13,7 @@ export function Footer({ status }: FooterProps) {
         <div className="flex items-center gap-space-xs">
           <ShieldIcon size={18} className="text-secondary-fixed shrink-0" />
           <p className="font-label-meta text-label-meta text-inverse-on-surface">
-            Decision support only. Not a diagnosis, treatment, or dosage advice. Always defer to local emergency medical protocols.
+            Decision support only. Not a diagnosis. No treatment or dosage advice. Always defer to local emergency medical protocols.
           </p>
         </div>
         <div className="font-label-meta text-label-meta text-inverse-on-surface/80 shrink-0">
