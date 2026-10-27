@@ -23,7 +23,11 @@ def clean_llm_output(raw: str) -> dict:
         if start != -1 and end != -1 and end > start:
             text = text[start : end + 1]
 
-    data = json.loads(text)
+    try:
+        data = json.loads(text)
+    except Exception:
+        raise ValueError("Model output is not valid JSON") from None
+
     if not isinstance(data, dict):
         raise ValueError("Model output is not a JSON object")
 
