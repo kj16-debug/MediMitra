@@ -62,6 +62,8 @@ No diagnosis, treatment, or dosage output is intended. Red-flag rules only maint
 - `CLOUD_BASE_URL`: Cloud provider endpoint (e.g. `https://models.jarvislabs.net/v1`).
 - `JARVISLABS_API_KEY`: Cloud provider API token (kept strictly server-side).
 - `CLOUD_MODEL`: Cloud served model identifier (`gemma-4-26b-a4b-it`).
+- `LOCAL_TIMEOUT_SECONDS`: Local model request timeout in seconds (default `120.0`; CPU Gemma inference can be slow).
+- `CLOUD_TIMEOUT_SECONDS`: Cloud model request timeout in seconds (default `60.0`).
 - `CORS_ORIGINS`: Comma-separated list of allowed browser origins (defaults to local Vite dev and preview ports; wildcards disabled).
 - `MAX_BODY_SIZE`: Maximum request payload size in bytes (defaults to `65536` / 64 KB; enforced on streaming bytes).
 - `RATE_LIMIT_PER_MINUTE`: Sliding-window request ceiling per client IP (defaults to `60` rpm with automatic memory cleanup).
