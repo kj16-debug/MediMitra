@@ -149,4 +149,15 @@ async def call_model(req: AnalyzeRequest, cloud: bool = False) -> TriageResult:
 
     raw_content = response.choices[0].message.content or ""
     payload = clean_llm_output(raw_content)
-    return TriageResult.model_validate(payload).model_copy(update={"source": "cloud" if cloud else "local", "rules_only": False})
+
+    from .output_filter import contains_treatment_or_dosage, logger as filter_logger
+    if contains_treatment_or_dosage(payload):
+        filter_logger.warning("model output rejected by filter")
+        return rules_only_result(req, source="cloud" if cloud else "local")
+
+    result = TriageResult.model_validate(payload).model_copy(update={"source": "cloud" if cloud else "local", "rules_only": False})
+    if contains_treatment_or_dosage(result):
+        filter_logger.warning("model output rejected by filter")
+        return rules_only_result(req, source="cloud" if cloud else "local")
+
+    return result
