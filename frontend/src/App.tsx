@@ -145,7 +145,7 @@ function App() {
 
       <main className="w-full pt-20 md:pt-24 flex-1">
         <div className="max-w-[1100px] mx-auto px-margin min-h-[calc(100vh-10rem)]">
-          <RulesBanner show={Boolean(result?.rules_only)} />
+          <RulesBanner show={Boolean(result?.rules_only || cloud?.rules_only)} />
 
           {currentScreen === 'home' && (
             <HomeScreen
