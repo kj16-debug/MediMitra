@@ -23,6 +23,29 @@ export function Header({
   isSelfHarm = false,
   status,
 }: HeaderProps) {
+  const getStatusDisplay = (): { label: string; title?: string } => {
+    if (!status) {
+      return { label: 'Status unavailable', title: 'Cannot reach backend status endpoint' };
+    }
+    if (status.demo_mode) {
+      return { label: 'Simulated demo', title: 'Operating in simulated demo mode' };
+    }
+    if (!status.local_configured && !status.cloud_configured) {
+      return {
+        label: 'Live: not configured',
+        title: 'No local Ollama or cloud model endpoint configured in backend environment',
+      };
+    }
+    if (status.local_configured && status.local_model && status.local_model !== 'Not configured') {
+      return { label: `Live: ${status.local_model}`, title: `Using local model ${status.local_model}` };
+    }
+    if (status.cloud_configured && status.cloud_model && status.cloud_model !== 'Not configured') {
+      return { label: `Live: Cloud (${status.cloud_model})`, title: `Using cloud model ${status.cloud_model}` };
+    }
+    return { label: 'Live: not configured', title: 'Live model configured without valid identifier' };
+  };
+
+  const statusInfo = getStatusDisplay();
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-surface-container-lowest/95 backdrop-blur-md shadow-[0_1px_8px_rgba(0,0,0,0.04)] border-b border-surface-container">
       <div className="h-16 max-w-[1100px] mx-auto px-margin flex items-center justify-between gap-space-md">
@@ -147,11 +170,12 @@ export function Header({
           </div>
 
           {/* Dynamic Status Pill */}
-          <div className="flex items-center px-space-sm py-0.5 bg-surface-container-high rounded-full border border-surface-container-highest">
+          <div
+            className="flex items-center px-space-sm py-0.5 bg-surface-container-high rounded-full border border-surface-container-highest"
+            title={statusInfo.title}
+          >
             <span className="font-label-meta text-label-meta text-on-surface-variant font-medium">
-              {status?.demo_mode
-                ? 'Simulated demo'
-                : `Live: ${status?.local_model && status.local_model !== 'Not configured' ? status.local_model : status?.cloud_configured ? `Cloud (${status.cloud_model})` : 'Rules only'}`}
+              {statusInfo.label}
             </span>
           </div>
 
