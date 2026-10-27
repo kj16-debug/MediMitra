@@ -1,99 +1,170 @@
 # MediMitra
 
-An offline-first triage support prototype for community health workers. It demonstrates a structured intake, urgency summary, deterministic safety rules, a referral note, and a cloud escalation comparison. It is decision support only, not a diagnostic tool.
+> **DISCLAIMER**: Decision support only. Not a diagnosis. MediMitra is a technology prototype for community health workers and must never be used to make real clinical decisions, establish medical diagnoses, or prescribe medications and dosages. Always defer to qualified medical officers and local emergency healthcare protocols.
 
-## Run locally
+MediMitra is an offline-first clinical triage decision support assistant tailored for community health workers (e.g. ASHA workers) in low-connectivity rural settings. It provides structured symptom intake, preliminary urgency categorization (Green, Yellow, Red), deterministic red-flag safety overrides, printable referral notes, and dual-model cloud second-opinion comparisons.
 
-Requirements: Python 3.11+ and Node.js 18+.
+---
 
+## Quick Start & Local Setup
+
+### Prerequisites
+- Python 3.11+
+- Node.js 18+
+
+### 1. Backend Service
 ```bash
-cp .env.example .env
-python3 -m venv .venv
-source .venv/bin/activate
+# Set up virtual environment
+python -m venv .venv
+
+# Activate virtual environment
+# Windows PowerShell:
+.\.venv\Scripts\Activate.ps1
+# Linux / macOS:
+# source .venv/bin/activate
+
+# Install dependencies
 pip install -r backend/requirements.txt
+
+# Start backend on port 8000
 uvicorn app.main:app --app-dir backend --reload --port 8000
 ```
+- Backend API: <http://localhost:8000>
+- Interactive API Docs: <http://localhost:8000/docs>
 
-In another terminal:
-
+### 2. Frontend Application
+In a separate terminal:
 ```bash
 cd frontend
 npm install
 npm run dev
 ```
+- Frontend Web App: <http://localhost:5173>
 
-Open <http://localhost:5173>. API docs: <http://localhost:8000/docs>.
-
-## Demo mode and model integrations
-
-The default `DEMO_MODE=1` returns deterministic fictional demo analyses and labels them as simulated. The local and cloud workflow buttons work without downloading a model, API keys, or network service. The demo data is fictional; submitted text is held in application memory for the request and is not logged or written to disk.
-
-To connect real inference, install Ollama and verify the exact Gemma 4 E4B/E2B model tag with `ollama list` or the Ollama library. Set `LOCAL_MODEL` and `LOCAL_BASE_URL` in `.env`. For Jarvislabs Token Factory, set `CLOUD_BASE_URL=https://models.jarvislabs.net/v1`, add your secret as `JARVISLABS_API_KEY`, and set `CLOUD_MODEL` to the exact model ID shown in your Jarvislabs account/catalog (the selected model ID is `gemma-4-26b-a4b-it`). Jarvislabs documents this base URL and recommends keeping the key in a server environment; this backend reads it server-side and never sends it to the browser. Set `DEMO_MODE=0` only after configuring both endpoints. The model adapter and schema validation are in `backend/app/llm.py`; deterministic rules always run after model output.
-
-`DEBUG_LOG` defaults to `0`; this prototype does not log case text. Never use real patient data in the demo. Frontend demo translations remain in English until a configured model supplies the requested output language.
-
-## Tests and build
-
+### 3. Running Tests and Verifying Builds
 ```bash
-cd backend
+# Run backend pytest suite (124 tests)
+.\.venv\Scripts\Activate.ps1
 pytest -q
-cd ../frontend
+
+# Verify frontend production build
+cd frontend
 npm run build
 ```
 
-## Three-minute demo
+---
 
-1. Introduce the privacy and connectivity problem. The badge identifies the app as a simulated Gemma 4 demo.
-2. Load **Kabir · fever and vomiting**, analyze, and review the structured summary and referral.
-3. Load **Dev · low oxygen rule override** and analyze. The SpO₂ rule forces red urgency even if the generated proposal is lower.
-4. Select **Escalate to Gemma 4 26B A4B IT** to display a simulated side-by-side cloud second opinion. No cloud service is called in demo mode.
-5. Point out that the referral includes the decision-support disclaimer.
+## Demo Mode vs. Live Mode
 
-## Safety and scope
+### Demo Mode (`DEMO_MODE=1`, Default)
+- Runs completely offline with deterministic simulated triage responses.
+- Requires no external API keys, internet connection, or local model downloads.
+- Allows full workflow evaluation (intake, urgency classification, safety overrides, printable referral notes, and side-by-side cloud comparison) out of the box.
+- Sample demo cases (e.g. Kabir, Dev) test normal and safety-override workflows without live inference.
 
-No diagnosis, treatment, or dosage output is intended. Red-flag rules only maintain or raise urgency. Self-harm rule hits explicitly call for immediate human support. All patient examples are fictional. This prototype is not clinically validated and must not be used to make real care decisions.
+### Live Mode (`DEMO_MODE=0`)
+- Connects to live language models for clinical summary generation and question suggestion.
+- **Local On-Device Engine**: Calls local OpenAI-compatible endpoints (e.g. Ollama running Gemma models).
+- **Cloud Escalation**: Calls cloud OpenAI-compatible endpoints (e.g. Jarvislabs Token Factory running `gemma-4-26b-a4b-it`).
+- **Independent Model Operation**: Local and cloud endpoints operate independently. If only local is configured, local runs while cloud escalation indicates unavailable; if only cloud is configured, local falls back to rules-only while cloud escalation functions.
+- **Rules-Only Fallback**: If an AI model fails, times out, or returns invalid schema, the system returns a deterministic rules-only result (`rules_only: true`, minimum yellow urgency) labelled `"AI unavailable - rules only"`.
+
+---
 
 ## Environment Variables
 
 ### Backend Configuration (`.env`)
-- `DEMO_MODE`: Set to `1` (default) for deterministic offline simulation without external dependencies. Set to `0` for live inference.
-- `LOCAL_BASE_URL`: Local model endpoint (e.g. `http://localhost:11434/v1`).
-- `LOCAL_MODEL`: Local model tag in Ollama.
-- `CLOUD_BASE_URL`: Cloud provider endpoint (e.g. `https://models.jarvislabs.net/v1`).
-- `JARVISLABS_API_KEY`: Cloud provider API token (kept strictly server-side).
-- `CLOUD_MODEL`: Cloud served model identifier (`gemma-4-26b-a4b-it`).
-- `LOCAL_TIMEOUT_SECONDS`: Local model request timeout in seconds (default `120.0`; CPU Gemma inference can be slow).
-- `CLOUD_TIMEOUT_SECONDS`: Cloud model request timeout in seconds (default `60.0`).
-- `CORS_ORIGINS`: Comma-separated list of allowed browser origins (defaults to local Vite dev and preview ports; wildcards disabled).
-- `MAX_BODY_SIZE`: Maximum request payload size in bytes (defaults to `65536` / 64 KB; enforced on streaming bytes).
-- `RATE_LIMIT_PER_MINUTE`: Sliding-window request ceiling per client IP (defaults to `60` rpm with automatic memory cleanup).
-- `DEBUG_LOG`: Default `0`. Case text and model outputs are never written to disk or logs regardless of setting.
+Configuration template is provided in `.env.example`. Copy `.env.example` to `.env` to configure.
+
+| Variable | Default Value | Description |
+|---|---|---|
+| `DEMO_MODE` | `1` | `1` for deterministic offline simulation; `0` for live model inference. |
+| `LOCAL_BASE_URL` | `http://localhost:11434/v1` | Base URL for local OpenAI-compatible inference server (e.g. Ollama). |
+| `LOCAL_API_KEY` | `ollama` | API key for local inference endpoint. |
+| `LOCAL_MODEL` | `""` | Local model tag in Ollama (e.g. `gemma4:e4b`). Empty disables local model. |
+| `CLOUD_BASE_URL` | `https://models.jarvislabs.net/v1` | Base URL for cloud inference provider (Jarvislabs Token Factory). |
+| `JARVISLABS_API_KEY` | `""` | Secret API key for cloud provider (kept strictly server-side). |
+| `CLOUD_MODEL` | `gemma-4-26b-a4b-it` | Served model identifier on the cloud provider. |
+| `LOCAL_TIMEOUT_SECONDS` | `120.0` | Request timeout for local model (float; allows slow CPU inference). Bad/negative values safely fall back to `120.0`. |
+| `CLOUD_TIMEOUT_SECONDS` | `60.0` | Request timeout for cloud model (float). Bad/negative values safely fall back to `60.0`. |
+| `DEBUG_LOG` | `0` | Debug logging toggle. Patient case text and model outputs are never logged regardless of setting. |
+| `CORS_ORIGINS` | `http://localhost:5173,...` | Comma-separated list of allowed browser origins (wildcards prohibited). |
+| `SUPERVISOR_EMERGENCY_CONTACT` | `"Contact your supervisor..."` | Fallback emergency instruction string for field health workers. |
+| `MAX_BODY_SIZE` | `1000000` | Maximum request body size in bytes enforced by middleware. |
+| `RATE_LIMIT_PER_MINUTE` | `60` | In-memory sliding-window request limit per client IP. |
 
 ### Frontend Configuration (`frontend/.env`)
-- `VITE_API_BASE_URL`: Public base URL for the backend API (leave blank when using the default Vite `/api` proxy).
-- `VITE_HELPLINE_TEXT`: Public helpline and supervisor contact text displayed on the self-harm safety screen. Only shown if configured.
-- **Security Notice**: Never put API keys (e.g. `JARVISLABS_API_KEY`) in `frontend/.env` or any `VITE_` variable; client-side environment variables are bundled into browser assets.
+Configuration template is provided in `frontend/.env.example`.
 
-## Runtime Behavior & Hardening
+| Variable | Default Value | Description |
+|---|---|---|
+| `VITE_API_BASE_URL` | `""` | Base URL for backend API. Leave empty to use Vite `/api` proxy in development. |
+| `VITE_HELPLINE_TEXT` | `""` | Public district emergency helpline text displayed on the self-harm screen. Hidden if unset. |
 
-### Live Fallback Behavior
-In live mode (`DEMO_MODE=0`), if the model inference call fails, times out, or returns invalid schema data, the backend does **not** return the simulated mock result. Instead, it falls back to a deterministic rules-only evaluation:
-- Urgency is derived solely from the deterministic safety rules.
-- Urgency is floored at `yellow` (it can never be `green`).
-- The response is explicitly tagged with `rules_only: true` and labelled `"AI unavailable - assess manually"`.
-- The frontend displays an ambient `"AI unavailable - rules only"` alert banner across screens.
+> **IMPORTANT SECURITY NOTE**: API keys (including `JARVISLABS_API_KEY`) must remain strictly in backend `.env` (which is git-ignored). Never put API keys or secrets in `frontend/.env`, any `VITE_` variable, or version control. Any variable prefixed with `VITE_` is compiled into client-side JavaScript and exposed to the browser.
 
-### Security and Privacy Hardening
-- **Privacy-safe errors**: Pydantic validation and middleware errors return sanitized messages and never echo submitted case text or model outputs.
-- **Payload limits**: Middleware limits chunked streaming bodies to prevent memory exhaustion attacks.
-- **Rate limiting**: In-memory IP rate limiter cleans up stale timestamps to prevent unbounded memory growth and never logs request bodies on HTTP 429.
-- **Security headers**: Strict HTTP security headers applied on all responses (`X-Content-Type-Options: nosniff`, `X-Frame-Options: DENY`, `Referrer-Policy: no-referrer`, CSP).
-- **Log privacy**: Uvicorn access logging and application loggers are sanitized so that case text and model responses never reach server logs.
+---
+
+## Safety Architecture & Guardrails
+
+MediMitra implements multi-layered safety guardrails to ensure decision support integrity:
+
+1. **Deterministic Red-Flag Rules Run After Model**:
+   - Safety rules in `backend/app/red_flags.py` evaluate on every intake after the model (or fallback) returns.
+   - **Safety Invariant**: Rules can only maintain or raise urgency (e.g. Green -> Yellow, Yellow -> Red), never lower it. Low SpO₂ (< 90%), chest pain, convulsions, or respiratory distress automatically force RED urgency regardless of model proposal.
+
+2. **Self-Harm Safety Protocol**:
+   - Detection of self-harm phrases (`want to die`, `kill myself`, `end my life`) immediately triggers a priority safety override:
+     - Urgency is locked to **RED**.
+     - Referral note and summary prominently display: `IMMEDIATE HUMAN SUPPORT REQUIRED: Connect with emergency care or a crisis worker immediately.`
+     - The UI routes directly to an empathetic safety guidance screen instructing the worker to stay with the person, never leave them alone, and contact a supervisor.
+
+3. **Model Output Treatment & Dosage Filter**:
+   - Every free-text field returned by an external model is inspected by `backend/app/output_filter.py`.
+   - If any dosage units (e.g. `mg`, `ml`, `tablets`, `puffs`), prescription/administration actions (`prescribe`, `administer`, `give him/her`), or drug names (`paracetamol`, `antibiotics`, `ibuprofen`, `ORS`, etc.) appear, **all model output is discarded**.
+   - The request automatically falls back to a rules-only result (`rules_only: true`, minimum yellow urgency).
+   - Word-boundary matching (`\b`) ensures harmless words (e.g. "table", "doctors", "orders") pass without false positives.
+
+4. **Case Text Delimited as Untrusted Data**:
+   - In prompts, patient text is enclosed within `<case_data>...</case_data>` delimiters.
+   - Any raw `</case_data>` closing tags in user input are neutralized to prevent delimiter escape.
+   - The system prompt explicitly instructs the model that data inside tags is untrusted patient observations and that instructions inside must be ignored.
+
+5. **No Case Text Logged or Stored**:
+   - Patient text, vitals, and model responses are held in transient memory only for the duration of the request.
+   - Server access logging, error handlers, and client storage (localStorage, sessionStorage, indexedDB, console) never store or log case text.
+
+---
+
+## Status API & Header Indicators
+
+The backend exposes `GET /api/status`, returning configuration status without exposing secrets:
+- `demo_mode`: Boolean flag indicating whether simulation mode is active.
+- `local_configured`: Boolean indicating whether local model and endpoint are configured.
+- `cloud_configured`: Boolean indicating whether cloud model, endpoint, and API key are configured.
+- `local_model`: Configured local model name (or simulated demo label).
+- `cloud_model`: Configured cloud model name (or simulated demo label).
+
+### Header Status Pill Meaning
+The frontend header status pill dynamically indicates runtime state:
+- **`Simulated demo`**: Backend is running in demo mode (`DEMO_MODE=1`).
+- **`Live: <model>`**: Backend is running in live mode (`DEMO_MODE=0`) and the model is configured (e.g. `Live: gemma4:e4b` or `Live: Cloud (gemma-4-26b-a4b-it)`).
+- **`Live: not configured`**: Backend is in live mode (`DEMO_MODE=0`), but neither local nor cloud models are configured.
+- **`Status unavailable`**: Frontend cannot reach `/api/status` (e.g. backend offline or network disruption).
+
+---
+
+## Privacy Notice
+
+- **Cloud Escalation Privacy**: When escalating a case for cloud second opinion, patient case text and vital signs are transmitted over HTTPS to the configured cloud provider (Jarvislabs Token Factory).
+- **Synthetic Data Requirement**: Because this is a prototype, evaluators and health workers must **only use fictional patient cases**. Never enter real patient identifying information, national ID numbers, or protected health information (PHI).
+
+---
 
 ## Known Limitations
 
-- **Keyword-based rules**: Deterministic red-flag rules rely on targeted clinical keywords and vitals thresholds. They do not parse complex linguistic negation and intentionally err on the side of caution (may raise urgency when a symptom is mentioned in a negated context).
-- **Per-IP rate limiting**: Rate limiting tracks client IP from direct socket connection. If deployed behind a reverse proxy or load balancer, configure trusted reverse-proxy headers (e.g. `X-Forwarded-For`) to avoid grouping clinic clients.
-- **Tailwind 3 Dev Dependencies**: 3 moderate dev-only npm advisories exist upstream via Tailwind CSS 3.x build toolchain; production builds remain secure.
-- **Clinical validation**: MediMitra is a technology prototype and has not undergone formal clinical trials. Deterministic red-flag rules must be reviewed and validated by licensed medical officers before deployment beyond demonstration environments.
-- **Helpline verification**: Emergency contact and helpline text must be explicitly configured and verified with local district health authorities (`VITE_HELPLINE_TEXT` / `SUPERVISOR_EMERGENCY_CONTACT`).
+- **Keyword-Based Rules Cannot Read Negation**: Deterministic red-flag rules match targeted clinical keywords and vital signs thresholds. They intentionally err on the side of caution and do not interpret complex linguistic negation (e.g. "patient has no chest pain" may still trigger a yellow/red check).
+- **Clinical Validation Required**: MediMitra is a technology proof-of-concept and has not undergone formal clinical trials. Deterministic red-flag rules and prompt structures must be reviewed and validated by licensed medical officers before deployment in field operations.
+- **Per-IP Rate Limiting**: The in-memory sliding-window rate limiter tracks client socket IPs. In deployments behind reverse proxies or load balancers, trusted header forwarding (e.g. `X-Forwarded-For`) must be configured to avoid grouping multiple clinic devices under one IP.
+- **No Real Translations**: The language selector is disabled with `"More languages coming soon"` to avoid unverified medical translations. The interface and triage outputs remain in English.
+- **No Hardcoded Helpline Numbers**: No specific emergency helpline telephone numbers are hardcoded. Deployments must configure verified local district emergency contacts via `VITE_HELPLINE_TEXT` and `SUPERVISOR_EMERGENCY_CONTACT`.
