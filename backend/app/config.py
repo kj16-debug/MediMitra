@@ -19,7 +19,10 @@ def _safe_int(val: str | None, default: int) -> int:
     if val is None or not str(val).strip():
         return default
     try:
-        return int(val)
+        i = int(val)
+        if i <= 0:
+            return default
+        return i
     except (ValueError, TypeError):
         return default
 
@@ -31,6 +34,8 @@ CLOUD_API_KEY = os.getenv("JARVISLABS_API_KEY", os.getenv("CLOUD_API_KEY", ""))
 CLOUD_MODEL = os.getenv("CLOUD_MODEL", "")
 LOCAL_TIMEOUT_SECONDS = _safe_float(os.getenv("LOCAL_TIMEOUT_SECONDS"), 120.0)
 CLOUD_TIMEOUT_SECONDS = _safe_float(os.getenv("CLOUD_TIMEOUT_SECONDS"), 60.0)
+CLOUD_MAX_TOKENS = _safe_int(os.getenv("CLOUD_MAX_TOKENS"), 4000)
+CLOUD_ENABLE_THINKING = os.getenv("CLOUD_ENABLE_THINKING", "0") == "1"
 DEBUG_LOG = os.getenv("DEBUG_LOG", "0") == "1"
 DEMO_MODE = os.getenv("DEMO_MODE", "1") == "1"
 

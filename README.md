@@ -87,6 +87,8 @@ Configuration template is provided in `.env.example`. Copy `.env.example` to `.e
 | `CLOUD_MODEL` | `gemma-4-26b-a4b-it` | Served model identifier on the cloud provider. |
 | `LOCAL_TIMEOUT_SECONDS` | `120.0` | Request timeout for local model (float; allows slow CPU inference). Bad/negative values safely fall back to `120.0`. |
 | `CLOUD_TIMEOUT_SECONDS` | `60.0` | Request timeout for cloud model (float). Bad/negative values safely fall back to `60.0`. |
+| `CLOUD_MAX_TOKENS` | `4000` | Maximum generation tokens for cloud model requests (prevents truncation on reasoning models). |
+| `CLOUD_ENABLE_THINKING` | `0` | Enable thinking/reasoning on cloud models (`0` disables thinking for direct, fast JSON output; `1` enables). |
 | `DEBUG_LOG` | `0` | Debug logging toggle. Patient case text and model outputs are never logged regardless of setting. |
 | `CORS_ORIGINS` | `http://localhost:5173,...` | Comma-separated list of allowed browser origins (wildcards prohibited). |
 | `SUPERVISOR_EMERGENCY_CONTACT` | `"Contact your supervisor..."` | Fallback emergency instruction string for field health workers. |

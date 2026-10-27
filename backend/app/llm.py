@@ -1,10 +1,13 @@
 """Replaceable model adapter. Demo responses are deterministic and never claim inference."""
 import json
 import re
+import logging
 from openai import AsyncOpenAI
 from . import config
 from .schemas import AnalyzeRequest, TriageResult
 from .prompts import SYSTEM_PROMPT, build_user_prompt
+
+logger = logging.getLogger("app.llm")
 
 DISCLAIMER = "Decision support only. Not a diagnosis."
 
@@ -132,28 +135,43 @@ async def call_model(req: AnalyzeRequest, cloud: bool = False) -> TriageResult:
     client = AsyncOpenAI(base_url=base, api_key=key or "ollama", timeout=timeout)
     user_prompt = build_user_prompt(req)
 
+    extra_body = {}
+    if cloud and not config.CLOUD_ENABLE_THINKING:
+        extra_body["chat_template_kwargs"] = {"enable_thinking": False}
+
+    call_kwargs = {
+        "model": model,
+        "temperature": 0.2,
+    }
+    if cloud and config.CLOUD_MAX_TOKENS:
+        call_kwargs["max_tokens"] = config.CLOUD_MAX_TOKENS
+    if extra_body:
+        call_kwargs["extra_body"] = extra_body
+
     try:
         response = await client.chat.completions.create(
-            model=model,
-            temperature=0.2,
             response_format={"type": "json_object"},
             messages=[
                 {"role": "system", "content": SYSTEM_PROMPT},
                 {"role": "user", "content": user_prompt},
             ],
+            **call_kwargs,
         )
     except Exception:
         # Retry without response_format if endpoint does not support json_object mode
         response = await client.chat.completions.create(
-            model=model,
-            temperature=0.2,
             messages=[
                 {"role": "system", "content": SYSTEM_PROMPT},
                 {"role": "user", "content": user_prompt},
             ],
+            **call_kwargs,
         )
 
     raw_content = response.choices[0].message.content or ""
+    if not raw_content.strip():
+        logger.warning("model returned no content")
+        return rules_only_result(req, source="cloud" if cloud else "local")
+
     payload = clean_llm_output(raw_content)
 
     from .output_filter import contains_treatment_or_dosage, logger as filter_logger
