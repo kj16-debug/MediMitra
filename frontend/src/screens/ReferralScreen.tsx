@@ -45,12 +45,15 @@ export function ReferralScreen({
 
   async function handleCopy() {
     try {
+      const textToCopy = r.referral_note.includes('Decision support only. Not a diagnosis.')
+        ? r.referral_note
+        : `${r.referral_note} Decision support only. Not a diagnosis.`.trim();
       if (navigator?.clipboard?.writeText) {
-        await navigator.clipboard.writeText(r.referral_note);
+        await navigator.clipboard.writeText(textToCopy);
         setCopyState('copied');
       } else {
         const textarea = document.createElement('textarea');
-        textarea.value = r.referral_note;
+        textarea.value = textToCopy;
         textarea.style.position = 'fixed';
         textarea.style.left = '-9999px';
         document.body.appendChild(textarea);

@@ -6,7 +6,7 @@ from . import config
 from .schemas import AnalyzeRequest, TriageResult
 from .prompts import SYSTEM_PROMPT, build_user_prompt
 
-DISCLAIMER = "Decision-support prototype. Not a diagnostic tool. Mock data only."
+DISCLAIMER = "Decision support only. Not a diagnosis."
 
 def clean_llm_output(raw: str) -> dict:
     text = (raw or "").strip()
@@ -58,6 +58,8 @@ def clean_llm_output(raw: str) -> dict:
         data["summary_plain"] = "Case summary for clinical review."
     if not data.get("referral_note"):
         data["referral_note"] = f"Referral note: Please assess the patient. Urgency: {data['urgency']}. {DISCLAIMER}"
+    elif DISCLAIMER not in data["referral_note"]:
+        data["referral_note"] = f"{data['referral_note']} {DISCLAIMER}".strip()
     if not data.get("disclaimer"):
         data["disclaimer"] = DISCLAIMER
     if not isinstance(data.get("red_flags"), list):

@@ -29,7 +29,7 @@ class TriageResult(BaseModel):
     rule_reasons: list[str] = []
     source: Literal["local", "cloud"] = "local"
     rules_only: bool = False
-    disclaimer: str = "Decision-support prototype. Not a diagnostic tool. Mock data only."
+    disclaimer: str = "Decision support only. Not a diagnosis."
 
 class EscalateRequest(BaseModel):
     request: AnalyzeRequest

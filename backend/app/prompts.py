@@ -13,7 +13,7 @@ Enforces strict clinical decision-support rules:
 import re
 from .schemas import AnalyzeRequest
 
-DISCLAIMER = "Decision-support prototype. Not a diagnostic tool. Mock data only."
+DISCLAIMER = "Decision support only. Not a diagnosis."
 
 SYSTEM_PROMPT = f"""You are a specialized clinical decision-support assistant for rural community health workers (e.g. ASHA workers).
 You are NOT a doctor and must NEVER provide a clinical diagnosis, medical prescription, drug dosage, or curative treatment.

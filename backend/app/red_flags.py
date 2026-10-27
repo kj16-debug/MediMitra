@@ -58,16 +58,21 @@ def apply_red_flag_rules(req: AnalyzeRequest, result: TriageResult) -> TriageRes
 
     # Strip existing urgency mentions and disclaimer to build in code without contradiction
     clean_referral = re.sub(r"\b(?:final\s+|current\s+)?urgency\s*(?::|is)\s*(?:green|yellow|red)\b\.?", "", result.referral_note, flags=re.I).strip()
-    clean_referral = clean_referral.replace(result.disclaimer, "").strip()
+    if result.disclaimer:
+        clean_referral = clean_referral.replace(result.disclaimer, "").strip()
+    clean_referral = clean_referral.replace("Decision-support prototype. Not a diagnostic tool. Mock data only.", "").replace("Decision support only. Not a diagnosis.", "").strip()
+
+    disclaimer_text = "Decision support only. Not a diagnosis."
+    result.disclaimer = disclaimer_text
 
     if urgency_raised:
         override = f"Safety rules raised urgency to {level.upper()} because: {'; '.join(reasons)}."
         clean_summary = re.sub(r"\b(?:final\s+|current\s+)?urgency\s*(?::|is)\s*(?:green|yellow|red)\b\.?", "", result.summary_plain, flags=re.I).strip()
         result.urgency_reason = override
         result.summary_plain = f"{override} {clean_summary} Final urgency: {level.upper()}.".strip()
-        result.referral_note = f"{override} {clean_referral} Final urgency: {level.upper()}. {result.disclaimer}".strip()
+        result.referral_note = f"{override} {clean_referral} Final urgency: {level.upper()}. {disclaimer_text}".strip()
     else:
-        result.referral_note = f"{clean_referral} Final urgency: {level.upper()}. {result.disclaimer}".strip()
+        result.referral_note = f"{clean_referral} Final urgency: {level.upper()}. {disclaimer_text}".strip()
 
     # Self-harm safety rule must always explicitly call for immediate human support
     if any("Self-harm" in r for r in reasons):
