@@ -47,6 +47,26 @@ NOUNS_SET = {
     "antibiotic", "antibiotics",
 }
 
+# Recommendation cues that reject an echo-allowed term if appearing in the SAME sentence
+RECOMMENDATION_CUES_PATTERN = re.compile(
+    r"\b(?:"
+    r"recommend(?:s|ed|ing)?|"
+    r"advis(?:e|es|ed|ing)|"
+    r"suggest(?:s|ed|ing)?|"
+    r"should|"
+    r"consider(?:s|ed|ing)?|"
+    r"try|"
+    r"needs?|"
+    r"must|"
+    r"ensure[ds]?|"
+    r"continue[ds]?|"
+    r"starts?|"
+    r"(?:is|are)\s+indicated|"
+    r"would\s+benefit"
+    r")\b",
+    re.IGNORECASE,
+)
+
 # Advice verbs that reject an echo-allowed term if directly preceding it within 3 words
 # (Past-tense history such as 'gave', 'took', 'was given', 'has been taking' are allowed)
 ADVICE_VERBS = {
@@ -61,6 +81,31 @@ ADVICE_VERBS = {
     "increase", "increases",
     "repeat", "repeats",
 }
+
+def _get_sentence_around(text: str, start: int, end: int) -> str:
+    """Extract the sentence containing the slice start..end."""
+    before = text[:start]
+    prev_boundary = max(
+        before.rfind("."),
+        before.rfind("!"),
+        before.rfind("?"),
+        before.rfind("\n"),
+        before.rfind(";"),
+    )
+    sent_start = 0 if prev_boundary == -1 else prev_boundary + 1
+
+    after = text[end:]
+    next_boundaries = [
+        pos for pos in (
+            after.find("."),
+            after.find("!"),
+            after.find("?"),
+            after.find("\n"),
+            after.find(";"),
+        ) if pos != -1
+    ]
+    sent_end = len(text) if not next_boundaries else end + min(next_boundaries)
+    return text[sent_start:sent_end]
 
 def _word_in_case_text(term: str, case_text: str) -> bool:
     if not case_text or not isinstance(case_text, str):
@@ -81,7 +126,9 @@ def is_text_prohibited(text: str, case_text: str = "") -> bool:
 
     If case_text is provided, echo-allowed terms (drug names, ORS, nouns: medicine,
     medication, syrup, injection, antibiotic) mentioned in case_text are ignored,
-    UNLESS preceded within 3 words by an advice verb.
+    UNLESS:
+      - The same sentence contains a recommendation cue before OR after the term.
+      - The term is directly preceded within 3 words by an advice verb.
     """
     if not text or not isinstance(text, str):
         return False
@@ -101,7 +148,12 @@ def is_text_prohibited(text: str, case_text: str = "") -> bool:
         if not _word_in_case_text(term, case_text):
             return True
 
-        # If present in case_text, check if directly preceded within 3 words by an advice verb
+        # Check if the same sentence contains any recommendation cue before OR after the term
+        sentence = _get_sentence_around(text, match.start(), match.end())
+        if RECOMMENDATION_CUES_PATTERN.search(sentence):
+            return True
+
+        # Check if directly preceded within 3 words by an advice verb
         prefix = text[: match.start()]
         clause = re.split(r"[.!?;\n]", prefix)[-1]
         words_before = re.findall(r"\b[A-Za-z]+\b", clause)
