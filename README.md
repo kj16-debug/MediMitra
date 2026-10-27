@@ -123,8 +123,9 @@ MediMitra implements multi-layered safety guardrails to ensure decision support 
 
 3. **Model Output Treatment & Dosage Filter**:
    - Every free-text field returned by an external model is inspected by `backend/app/output_filter.py`.
-   - If any dosage units (e.g. `mg`, `ml`, `tablets`, `puffs`), prescription/administration actions (`prescribe`, `administer`, `give him/her`), or drug names (`paracetamol`, `antibiotics`, `ibuprofen`, `ORS`, etc.) appear, **all model output is discarded**.
-   - The request automatically falls back to a rules-only result (`rules_only: true`, minimum yellow urgency).
+   - Dosage amounts (numbers followed by units like `mg`, `ml`, `tablets`), administer/prescribe wording (`administer`, `prescribe`, `give him/her/them`, `dose`), and recommendations of any medicine or fluid (cued by words like `recommended`, `advise`, `suggest`, `should`, `consider`, `try`, `needs`, `must`, `ensure`, `continue`, `start`, `is indicated`, `would benefit`) are strictly rejected.
+   - A drug name, ORS, or treatment noun (e.g. `medicine`, `medication`, `syrup`, `injection`, `antibiotic`) the worker typed themselves in the intake may be repeated neutrally as past history (such as plain past tense "gave" or "took" without advice cues).
+   - If prohibited advice or un-echoed drug terms are detected, all model output is discarded and the request automatically falls back to a rules-only result (`rules_only: true`, minimum yellow urgency).
    - Word-boundary matching (`\b`) ensures harmless words (e.g. "table", "doctors", "orders") pass without false positives.
 
 4. **Case Text Delimited as Untrusted Data**:
